@@ -826,46 +826,106 @@ body {
 }
 
 /* Instagram analysis */
-.insta-title {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 30px;
-  letter-spacing: 0.04em;
-  margin: 28px 0 12px;
-}
-.insta-top {
+.insta-section {
   background: var(--white);
   border: 1px solid var(--gray-2);
-  padding: 18px 20px;
+  padding: 20px;
+  margin-bottom: 14px;
+}
+.insta-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 34px;
+  letter-spacing: 0.04em;
+  margin: 0 0 10px;
+}
+.insta-sub {
+  font-size: 11px;
+  color: var(--gray-3);
+  line-height: 1.65;
   margin-bottom: 12px;
 }
-.insta-top-score {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 44px;
-  line-height: 0.9;
+.insta-shot-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-bottom: 14px;
+}
+.insta-shot {
+  aspect-ratio: 1;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  background: var(--gray-1);
+}
+.insta-overall-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
   margin-bottom: 10px;
 }
-.insta-top-score.crit { color: var(--red); }
-.insta-top-score.dev { color: var(--amber); }
-.insta-top-score.str { color: var(--green); }
-.insta-meta {
+.insta-overall-score {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 62px;
+  line-height: 0.8;
+}
+.insta-overall-score.crit { color: var(--red); }
+.insta-overall-score.dev { color: var(--amber); }
+.insta-overall-score.str { color: var(--green); }
+.insta-overall-lbl {
   font-size: 10px;
   color: var(--gray-3);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.insta-kv {
-  margin-top: 10px;
+.insta-callout {
+  border: 1px solid var(--gray-2);
+  padding: 11px 12px;
+  margin-bottom: 8px;
+  background: var(--off);
+}
+.insta-callout-title {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.insta-callout.win .insta-callout-title { color: var(--green); }
+.insta-callout.urg .insta-callout-title { color: var(--red); }
+.insta-callout-text {
+  font-size: 11px;
+  color: var(--gray-4);
+  line-height: 1.6;
+}
+.insta-empty {
+  border: 1px dashed var(--gray-2);
+  padding: 16px 14px;
+  background: var(--off);
+}
+.insta-empty-text {
   font-size: 11px;
   color: var(--gray-4);
   line-height: 1.65;
+  margin-bottom: 10px;
+}
+.insta-retake-btn {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 10px 14px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 .ai-card {
   background: var(--white);
   border: 1px solid var(--gray-2);
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 .ai-head {
-  padding: 14px 18px;
+  padding: 14px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -875,6 +935,19 @@ body {
   font-size: 12px;
   font-weight: 500;
 }
+.ai-score-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ai-score-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.ai-score-dot.crit { background: var(--red); }
+.ai-score-dot.dev { background: var(--amber); }
+.ai-score-dot.str { background: var(--green); }
 .ai-score {
   font-family: "Bebas Neue", sans-serif;
   font-size: 28px;
@@ -886,13 +959,22 @@ body {
 .ai-body {
   display: none;
   border-top: 1px solid var(--gray-1);
-  padding: 14px 18px 18px;
+  padding: 14px 16px 16px;
 }
 .ai-body.show { display: block; }
 .ai-head.open .chev { transform: rotate(180deg); }
+.ai-score-track {
+  height: 4px;
+  background: var(--gray-1);
+  margin-bottom: 10px;
+}
+.ai-score-fill {
+  height: 100%;
+  background: var(--black);
+}
 .ai-verdict {
   font-size: 11px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   color: var(--gray-4);
   line-height: 1.6;
 }
@@ -901,7 +983,7 @@ body {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 .ai-list {
   list-style: none;
@@ -909,7 +991,7 @@ body {
 }
 .ai-list li {
   font-size: 11px;
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--gray-4);
   margin-bottom: 4px;
   padding-left: 14px;
@@ -1328,27 +1410,44 @@ let isSectionTransitioning = false;
 let latestReportData = null;
 
 const LEAD_CAPTURE_URL = "https://script.google.com/macros/s/AKfycbxb8z2UB7il4OLgRTMOV-U_6jecHHogkHlZ8tB19k9_xxHp8mLP9ZmgodbMAS6e3QpDrA/exec";
-const AI_SYSTEM_PROMPT = `You are an expert lash business consultant and Instagram strategist
-trained by PSC Lash Academy. You are analysing a lash artist's
-Instagram screenshots to give them a brutally honest, specific audit.
+const AI_SYSTEM_PROMPT = `You are a PSC Lash Academy Instagram strategist.
+Analyse these Instagram screenshots from a lash
+artist's page and give brutally specific feedback.
 
-Analyse the images and return ONLY a JSON object with this exact
-structure — no other text:
+Return ONLY valid JSON with this structure:
 {
-  grid_aesthetic: { score: 0-10, verdict: string, issues: [string], fixes: [string] },
-  positioning_clarity: { score: 0-10, verdict: string, issues: [string], fixes: [string] },
-  content_mix: { score: 0-10, verdict: string, issues: [string], fixes: [string] },
-  work_quality_presentation: { score: 0-10, verdict: string, issues: [string], fixes: [string] },
-  call_to_action: { score: 0-10, verdict: string, issues: [string], fixes: [string] },
-  overall_instagram_score: number,
-  biggest_win: string,
-  most_urgent_fix: string
+  grid_aesthetic: {
+    score: 1-10,
+    verdict: one sentence,
+    issues: [up to 3 specific things you see],
+    fixes: [up to 3 specific actions]
+  },
+  content_mix: {
+    score: 1-10,
+    verdict: one sentence,
+    issues: [up to 3 specific things],
+    fixes: [up to 3 specific actions]
+  },
+  positioning_clarity: {
+    score: 1-10,
+    verdict: one sentence,
+    issues: [up to 3 specific things],
+    fixes: [up to 3 specific actions]
+  },
+  hook_strength: {
+    score: 1-10,
+    verdict: one sentence,
+    issues: [up to 3 specific things],
+    fixes: [up to 3 specific actions]
+  },
+  overall_instagram_score: 1-100,
+  biggest_win: one specific positive thing,
+  most_urgent_fix: one specific action to take today
 }
 
-Be specific. Name exact things you see. Do not be generic.
-If you see the same style repeated, say it. If the bio is vague,
-say exactly what is vague about it. If captions have no hook,
-say that. Score honestly — most lash pages score 3-6 out of 10.`;
+Be specific. Name what you actually see.
+Score honestly — most lash pages score 40-65.
+Do not be generic.`;
 
 const SECTION_KEYS = {
   1: ["q1", "q2"],
@@ -2070,6 +2169,62 @@ function parseClaudeJson(raw) {
   }
 }
 
+async function requestInstagramAnalysis() {
+  const images = uploadedImages.map((img) => ({
+    mime: img.mime,
+    data: img.data
+  }));
+  const response = await fetch("/api/analyse", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ images })
+  });
+
+  if (!response.ok) {
+    throw new Error("AI proxy failed with status " + response.status);
+  }
+
+  const payload = await response.json();
+  const contentBlocks = Array.isArray(payload.content)
+    ? payload.content
+    : (payload.anthropicResponse && Array.isArray(payload.anthropicResponse.content) ? payload.anthropicResponse.content : []);
+  const raw = contentBlocks
+    .map((item) => item && item.type === "text" ? item.text : "")
+    .join("\n")
+    .trim();
+  return parseClaudeJson(raw);
+}
+
+function normalizeInstagramAnalysis(raw) {
+  const source = raw && typeof raw === "object" ? raw : {};
+  const normalizeItem = (item) => {
+    const obj = item && typeof item === "object" ? item : {};
+    const score = Math.max(1, Math.min(10, Number(obj.score || 1)));
+    return {
+      score,
+      verdict: String(obj.verdict || "No verdict returned."),
+      issues: (Array.isArray(obj.issues) ? obj.issues : []).slice(0, 3).map((v) => String(v)),
+      fixes: (Array.isArray(obj.fixes) ? obj.fixes : []).slice(0, 3).map((v) => String(v))
+    };
+  };
+
+  let overall = Number(source.overall_instagram_score || 0);
+  if (overall > 0 && overall <= 10) overall *= 10;
+  overall = Math.max(1, Math.min(100, Math.round(overall || 1)));
+
+  return {
+    grid_aesthetic: normalizeItem(source.grid_aesthetic),
+    content_mix: normalizeItem(source.content_mix),
+    positioning_clarity: normalizeItem(source.positioning_clarity),
+    hook_strength: normalizeItem(source.hook_strength),
+    overall_instagram_score: overall,
+    biggest_win: String(source.biggest_win || "No specific win returned."),
+    most_urgent_fix: String(source.most_urgent_fix || "No urgent fix returned.")
+  };
+}
+
 async function analyseMyPage() {
   if (!uploadedImages.length) return;
   const btn = document.getElementById("analyzeBtn");
@@ -2081,35 +2236,8 @@ async function analyseMyPage() {
   status.textContent = "Running AI Instagram analysis...";
 
   try {
-    const images = uploadedImages.map((img) => ({
-      mime: img.mime,
-      data: img.data
-    }));
-    const response = await fetch("/api/analyse", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        images,
-        systemPrompt: AI_SYSTEM_PROMPT
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error("AI proxy failed with status " + response.status);
-    }
-
-    const payload = await response.json();
-    const contentBlocks = Array.isArray(payload.content)
-      ? payload.content
-      : (payload.anthropicResponse && Array.isArray(payload.anthropicResponse.content) ? payload.anthropicResponse.content : []);
-    const raw = contentBlocks
-      .map((item) => item && item.type === "text" ? item.text : "")
-      .join("\n")
-      .trim();
-    const parsed = parseClaudeJson(raw);
-    instagramAnalysis = parsed;
+    const parsed = await requestInstagramAnalysis();
+    instagramAnalysis = normalizeInstagramAnalysis(parsed);
     status.textContent = "Analysis complete. It will appear in your final report.";
   } catch (err) {
     instagramAnalysisError = "AI analysis could not be generated right now. Your report will still be produced.";
@@ -2130,73 +2258,118 @@ function sendLeadCapture(payload) {
   }).catch(() => {});
 }
 
-function showReport() {
+async function showReport() {
   document.getElementById("audit-app").style.display = "none";
   document.getElementById("botNav").style.display = "none";
   const rep = document.getElementById("report");
   rep.style.display = "block";
   window.scrollTo(0, 0);
 
-  setTimeout(() => {
-    document.getElementById("genScreen").style.display = "none";
-    buildReport();
-    document.getElementById("repContent").style.display = "block";
-    window.scrollTo(0, 0);
-  }, 2400);
+  const minimumDelay = new Promise((resolve) => setTimeout(resolve, 2400));
+  let analysisTask = Promise.resolve();
+  if (uploadedImages.length) {
+    instagramAnalysis = null;
+    instagramAnalysisError = "";
+    analysisTask = requestInstagramAnalysis()
+      .then((parsed) => {
+        instagramAnalysis = normalizeInstagramAnalysis(parsed);
+      })
+      .catch(() => {
+        instagramAnalysis = null;
+        instagramAnalysisError = "Instagram analysis could not be generated right now. Your report is still available.";
+      });
+  } else {
+    instagramAnalysis = null;
+    instagramAnalysisError = "";
+  }
+
+  await Promise.allSettled([minimumDelay, analysisTask]);
+  document.getElementById("genScreen").style.display = "none";
+  buildReport();
+  document.getElementById("repContent").style.display = "block";
+  window.scrollTo(0, 0);
 }
 
 function buildInstagramSection(nextDelayFn) {
-  if (!instagramAnalysis && !instagramAnalysisError) return "";
+  const hasUploads = uploadedImages.length > 0;
+  let html = `
+    <div class="insta-section report-card" style="--d:${nextDelayFn()};">
+      <div class="insta-title">YOUR INSTAGRAM ANALYSIS</div>
+  `;
 
-  if (!instagramAnalysis && instagramAnalysisError) {
-    return `
-      <div class="insta-title">Instagram Page Analysis</div>
-      <div class="insta-top report-card" style="--d:${nextDelayFn()};">
-        <div class="insta-meta">Analysis status</div>
-        <div class="insta-kv">${escapeHtml(instagramAnalysisError)}</div>
+  if (!hasUploads) {
+    html += `
+      <div class="insta-empty">
+        <div class="insta-empty-text">Add your Instagram screenshots to get a personalised page analysis — retake the audit with your screenshots attached.</div>
+        <button class="insta-retake-btn" type="button" onclick="retakeAuditForInstagram()">Retake With Screenshots</button>
       </div>
+    </div>
     `;
+    return html;
   }
 
-  const analysis = instagramAnalysis || {};
-  const categoryRows = [
-    ["grid_aesthetic", "Grid Aesthetic"],
-    ["positioning_clarity", "Positioning Clarity"],
-    ["content_mix", "Content Mix"],
-    ["work_quality_presentation", "Work Quality Presentation"],
-    ["call_to_action", "Call to Action"]
-  ];
-
-  let html = `<div class="insta-title">Instagram Page Analysis</div>`;
-  const aiOverall = Number(analysis.overall_instagram_score || 0);
-  const topCls = lvlOfTen(aiOverall);
   html += `
-    <div class="insta-top report-card" style="--d:${nextDelayFn()};">
-      <div class="insta-meta">Overall Instagram Score</div>
-      <div class="insta-top-score ${topCls}">${aiOverall}/10</div>
-      <div class="insta-kv"><strong>Biggest Win:</strong> ${escapeHtml(analysis.biggest_win || "N/A")}</div>
-      <div class="insta-kv"><strong>Most Urgent Fix:</strong> ${escapeHtml(analysis.most_urgent_fix || "N/A")}</div>
+    <div class="insta-sub">Your uploaded screenshots were analysed and referenced directly in this section.</div>
+    <div class="insta-shot-grid">
+      ${uploadedImages.map((img, idx) => `<img class="insta-shot" src="${escapeHtml(img.previewUrl)}" alt="Uploaded Instagram screenshot ${idx + 1}">`).join("")}
     </div>
   `;
+
+  if (!instagramAnalysis) {
+    html += `
+      <div class="insta-empty">
+        <div class="insta-empty-text">${escapeHtml(instagramAnalysisError || "Instagram analysis is not available for this report run.")}</div>
+      </div>
+    </div>
+    `;
+    return html;
+  }
+
+  const analysis = instagramAnalysis;
+  const aiOverall = Number(analysis.overall_instagram_score || 1);
+  const overallCls = lvlOf(aiOverall).cls;
+  html += `
+    <div class="insta-overall-wrap">
+      <div class="insta-overall-score ${overallCls}">${aiOverall}%</div>
+      <div class="insta-overall-lbl">Overall Instagram Score</div>
+    </div>
+    <div class="insta-callout win">
+      <div class="insta-callout-title">Biggest Win</div>
+      <div class="insta-callout-text">${escapeHtml(analysis.biggest_win)}</div>
+    </div>
+    <div class="insta-callout urg">
+      <div class="insta-callout-title">Most Urgent Fix</div>
+      <div class="insta-callout-text">${escapeHtml(analysis.most_urgent_fix)}</div>
+    </div>
+  `;
+
+  const categoryRows = [
+    ["grid_aesthetic", "Grid"],
+    ["content_mix", "Content Mix"],
+    ["positioning_clarity", "Positioning"],
+    ["hook_strength", "Hooks"]
+  ];
 
   categoryRows.forEach((entry, i) => {
     const key = entry[0];
     const label = entry[1];
-    const item = analysis[key] || {};
-    const score = Number(item.score || 0);
+    const item = analysis[key] || { score: 1, verdict: "", issues: [], fixes: [] };
+    const score = Math.max(1, Math.min(10, Number(item.score || 1)));
     const cls = lvlOfTen(score);
     const issues = Array.isArray(item.issues) ? item.issues : [];
     const fixes = Array.isArray(item.fixes) ? item.fixes : [];
     html += `
-      <div class="ai-card report-card" style="--d:${nextDelayFn()};">
+      <div class="ai-card">
         <div class="ai-head" onclick="toggleAiCard(${i})">
           <div class="ai-name">${escapeHtml(label)}</div>
-          <div style="display:flex;align-items:center;gap:8px;">
+          <div class="ai-score-wrap">
+            <div class="ai-score-dot ${cls}"></div>
             <div class="ai-score ${cls}">${score}/10</div>
             <div class="chev">▾</div>
           </div>
         </div>
         <div class="ai-body" id="aiBody${i}">
+          <div class="ai-score-track"><div class="ai-score-fill" style="width:${score * 10}%"></div></div>
           <div class="ai-verdict">${escapeHtml(item.verdict || "No verdict returned.")}</div>
           <div class="ai-list-label">Issues</div>
           <ul class="ai-list">
@@ -2211,6 +2384,7 @@ function buildInstagramSection(nextDelayFn) {
     `;
   });
 
+  html += "</div>";
   return html;
 }
 
@@ -2253,6 +2427,7 @@ function buildReport() {
   const overallLabel = overallLabelFromScore(overall);
   const lowestKey = lowest[0];
   const lowestName = GAP_TITLE_MAP[lowestKey] || (CATEGORY_META.find((m) => m.key === lowestKey) || {}).name || "Unknown";
+  const instagramOverall = instagramAnalysis ? Number(instagramAnalysis.overall_instagram_score || 0) : 0;
 
   latestReportData = { name, overall, scores };
 
@@ -2270,6 +2445,7 @@ function buildReport() {
       <p class="rep-summary">${escapeHtml(summaries[ov.cls] || summaries.dev)}</p>
     </div>
     <div class="rep-body">
+      ${buildInstagramSection(nextDelay)}
       <div class="gap-card report-card" style="--d:${nextDelay()};">
         <div class="gap-title">YOUR BIGGEST GAP</div>
         <div class="gap-main">${escapeHtml(lowestName)}</div>
@@ -2293,8 +2469,6 @@ function buildReport() {
         `).join("")}
       </div>
   `;
-
-  html += buildInstagramSection(nextDelay);
 
   CATEGORY_META.forEach((meta, idx) => {
     const sc = scores[meta.key];
@@ -2331,6 +2505,20 @@ function buildReport() {
   });
 
   html += `<div class="pri-title">YOUR PRIORITY ACTIONS</div>`;
+  let actionNumber = 1;
+  if (instagramAnalysis && instagramOverall < 60) {
+    html += `
+      <div class="act-card urg report-card" style="--d:${nextDelay()};">
+        <div class="act-n">${String(actionNumber).padStart(2, "0")}</div>
+        <div>
+          <div class="act-tag">Fix This First</div>
+          <div class="act-ttl">Your Instagram page needs immediate attention — see your page analysis above for the specific fixes.</div>
+          <div class="act-desc">Your screenshots showed clear conversion and positioning gaps. Prioritise those fixes before publishing more content in the same style.</div>
+        </div>
+      </div>
+    `;
+    actionNumber++;
+  }
   sorted.forEach((pair, index) => {
     const key = pair[0];
     const score = pair[1];
@@ -2351,7 +2539,7 @@ function buildReport() {
 
     html += `
       <div class="act-card ${variant} report-card" style="--d:${nextDelay()};">
-        <div class="act-n">${String(index + 1).padStart(2, "0")}</div>
+        <div class="act-n">${String(actionNumber).padStart(2, "0")}</div>
         <div>
           <div class="act-tag">${tag}</div>
           <div class="act-ttl">${escapeHtml(act.ttl)}</div>
@@ -2359,6 +2547,7 @@ function buildReport() {
         </div>
       </div>
     `;
+    actionNumber++;
   });
 
   const shareText = `I just audited my lash business with the PSC 180° Audit Checker and scored ${overall}%. Eye opening. Get yours free at psclashes.com/audit 👁️`;
@@ -2553,6 +2742,28 @@ async function downloadReportCard() {
     btn.disabled = false;
     btn.textContent = prevText;
   }
+}
+
+function retakeAuditForInstagram() {
+  document.getElementById("report").style.display = "none";
+  document.getElementById("repContent").style.display = "none";
+  document.getElementById("genScreen").style.display = "flex";
+  document.getElementById("audit-app").style.display = "block";
+  document.getElementById("botNav").style.display = "flex";
+
+  document.querySelectorAll(".audit-sec").forEach((sec) => {
+    sec.classList.remove("active", "section-visible", "slide-in-right", "slide-in-left", "slide-out-left", "slide-out-right");
+  });
+  cur = 4;
+  document.getElementById("sec4").classList.add("active");
+  animateSection(4);
+
+  document.getElementById("btnBack").style.display = "block";
+  document.getElementById("btnNext").textContent = "Continue →";
+  updateProg();
+  updateQuestionProgress();
+  chk();
+  window.scrollTo(0, 0);
 }
 
 function init() {
