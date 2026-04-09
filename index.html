@@ -119,6 +119,10 @@ body {
 .audit-sec.section-visible {
   animation: sectionFadeIn 0.45s ease;
 }
+.audit-sec.slide-out-left { animation: slideOutLeft 0.3s ease forwards; }
+.audit-sec.slide-in-right { animation: slideInRight 0.3s ease forwards; }
+.audit-sec.slide-out-right { animation: slideOutRight 0.3s ease forwards; }
+.audit-sec.slide-in-left { animation: slideInLeft 0.3s ease forwards; }
 .audit-sec.section-visible .sec-title,
 .audit-sec.section-visible .sec-eyebrow,
 .audit-sec.section-visible .sec-desc {
@@ -132,6 +136,22 @@ body {
 @keyframes bannerSlideIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideOutLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-34px); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(34px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideOutRight {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(34px); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-34px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 /* Sticky progress */
@@ -196,8 +216,7 @@ body {
   margin-top: 6px;
   font-size: 9px;
   color: var(--gray-3);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 /* Section banner */
@@ -329,17 +348,22 @@ body {
 }
 .opt:active,
 .opt.pressed {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 .opt.sel {
+  background: var(--gray-1);
+  border-color: var(--black);
+  border-left: 3px solid var(--black);
+  padding-left: 12px;
+}
+.opt.sel .opt-dot {
   background: var(--black);
   border-color: var(--black);
 }
-.opt.sel .opt-dot {
-  background: var(--white);
-  border-color: var(--white);
+.opt.sel .opt-text {
+  color: var(--black);
+  font-weight: 500;
 }
-.opt.sel .opt-text { color: var(--white); }
 .opt-dot {
   width: 13px;
   height: 13px;
@@ -475,10 +499,18 @@ body {
   transition: all 0.2s;
 }
 .btn-next:hover { background: var(--gray-4); }
+.btn-next.ready {
+  animation: ctaPulse 1.5s ease-in-out infinite;
+}
 .btn-next:disabled {
   background: var(--gray-2);
   color: var(--gray-3);
   cursor: not-allowed;
+  animation: none;
+}
+@keyframes ctaPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 /* REPORT */
@@ -625,13 +657,23 @@ body {
 }
 .gap-title {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 28px;
+  font-size: 30px;
   letter-spacing: 0.05em;
   margin-bottom: 8px;
+  text-transform: uppercase;
 }
 .gap-main {
-  font-size: 16px;
-  font-weight: 500;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(42px, 8vw, 62px);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.gap-pct {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #CECECE;
   margin-bottom: 8px;
 }
 .gap-desc {
@@ -657,13 +699,28 @@ body {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+.glance-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.glance-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.glance-dot.crit { background: var(--red); }
+.glance-dot.dev { background: var(--amber); }
+.glance-dot.str { background: var(--green); }
 .glance-track {
-  height: 4px;
+  height: 5px;
   background: var(--gray-1);
 }
 .glance-fill {
   height: 100%;
   background: var(--black);
+  width: 0%;
 }
 
 /* Score cards */
@@ -921,6 +978,12 @@ body {
   padding: 18px 20px;
   margin: 24px 0 14px;
 }
+.download-card {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  padding: 18px 20px;
+  margin: 24px 0 12px;
+}
 .share-title {
   font-family: "Bebas Neue", sans-serif;
   font-size: 28px;
@@ -933,8 +996,8 @@ body {
   margin-bottom: 10px;
 }
 .share-copy {
-  background: var(--off);
-  border: 1px solid var(--gray-1);
+  background: var(--gray-1);
+  border: 1px solid var(--gray-2);
   padding: 12px;
   font-size: 11px;
   color: var(--gray-4);
@@ -951,6 +1014,122 @@ body {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
+}
+.copy-btn:disabled {
+  background: var(--gray-2);
+  color: var(--gray-3);
+  cursor: not-allowed;
+}
+
+.timeline-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.04em;
+  margin: 28px 0 12px;
+}
+.timeline-card {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  padding: 16px;
+  position: relative;
+  margin-bottom: 18px;
+}
+.timeline-line {
+  position: absolute;
+  left: 31px;
+  top: 40px;
+  bottom: 30px;
+  width: 1px;
+  background: var(--gray-2);
+}
+.timeline-step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  position: relative;
+}
+.timeline-step:last-child { margin-bottom: 0; }
+.timeline-num {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  min-width: 30px;
+  color: var(--black);
+  background: var(--white);
+  position: relative;
+  z-index: 1;
+}
+.timeline-kicker {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+.timeline-text {
+  font-size: 11px;
+  color: var(--gray-4);
+  line-height: 1.65;
+}
+
+#downloadCanvasHost {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+  pointer-events: none;
+}
+.dl-card {
+  width: 1080px;
+  background: var(--white);
+  color: var(--black);
+  border: 3px solid var(--black);
+  padding: 64px;
+  font-family: "Inter", sans-serif;
+}
+.dl-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 74px;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+.dl-name {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 28px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.dl-score {
+  margin: 26px 0 22px;
+  text-align: center;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 220px;
+  line-height: 0.82;
+}
+.dl-row { margin-bottom: 14px; }
+.dl-row-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.dl-track {
+  height: 10px;
+  background: #EAEAEA;
+}
+.dl-fill {
+  height: 100%;
+  background: var(--black);
+}
+.dl-foot {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 22px;
+  letter-spacing: 0.1em;
 }
 
 /* Final CTA */
@@ -1054,7 +1233,7 @@ body {
     </div>
     <div class="qprog-wrap">
       <div class="qprog-track"><div class="qprog-fill" id="qProgFill"></div></div>
-      <div class="qprog-label" id="qProgLabel">0 of 21 answered</div>
+      <div class="qprog-label" id="qProgLabel">Question 0 of 21 answered</div>
     </div>
   </div>
 
@@ -1133,7 +1312,9 @@ body {
   </div>
   <div id="repContent" style="display:none;"></div>
 </div>
+<div id="downloadCanvasHost" aria-hidden="true"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 let cur = 1;
 const TOTAL = 6;
@@ -1143,6 +1324,8 @@ let uploadedImages = [];
 let instagramAnalysis = null;
 let instagramAnalysisError = "";
 let leadCaptureSent = false;
+let isSectionTransitioning = false;
+let latestReportData = null;
 
 const LEAD_CAPTURE_URL = "https://script.google.com/macros/s/AKfycbxb8z2UB7il4OLgRTMOV-U_6jecHHogkHlZ8tB19k9_xxHp8mLP9ZmgodbMAS6e3QpDrA/exec";
 const AI_SYSTEM_PROMPT = `You are an expert lash business consultant and Instagram strategist
@@ -1577,11 +1760,19 @@ const ACTION_MAP = {
 };
 
 const BIGGEST_GAP_REASON = {
-  design: "Design logic impacts every single client result, referral, and retention cycle in your business.",
-  positioning: "If your positioning is unclear, everything else gets harder — especially premium pricing and client quality.",
-  content: "Content is your daily sales engine. Weak content means weak visibility, trust, and conversion.",
-  pricing: "Pricing confidence reflects business clarity. If this area is weak, revenue growth stays fragile.",
-  systems: "Without systems and accountability, progress becomes inconsistent no matter how strong your talent is."
+  design: "You are producing sets, not transformations. This single gap is costing you referrals every week.",
+  positioning: "You look like everyone else. Until this changes, price will always be the deciding factor.",
+  content: "Your content is not converting. You are creating work nobody is acting on.",
+  pricing: "Your prices are telling the wrong story. The ceiling you have built is entirely moveable.",
+  systems: "Information without execution is just comfort. This is the loop keeping you stuck."
+};
+
+const GAP_TITLE_MAP = {
+  design: "Design Thinking",
+  positioning: "Positioning",
+  content: "Content",
+  pricing: "Pricing",
+  systems: "Systems"
 };
 
 function escapeHtml(text) {
@@ -1603,6 +1794,15 @@ function lvlOf(pct) {
   if (pct < 35) return { lbl: "Critical Gap", cls: "crit" };
   if (pct < 62) return { lbl: "Developing", cls: "dev" };
   return { lbl: "Strong", cls: "str" };
+}
+
+function overallLabelFromScore(score) {
+  if (score <= 25) return "The Loop Is Real";
+  if (score <= 40) return "Working Hard. Wrong Direction.";
+  if (score <= 55) return "Close — But The Gaps Are Costing You";
+  if (score <= 70) return "Solid Foundations. Real Gaps Remain.";
+  if (score <= 85) return "Strong. A Few Changes Away From Exceptional.";
+  return "You Are Already Operating At A High Level";
 }
 
 function lvlOfTen(score) {
@@ -1740,6 +1940,7 @@ function chk() {
     });
   }
   btn.disabled = !ok;
+  btn.classList.toggle("ready", ok && !btn.disabled);
 }
 
 function animateSection(sectionIndex) {
@@ -1764,15 +1965,36 @@ function updateQuestionProgress() {
   const done = answeredCount();
   const pct = Math.round((done / TOTAL_QUESTIONS) * 100);
   document.getElementById("qProgFill").style.width = pct + "%";
-  document.getElementById("qProgLabel").textContent = done + " of " + TOTAL_QUESTIONS + " answered";
+  document.getElementById("qProgLabel").textContent = "Question " + done + " of " + TOTAL_QUESTIONS + " answered";
+}
+
+function transitionSections(fromIdx, toIdx, direction) {
+  const fromSec = document.getElementById("sec" + fromIdx);
+  const toSec = document.getElementById("sec" + toIdx);
+  if (!fromSec || !toSec) return;
+
+  isSectionTransitioning = true;
+  const outCls = direction === "next" ? "slide-out-left" : "slide-out-right";
+  const inCls = direction === "next" ? "slide-in-right" : "slide-in-left";
+  fromSec.classList.add(outCls);
+
+  setTimeout(() => {
+    fromSec.classList.remove(outCls, "active", "section-visible");
+    toSec.classList.add("active", inCls);
+    setTimeout(() => {
+      toSec.classList.remove(inCls);
+      animateSection(toIdx);
+      isSectionTransitioning = false;
+    }, 300);
+  }, 300);
 }
 
 function goNext() {
+  if (isSectionTransitioning) return;
   if (cur < TOTAL) {
-    document.getElementById("sec" + cur).classList.remove("active");
+    const prev = cur;
     cur++;
-    document.getElementById("sec" + cur).classList.add("active");
-    animateSection(cur);
+    transitionSections(prev, cur, "next");
     document.getElementById("btnBack").style.display = "block";
     document.getElementById("btnNext").textContent = cur === TOTAL ? "Generate My Report →" : "Continue →";
     updateProg();
@@ -1784,17 +2006,15 @@ function goNext() {
 }
 
 function goBack() {
-  if (cur > 1) {
-    document.getElementById("sec" + cur).classList.remove("active");
-    cur--;
-    document.getElementById("sec" + cur).classList.add("active");
-    animateSection(cur);
-    if (cur === 1) document.getElementById("btnBack").style.display = "none";
-    document.getElementById("btnNext").textContent = "Continue →";
-    updateProg();
-    chk();
-    window.scrollTo(0, 0);
-  }
+  if (isSectionTransitioning || cur <= 1) return;
+  const prev = cur;
+  cur--;
+  transitionSections(prev, cur, "back");
+  if (cur === 1) document.getElementById("btnBack").style.display = "none";
+  document.getElementById("btnNext").textContent = "Continue →";
+  updateProg();
+  chk();
+  window.scrollTo(0, 0);
 }
 
 async function toBase64Image(file) {
@@ -2030,6 +2250,11 @@ function buildReport() {
     dev: `${name}, you have real foundations in place — but there are clear, specific gaps holding you back from the results your skill deserves.`,
     str: `${name}, you are building something strong. Closing the final gaps now is what moves you into consistent premium growth.`
   };
+  const overallLabel = overallLabelFromScore(overall);
+  const lowestKey = lowest[0];
+  const lowestName = GAP_TITLE_MAP[lowestKey] || (CATEGORY_META.find((m) => m.key === lowestKey) || {}).name || "Unknown";
+
+  latestReportData = { name, overall, scores };
 
   let delayIndex = 0;
   const nextDelay = () => (delayIndex++ * 100) + "ms";
@@ -2041,22 +2266,29 @@ function buildReport() {
       <div class="rep-ey">Your 180° Audit Report</div>
       <div class="rep-name">${escapeHtml(name)}'s Results</div>
       <div class="rep-score ${ov.cls}" id="overallScore" data-target="${overall}">0%</div>
-      <div class="rep-score-lbl">${ov.lbl}</div>
+      <div class="rep-score-lbl">${escapeHtml(overallLabel)}</div>
       <p class="rep-summary">${escapeHtml(summaries[ov.cls] || summaries.dev)}</p>
     </div>
     <div class="rep-body">
       <div class="gap-card report-card" style="--d:${nextDelay()};">
-        <div class="gap-title">Your Biggest Gap</div>
-        <div class="gap-main">${escapeHtml(CATEGORY_META.find((m) => m.key === lowest[0]).name)} (${lowest[1]}%)</div>
-        <div class="gap-desc">${escapeHtml(BIGGEST_GAP_REASON[lowest[0]] || "This area is currently creating the largest drag on growth.")}</div>
+        <div class="gap-title">YOUR BIGGEST GAP</div>
+        <div class="gap-main">${escapeHtml(lowestName)}</div>
+        <div class="gap-pct">${lowest[1]}% score</div>
+        <div class="gap-desc">${escapeHtml(BIGGEST_GAP_REASON[lowestKey] || "This area is currently creating the largest drag on growth.")}</div>
       </div>
 
       <div class="glance-card report-card" style="--d:${nextDelay()};">
-        <div class="report-title">Your Audit at a Glance</div>
+        <div class="report-title">Your Results at a Glance</div>
         ${CATEGORY_META.map((meta) => `
           <div class="glance-row">
-            <div class="glance-top"><span>${meta.name}</span><span>${scores[meta.key]}%</span></div>
-            <div class="glance-track"><div class="glance-fill" style="width:${scores[meta.key]}%"></div></div>
+            <div class="glance-top">
+              <span class="glance-name">
+                <span class="glance-dot ${lvlOf(scores[meta.key]).cls}"></span>
+                <span>${meta.name}</span>
+              </span>
+              <span>${scores[meta.key]}%</span>
+            </div>
+            <div class="glance-track"><div class="glance-fill" data-target="${scores[meta.key]}"></div></div>
           </div>
         `).join("")}
       </div>
@@ -2129,13 +2361,45 @@ function buildReport() {
     `;
   });
 
-  const shareText = `I just completed the PSC 180° Audit and scored ${overall}%. Get your free audit at psclashes.com/audit`;
+  const shareText = `I just audited my lash business with the PSC 180° Audit Checker and scored ${overall}%. Eye opening. Get yours free at psclashes.com/audit 👁️`;
   html += `
+      <div class="download-card report-card" style="--d:${nextDelay()};">
+        <div class="share-title">Download Your Report</div>
+        <div class="share-sub">Generate a clean shareable report card image for your Instagram stories.</div>
+        <button class="copy-btn" id="downloadBtn" type="button" onclick="downloadReportCard()">Download Your Report</button>
+      </div>
+
       <div class="share-card report-card" style="--d:${nextDelay()};">
-        <div class="share-title">Share Your Results</div>
-        <div class="share-sub">Copy this Instagram story text:</div>
-        <div class="share-copy" id="shareCopyText">${escapeHtml(shareText)}</div>
-        <button class="copy-btn" type="button" onclick="copyShareText()">Copy Text</button>
+        <div class="share-title">Share Your Score</div>
+        <div class="share-sub">Copy and post this story caption:</div>
+        <div class="share-copy" id="shareCaptionText">${escapeHtml(shareText)}</div>
+        <button class="copy-btn" type="button" onclick="copyShareCaption(this)">Copy Caption</button>
+      </div>
+
+      <div class="timeline-title">What Happens When You Fix This</div>
+      <div class="timeline-card report-card" style="--d:${nextDelay()};">
+        <div class="timeline-line"></div>
+        <div class="timeline-step">
+          <div class="timeline-num">1</div>
+          <div>
+            <div class="timeline-kicker">Step 1 — WEEK 1-2</div>
+            <div class="timeline-text">You identify your exact gaps and stop trying to fix everything at once.</div>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-num">2</div>
+          <div>
+            <div class="timeline-kicker">Step 2 — WEEK 3-6</div>
+            <div class="timeline-text">You implement the right changes in the right order with a system and support behind you.</div>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-num">3</div>
+          <div>
+            <div class="timeline-kicker">Step 3 — MONTH 2-3</div>
+            <div class="timeline-text">Your calendar fills. Your prices rise. Your content converts. The loop breaks.</div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="final-cta">
@@ -2153,20 +2417,35 @@ function buildReport() {
 
   document.getElementById("repContent").innerHTML = html;
   animateOverallScore(overall);
+  animateGlanceBars();
 }
 
 function animateOverallScore(target) {
   const el = document.getElementById("overallScore");
   if (!el) return;
-  const duration = 1500;
+  const duration = 2000;
   const start = performance.now();
   function step(now) {
     const p = Math.min((now - start) / duration, 1);
-    const val = Math.round(target * p);
+    const eased = 1 - Math.pow(1 - p, 3);
+    const val = Math.round(target * eased);
     el.textContent = val + "%";
     if (p < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
+}
+
+function animateGlanceBars() {
+  const bars = Array.from(document.querySelectorAll(".glance-fill[data-target]"));
+  bars.forEach((bar, index) => {
+    const target = Math.max(0, Math.min(100, Number(bar.getAttribute("data-target") || 0)));
+    bar.style.width = "0%";
+    bar.style.transition = "none";
+    setTimeout(() => {
+      bar.style.transition = "width 1s ease";
+      bar.style.width = target + "%";
+    }, 150 * index + 40);
+  });
 }
 
 function toggleScard(i) {
@@ -2195,8 +2474,8 @@ function toggleAiCard(i) {
   }
 }
 
-async function copyShareText() {
-  const el = document.getElementById("shareCopyText");
+async function copyShareCaption(btn) {
+  const el = document.getElementById("shareCaptionText");
   if (!el) return;
   const text = el.textContent || "";
   try {
@@ -2208,6 +2487,71 @@ async function copyShareText() {
     ta.select();
     document.execCommand("copy");
     document.body.removeChild(ta);
+  }
+  if (btn) {
+    btn.textContent = "Copied ✓";
+    setTimeout(() => {
+      btn.textContent = "Copy Caption";
+    }, 2000);
+  }
+}
+
+function safeFilename(value) {
+  const cleaned = String(value || "Report")
+    .replace(/[^a-zA-Z0-9-_ ]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+  return cleaned || "Report";
+}
+
+function downloadCardHtml() {
+  if (!latestReportData) return "";
+  const { name, overall, scores } = latestReportData;
+  return `
+    <div class="dl-card">
+      <div class="dl-title">PSC 180° AUDIT</div>
+      <div class="dl-name">${escapeHtml(name)}</div>
+      <div class="dl-score">${overall}%</div>
+      ${CATEGORY_META.map((meta) => `
+        <div class="dl-row">
+          <div class="dl-row-top"><span>${meta.name}</span><span>${scores[meta.key]}%</span></div>
+          <div class="dl-track"><div class="dl-fill" style="width:${scores[meta.key]}%"></div></div>
+        </div>
+      `).join("")}
+      <div class="dl-foot">psclashes.com/audit</div>
+    </div>
+  `;
+}
+
+async function downloadReportCard() {
+  const btn = document.getElementById("downloadBtn");
+  if (!btn || !latestReportData) return;
+  if (typeof html2canvas !== "function") {
+    return;
+  }
+
+  btn.disabled = true;
+  const prevText = btn.textContent;
+  btn.textContent = "Generating...";
+
+  try {
+    const host = document.getElementById("downloadCanvasHost");
+    host.innerHTML = downloadCardHtml();
+    const card = host.firstElementChild;
+    const canvas = await html2canvas(card, {
+      backgroundColor: "#FFFFFF",
+      scale: 2
+    });
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/png");
+    link.download = `PSC-Audit-${safeFilename(latestReportData.name)}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    host.innerHTML = "";
+  } finally {
+    btn.disabled = false;
+    btn.textContent = prevText;
   }
 }
 
