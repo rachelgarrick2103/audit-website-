@@ -6,7 +6,7 @@
 <title>The 180° Audit Checker — PSC Lash Academy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -27,14 +27,12 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--white);
   color: var(--black);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 300;
   overflow-x: hidden;
 }
 
-/* ════════════════════════════
-   HERO
-════════════════════════════ */
+/* HERO */
 #hero {
   min-height: 100vh;
   background: var(--black);
@@ -47,16 +45,15 @@ body {
   position: relative;
   overflow: hidden;
 }
-
 .hero-ring {
   position: absolute;
   border-radius: 50%;
-  border: 0.5px solid rgba(255,255,255,0.07);
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
+  border: 0.5px solid rgba(255,255,255,0.08);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
-
 .hero-eyebrow {
   font-size: 9px;
   font-weight: 600;
@@ -64,17 +61,14 @@ body {
   color: var(--gray-3);
   text-transform: uppercase;
   margin-bottom: 28px;
-  position: relative;
   z-index: 2;
 }
-
 .hero-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: clamp(68px, 14vw, 130px);
   line-height: 0.86;
   letter-spacing: -0.01em;
   color: var(--white);
-  position: relative;
   z-index: 2;
   margin-bottom: 6px;
 }
@@ -82,19 +76,14 @@ body {
   -webkit-text-stroke: 1.5px var(--white);
   color: transparent;
 }
-
 .hero-sub {
-  font-family: 'DM Serif Display', serif;
-  font-style: italic;
-  font-size: clamp(14px, 2.5vw, 18px);
+  font-size: clamp(14px, 2.4vw, 18px);
   color: var(--gray-3);
-  max-width: 480px;
-  line-height: 1.6;
+  max-width: 520px;
+  line-height: 1.7;
   margin: 22px 0 44px;
-  position: relative;
   z-index: 2;
 }
-
 .btn-start {
   display: inline-flex;
   align-items: center;
@@ -103,13 +92,11 @@ body {
   color: var(--black);
   border: none;
   padding: 18px 44px;
-  font-family: 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
-  position: relative;
   z-index: 2;
   transition: background 0.2s, transform 0.15s;
 }
@@ -117,20 +104,35 @@ body {
   background: var(--gray-2);
   transform: translateY(-2px);
 }
-
 .hero-note {
   font-size: 9px;
   color: var(--gray-4);
   letter-spacing: 0.14em;
   margin-top: 20px;
-  position: relative;
   z-index: 2;
 }
 
-/* ════════════════════════════
-   AUDIT APP
-════════════════════════════ */
+/* APP */
 #audit-app { display: none; }
+.audit-sec { display: none; }
+.audit-sec.active { display: block; }
+.audit-sec.section-visible {
+  animation: sectionFadeIn 0.45s ease;
+}
+.audit-sec.section-visible .sec-title,
+.audit-sec.section-visible .sec-eyebrow,
+.audit-sec.section-visible .sec-desc {
+  animation: bannerSlideIn 0.55s ease both;
+}
+
+@keyframes sectionFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes bannerSlideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* Sticky progress */
 .sticky-bar {
@@ -139,21 +141,33 @@ body {
   z-index: 100;
   background: var(--black);
 }
-.prog-track { height: 3px; background: rgba(255,255,255,0.08); }
+.prog-track {
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+}
 .prog-fill {
   height: 100%;
   background: var(--white);
-  transition: width 0.5s ease;
   width: 0%;
+  transition: width 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-origin: left center;
+}
+.prog-fill.animate {
+  animation: fillPulse 0.5s ease;
+}
+@keyframes fillPulse {
+  0% { filter: brightness(0.8); }
+  50% { filter: brightness(1.2); }
+  100% { filter: brightness(1); }
 }
 .prog-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 24px;
+  padding: 14px 24px 10px;
 }
 .prog-brand {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: 18px;
   color: var(--white);
   letter-spacing: 0.1em;
@@ -165,11 +179,28 @@ body {
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
+.qprog-wrap {
+  padding: 0 24px 12px;
+}
+.qprog-track {
+  height: 2px;
+  background: rgba(255,255,255,0.15);
+}
+.qprog-fill {
+  height: 100%;
+  background: var(--white);
+  width: 0%;
+  transition: width 0.45s ease;
+}
+.qprog-label {
+  margin-top: 6px;
+  font-size: 9px;
+  color: var(--gray-3);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
 
-/* Section */
-.audit-sec { display: none; }
-.audit-sec.active { display: block; }
-
+/* Section banner */
 .sec-banner {
   background: var(--black);
   padding: 44px 24px 52px;
@@ -178,7 +209,7 @@ body {
 }
 .sec-banner-bg-num {
   position: absolute;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: 200px;
   color: rgba(255,255,255,0.03);
   right: -20px;
@@ -196,7 +227,7 @@ body {
   margin-bottom: 10px;
 }
 .sec-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: clamp(44px, 9vw, 72px);
   line-height: 0.88;
   color: var(--white);
@@ -206,31 +237,21 @@ body {
   color: transparent;
 }
 .sec-desc {
-  font-family: 'DM Serif Display', serif;
-  font-style: italic;
   font-size: 12px;
   color: var(--gray-3);
   margin-top: 10px;
-  max-width: 380px;
+  max-width: 420px;
   line-height: 1.65;
-}
-/* wave divider */
-.sec-wave {
-  background: var(--black);
-  height: 28px;
-  clip-path: ellipse(55% 100% at 50% 0%);
-  background: var(--off);
-  margin-top: -1px;
 }
 
 .q-wrap {
   background: var(--off);
   padding: 24px 20px 100px;
-  max-width: 640px;
+  max-width: 680px;
   margin: 0 auto;
 }
 
-/* Input fields */
+/* Inputs */
 .field-block {
   background: var(--white);
   border: 1px solid var(--gray-2);
@@ -251,7 +272,6 @@ body {
   border: none;
   border-bottom: 1px solid var(--gray-2);
   padding: 8px 0;
-  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 300;
   color: var(--black);
@@ -262,7 +282,7 @@ body {
 .field-input:focus { border-color: var(--black); }
 .field-input::placeholder { color: var(--gray-2); }
 
-/* Question card */
+/* Questions */
 .q-card {
   background: var(--white);
   border: 1px solid var(--gray-2);
@@ -271,7 +291,6 @@ body {
   transition: border-color 0.2s;
 }
 .q-card.done { border-color: var(--black); }
-
 .q-num {
   font-size: 9px;
   font-weight: 600;
@@ -285,19 +304,13 @@ body {
   font-weight: 500;
   color: var(--black);
   line-height: 1.55;
-  margin-bottom: 6px;
 }
-.q-hint {
-  font-size: 10px;
-  font-weight: 300;
-  color: var(--gray-3);
-  font-style: italic;
-  line-height: 1.5;
-  margin-bottom: 14px;
+.opts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 14px;
 }
-
-/* Options */
-.opts { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
 .opt {
   display: flex;
   align-items: flex-start;
@@ -308,22 +321,33 @@ body {
   cursor: pointer;
   text-align: left;
   width: 100%;
-  transition: all 0.15s;
+  transition: all 0.16s ease;
 }
-.opt:hover { background: var(--gray-1); border-color: var(--gray-3); }
+.opt:hover {
+  background: var(--gray-1);
+  border-color: var(--gray-3);
+}
+.opt:active,
+.opt.pressed {
+  transform: scale(0.98);
+}
 .opt.sel {
   background: var(--black);
   border-color: var(--black);
 }
-.opt.sel .opt-dot { background: var(--white); border-color: var(--white); }
+.opt.sel .opt-dot {
+  background: var(--white);
+  border-color: var(--white);
+}
 .opt.sel .opt-text { color: var(--white); }
 .opt-dot {
-  width: 13px; height: 13px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
   border: 1.5px solid var(--gray-2);
   flex-shrink: 0;
   margin-top: 2px;
-  transition: all 0.15s;
+  transition: all 0.16s;
 }
 .opt-text {
   font-size: 12px;
@@ -332,7 +356,7 @@ body {
   line-height: 1.45;
 }
 
-/* Upload */
+/* Upload + AI */
 .upload-block {
   background: var(--white);
   border: 1.5px dashed var(--gray-2);
@@ -343,23 +367,80 @@ body {
   transition: all 0.2s;
   margin-bottom: 12px;
 }
-.upload-block:hover { border-color: var(--black); background: var(--gray-1); }
-.upload-block input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.upload-icon { font-size: 20px; color: var(--gray-2); margin-bottom: 8px; }
-.upload-main { font-size: 12px; font-weight: 500; color: var(--black); margin-bottom: 3px; }
-.upload-sub { font-size: 10px; color: var(--gray-3); }
+.upload-block:hover {
+  border-color: var(--black);
+  background: var(--gray-1);
+}
+.upload-block input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.upload-icon {
+  font-size: 20px;
+  color: var(--gray-2);
+  margin-bottom: 8px;
+}
+.upload-main {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 3px;
+}
+.upload-sub {
+  font-size: 10px;
+  color: var(--gray-3);
+}
 .preview-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
   gap: 3px;
   margin-top: 10px;
 }
-.prev-img { aspect-ratio:1; object-fit:cover; width:100%; display:block; background:var(--gray-1); }
+.prev-img {
+  aspect-ratio: 1;
+  object-fit: cover;
+  width: 100%;
+  display: block;
+  background: var(--gray-1);
+}
+.analyze-wrap {
+  display: none;
+  margin-top: 10px;
+}
+.btn-analyze {
+  width: 100%;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 13px 16px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-analyze:hover { background: var(--gray-4); }
+.btn-analyze:disabled {
+  background: var(--gray-2);
+  color: var(--gray-3);
+  cursor: not-allowed;
+}
+.analyze-status {
+  font-size: 10px;
+  color: var(--gray-3);
+  margin-top: 8px;
+  line-height: 1.5;
+}
 
 /* Bottom nav */
 .bottom-nav {
   position: fixed;
-  bottom: 0; left: 0; right: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background: var(--white);
   border-top: 1px solid var(--gray-2);
   padding: 14px 20px;
@@ -372,7 +453,6 @@ body {
   color: var(--gray-3);
   border: 1px solid var(--gray-2);
   padding: 14px 20px;
-  font-family: 'Inter', sans-serif;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -387,7 +467,6 @@ body {
   color: var(--white);
   border: none;
   padding: 14px 24px;
-  font-family: 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -396,13 +475,14 @@ body {
   transition: all 0.2s;
 }
 .btn-next:hover { background: var(--gray-4); }
-.btn-next:disabled { background: var(--gray-2); color: var(--gray-3); cursor: not-allowed; }
+.btn-next:disabled {
+  background: var(--gray-2);
+  color: var(--gray-3);
+  cursor: not-allowed;
+}
 
-/* ════════════════════════════
-   REPORT
-════════════════════════════ */
+/* REPORT */
 #report { display: none; }
-
 .gen-screen {
   min-height: 100vh;
   background: var(--black);
@@ -412,26 +492,42 @@ body {
   justify-content: center;
   gap: 20px;
   padding: 40px 24px;
+  text-align: center;
 }
 .gen-ring {
-  width: 56px; height: 56px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.15);
   border-top-color: var(--white);
   animation: spin 1s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+.gen-logo {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 30px;
+  color: var(--white);
+  letter-spacing: 0.2em;
+  animation: logoPulse 1.2s ease infinite;
+}
+@keyframes logoPulse {
+  0% { opacity: 0.25; transform: translateY(6px); }
+  50% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0.25; transform: translateY(6px); }
+}
 .gen-text {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: 22px;
   color: var(--white);
   letter-spacing: 0.12em;
-  animation: blink 1.6s ease infinite;
 }
-@keyframes blink { 0%,100%{opacity:0.3} 50%{opacity:1} }
-.gen-sub { font-size: 11px; color: var(--gray-3); text-align: center; max-width: 260px; line-height: 1.7; }
+.gen-sub {
+  font-size: 11px;
+  color: var(--gray-3);
+  max-width: 280px;
+  line-height: 1.7;
+}
 
-/* Report hero */
 .rep-hero {
   background: var(--black);
   padding: 56px 24px 64px;
@@ -443,8 +539,9 @@ body {
   position: absolute;
   border-radius: 50%;
   border: 0.5px solid rgba(255,255,255,0.06);
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .rep-ey {
   font-size: 9px;
@@ -453,7 +550,8 @@ body {
   color: var(--gray-3);
   text-transform: uppercase;
   margin-bottom: 14px;
-  position: relative; z-index: 2;
+  position: relative;
+  z-index: 2;
 }
 .rep-name {
   font-size: 11px;
@@ -461,45 +559,114 @@ body {
   color: var(--gray-3);
   text-transform: uppercase;
   margin-bottom: 4px;
-  position: relative; z-index: 2;
+  position: relative;
+  z-index: 2;
 }
 .rep-score {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: clamp(90px, 20vw, 140px);
   line-height: 0.85;
   color: var(--white);
-  position: relative; z-index: 2;
+  position: relative;
+  z-index: 2;
 }
 .rep-score.crit { color: #E74C3C; }
 .rep-score.dev  { color: #E67E22; }
 .rep-score.str  { color: #BDC3C7; }
 .rep-score-lbl {
-  font-family: 'DM Serif Display', serif;
-  font-style: italic;
   font-size: 16px;
   color: var(--gray-3);
   margin-top: 6px;
-  position: relative; z-index: 2;
+  position: relative;
+  z-index: 2;
 }
 .rep-summary {
   font-size: 11px;
   color: var(--gray-3);
-  max-width: 400px;
+  max-width: 430px;
   margin: 14px auto 0;
   line-height: 1.75;
-  font-weight: 300;
-  position: relative; z-index: 2;
+  position: relative;
+  z-index: 2;
 }
-
-/* Report body */
 .rep-body {
   background: var(--off);
   padding: 32px 20px 80px;
-  max-width: 640px;
+  max-width: 680px;
   margin: 0 auto;
 }
 
-/* Section score card */
+.report-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 30px;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  margin: 0 0 12px;
+}
+
+.report-card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: cardIn 0.45s ease forwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes cardIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gap-card {
+  background: var(--black);
+  color: var(--white);
+  padding: 22px 22px;
+  margin-bottom: 14px;
+}
+.gap-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+.gap-main {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.gap-desc {
+  font-size: 11px;
+  color: #D0D0D0;
+  line-height: 1.75;
+}
+
+.glance-card {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  padding: 20px;
+  margin-bottom: 14px;
+}
+.glance-row { margin-bottom: 12px; }
+.glance-row:last-child { margin-bottom: 0; }
+.glance-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--gray-4);
+  margin-bottom: 5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.glance-track {
+  height: 4px;
+  background: var(--gray-1);
+}
+.glance-fill {
+  height: 100%;
+  background: var(--black);
+}
+
+/* Score cards */
 .scard {
   background: var(--white);
   border: 1px solid var(--gray-2);
@@ -515,69 +682,192 @@ body {
   transition: background 0.15s;
 }
 .scard-head:hover { background: var(--gray-1); }
-.scard-left { display: flex; align-items: center; gap: 14px; }
+.scard-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 .scard-ico {
-  width: 34px; height: 34px;
+  width: 34px;
+  height: 34px;
   background: var(--gray-1);
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
   flex-shrink: 0;
 }
 .scard-title { font-size: 13px; font-weight: 500; color: var(--black); }
 .scard-sub { font-size: 9px; color: var(--gray-3); margin-top: 1px; letter-spacing: 0.04em; }
 .scard-pct {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: 26px;
   min-width: 52px;
   text-align: right;
-  letter-spacing: 0.02em;
 }
 .scard-pct.crit { color: var(--red); }
 .scard-pct.dev  { color: var(--amber); }
 .scard-pct.str  { color: var(--green); }
-.chev { font-size: 10px; color: var(--gray-3); transition: transform 0.2s; margin-left: 8px; }
-.open .chev { transform: rotate(180deg); }
-
-.scard-body { display: none; padding: 16px 20px 20px; border-top: 1px solid var(--gray-1); }
+.chev {
+  font-size: 10px;
+  color: var(--gray-3);
+  transition: transform 0.2s;
+  margin-left: 8px;
+}
+.scard-head.open .chev { transform: rotate(180deg); }
+.scard-body {
+  display: none;
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--gray-1);
+}
 .scard-body.show { display: block; }
-
 .bar-wrap { margin-bottom: 16px; }
 .bar-lbl {
-  display: flex; justify-content: space-between;
-  font-size: 9px; font-weight: 500; color: var(--gray-3);
-  letter-spacing: 0.1em; text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--gray-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   margin-bottom: 6px;
 }
 .bar-track { height: 3px; background: var(--gray-1); }
-.bar-fill { height: 100%; transition: width 0.8s ease; }
+.bar-fill { height: 100%; }
 .bar-fill.crit { background: var(--red); }
 .bar-fill.dev  { background: var(--amber); }
 .bar-fill.str  { background: var(--black); }
-
 .findings-lbl {
-  font-size: 9px; font-weight: 600; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--black);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--black);
   margin: 14px 0 8px;
 }
 .finding {
-  display: flex; gap: 10px;
+  display: flex;
+  gap: 10px;
   background: var(--off);
   padding: 10px 12px;
   margin-bottom: 6px;
 }
 .fdot {
-  width: 6px; height: 6px; border-radius: 50%;
-  margin-top: 5px; flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
 }
 .fdot.crit { background: var(--red); }
 .fdot.dev  { background: var(--amber); }
 .fdot.ok   { background: var(--green); }
-.ftext { font-size: 11px; color: var(--gray-4); line-height: 1.65; font-weight: 300; }
+.ftext {
+  font-size: 11px;
+  color: var(--gray-4);
+  line-height: 1.65;
+}
 
-/* Priority actions */
-.pri-title {
-  font-family: 'Bebas Neue', sans-serif;
+/* Instagram analysis */
+.insta-title {
+  font-family: "Bebas Neue", sans-serif;
   font-size: 30px;
+  letter-spacing: 0.04em;
+  margin: 28px 0 12px;
+}
+.insta-top {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  padding: 18px 20px;
+  margin-bottom: 12px;
+}
+.insta-top-score {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 44px;
+  line-height: 0.9;
+  margin-bottom: 10px;
+}
+.insta-top-score.crit { color: var(--red); }
+.insta-top-score.dev { color: var(--amber); }
+.insta-top-score.str { color: var(--green); }
+.insta-meta {
+  font-size: 10px;
+  color: var(--gray-3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.insta-kv {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--gray-4);
+  line-height: 1.65;
+}
+.ai-card {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  margin-bottom: 10px;
+}
+.ai-head {
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.ai-name {
+  font-size: 12px;
+  font-weight: 500;
+}
+.ai-score {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 28px;
+  line-height: 1;
+}
+.ai-score.crit { color: var(--red); }
+.ai-score.dev { color: var(--amber); }
+.ai-score.str { color: var(--green); }
+.ai-body {
+  display: none;
+  border-top: 1px solid var(--gray-1);
+  padding: 14px 18px 18px;
+}
+.ai-body.show { display: block; }
+.ai-verdict {
+  font-size: 11px;
+  margin-bottom: 12px;
+  color: var(--gray-4);
+  line-height: 1.6;
+}
+.ai-list-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.ai-list {
+  list-style: none;
+  margin-bottom: 10px;
+}
+.ai-list li {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--gray-4);
+  margin-bottom: 4px;
+  padding-left: 14px;
+  position: relative;
+}
+.ai-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Actions */
+.pri-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 34px;
   letter-spacing: 0.04em;
   color: var(--black);
   margin: 28px 0 14px;
@@ -591,25 +881,76 @@ body {
   gap: 14px;
   align-items: flex-start;
 }
-.act-card.urg  { border-left: 3px solid var(--red); }
-.act-card.imp  { border-left: 3px solid var(--amber); }
-.act-card.mnt  { border-left: 3px solid var(--black); }
+.act-card.urg { border-left: 3px solid var(--red); }
+.act-card.imp { border-left: 3px solid var(--amber); }
+.act-card.mnt { border-left: 3px solid var(--black); }
 .act-n {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 26px;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 44px;
   color: var(--gray-2);
-  line-height: 1;
-  min-width: 26px;
+  line-height: 0.85;
+  min-width: 42px;
 }
 .act-tag {
-  font-size: 8px; font-weight: 600; letter-spacing: 0.18em;
-  text-transform: uppercase; margin-bottom: 3px;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
 }
 .act-card.urg .act-tag { color: var(--red); }
 .act-card.imp .act-tag { color: var(--amber); }
 .act-card.mnt .act-tag { color: var(--black); }
-.act-ttl { font-size: 12px; font-weight: 500; color: var(--black); line-height: 1.4; margin-bottom: 3px; }
-.act-desc { font-size: 10.5px; color: var(--gray-3); line-height: 1.65; font-weight: 300; }
+.act-ttl {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--black);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.act-desc {
+  font-size: 10.5px;
+  color: var(--gray-3);
+  line-height: 1.65;
+}
+
+.share-card {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  padding: 18px 20px;
+  margin: 24px 0 14px;
+}
+.share-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.share-sub {
+  font-size: 11px;
+  color: var(--gray-3);
+  margin-bottom: 10px;
+}
+.share-copy {
+  background: var(--off);
+  border: 1px solid var(--gray-1);
+  padding: 12px;
+  font-size: 11px;
+  color: var(--gray-4);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.copy-btn {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 11px 16px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
 
 /* Final CTA */
 .final-cta {
@@ -624,37 +965,42 @@ body {
   position: absolute;
   border-radius: 50%;
   border: 0.5px solid rgba(255,255,255,0.06);
-  top:50%; left:50%;
-  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .fcta-ey {
-  font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
-  color: var(--gray-3); text-transform: uppercase;
-  margin-bottom: 14px; position: relative; z-index:2;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--gray-3);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 2;
 }
 .fcta-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: clamp(42px, 9vw, 64px);
   line-height: 0.88;
   color: var(--white);
   margin-bottom: 16px;
-  position: relative; z-index:2;
+  position: relative;
+  z-index: 2;
 }
 .fcta-desc {
-  font-family: 'DM Serif Display', serif;
-  font-style: italic;
   font-size: 13px;
   color: var(--gray-3);
-  max-width: 360px;
+  max-width: 400px;
   margin: 0 auto 28px;
   line-height: 1.65;
-  position: relative; z-index:2;
+  position: relative;
+  z-index: 2;
 }
 .fcta-btn {
   display: inline-block;
   background: var(--white);
   color: var(--black);
-  font-family: 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -664,7 +1010,8 @@ body {
   border: none;
   cursor: pointer;
   transition: background 0.2s;
-  position: relative; z-index:2;
+  position: relative;
+  z-index: 2;
 }
 .fcta-btn:hover { background: var(--gray-2); }
 .fcta-ig {
@@ -672,50 +1019,44 @@ body {
   color: var(--gray-4);
   margin-top: 16px;
   letter-spacing: 0.12em;
-  position: relative; z-index:2;
+  position: relative;
+  z-index: 2;
 }
 </style>
 </head>
 <body>
 
-<!-- ══ HERO ══ -->
 <section id="hero">
   <div class="hero-ring" style="width:640px;height:640px;"></div>
   <div class="hero-ring" style="width:440px;height:440px;opacity:0.6;"></div>
   <div class="hero-ring" style="width:260px;height:260px;opacity:0.4;"></div>
 
   <div class="hero-eyebrow">PSC Lash Academy · Free Business Tool</div>
-
   <div class="hero-title">
     THE 180°<br>
     <span class="outline">AUDIT</span><br>
     CHECKER
   </div>
-
   <p class="hero-sub">
     Answer honestly. Get a personalised report on exactly what is holding your lash business back — and what to fix first.
   </p>
-
-  <button class="btn-start" id="heroBtn">
-    Start My Audit &nbsp;→
-  </button>
-
-  <p class="hero-note">Takes 4–5 minutes &nbsp;·&nbsp; Completely free &nbsp;·&nbsp; No email required</p>
+  <button class="btn-start" id="heroBtn">Start My Audit &nbsp;→</button>
+  <p class="hero-note">Takes 4–5 minutes &nbsp;·&nbsp; Completely free &nbsp;·&nbsp; Premium report included</p>
 </section>
 
-<!-- ══ AUDIT APP ══ -->
 <div id="audit-app">
-
-  <!-- Progress bar -->
   <div class="sticky-bar">
     <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
     <div class="prog-header">
       <div class="prog-brand">180° AUDIT</div>
       <div class="prog-label" id="progLabel">Section 1 of 6</div>
     </div>
+    <div class="qprog-wrap">
+      <div class="qprog-track"><div class="qprog-fill" id="qProgFill"></div></div>
+      <div class="qprog-label" id="qProgLabel">0 of 21 answered</div>
+    </div>
   </div>
 
-  <!-- SEC 1: ABOUT YOU -->
   <div class="audit-sec active" id="sec1">
     <div class="sec-banner">
       <div class="sec-banner-bg-num">1</div>
@@ -723,39 +1064,9 @@ body {
       <div class="sec-title">About<br><span class="outline">You</span></div>
       <div class="sec-desc">A few details to personalise your report.</div>
     </div>
-    <div class="q-wrap">
-      <div class="field-block">
-        <label class="field-label">Your First Name</label>
-        <input class="field-input" id="uName" type="text" placeholder="e.g. Sarah" oninput="chk()">
-      </div>
-      <div class="field-block">
-        <label class="field-label">Instagram Handle</label>
-        <input class="field-input" id="uHandle" type="text" placeholder="@yourlashpage" oninput="chk()">
-      </div>
-      <div class="q-card" id="qc-exp">
-        <div class="q-num">Question 01</div>
-        <div class="q-text">How long have you been doing lashes professionally?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'exp',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Less than 1 year — still building my foundation</span></button>
-          <button class="opt" onclick="pick(this,'exp',2,'dev')"><div class="opt-dot"></div><span class="opt-text">1–3 years — have the skill, business is not where it should be</span></button>
-          <button class="opt" onclick="pick(this,'exp',3,'str')"><div class="opt-dot"></div><span class="opt-text">3–5 years — experienced but stuck or plateaued</span></button>
-          <button class="opt" onclick="pick(this,'exp',3,'str')"><div class="opt-dot"></div><span class="opt-text">5+ years — established and ready for the next level</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-bk">
-        <div class="q-num">Question 02</div>
-        <div class="q-text">How full is your calendar on average right now?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'bk',0,'crit')"><div class="opt-dot"></div><span class="opt-text">Less than 30% — very inconsistent, lots of empty slots</span></button>
-          <button class="opt" onclick="pick(this,'bk',1,'crit')"><div class="opt-dot"></div><span class="opt-text">30–60% — some weeks good, others very quiet</span></button>
-          <button class="opt" onclick="pick(this,'bk',2,'dev')"><div class="opt-dot"></div><span class="opt-text">60–85% — reasonably busy but not fully booked</span></button>
-          <button class="opt" onclick="pick(this,'bk',3,'str')"><div class="opt-dot"></div><span class="opt-text">85%+ — nearly or fully booked consistently</span></button>
-        </div>
-      </div>
-    </div>
+    <div class="q-wrap" id="sec1Wrap"></div>
   </div>
 
-  <!-- SEC 2: DESIGN -->
   <div class="audit-sec" id="sec2">
     <div class="sec-banner">
       <div class="sec-banner-bg-num">2</div>
@@ -763,48 +1074,9 @@ body {
       <div class="sec-title">Your<br><span class="outline">Design</span><br>Thinking</div>
       <div class="sec-desc">How deliberately are you approaching each client's face?</div>
     </div>
-    <div class="q-wrap">
-      <div class="q-card" id="qc-d1">
-        <div class="q-num">Question 03</div>
-        <div class="q-text">When a client asks for a style, what do you do first?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'d1',0,'crit')"><div class="opt-dot"></div><span class="opt-text">I do the style she asked for — I know how to execute it</span></button>
-          <button class="opt" onclick="pick(this,'d1',1,'dev')"><div class="opt-dot"></div><span class="opt-text">I sometimes look at her face but mostly work from the request</span></button>
-          <button class="opt" onclick="pick(this,'d1',3,'str')"><div class="opt-dot"></div><span class="opt-text">I always assess her face first and make my own design decision</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-d2">
-        <div class="q-num">Question 04</div>
-        <div class="q-text">Can you explain — right now, out loud — why you chose the specific curl for your last client?</div>
-        <div class="q-hint">Beyond "that's what she asked for" or "that's what I always use."</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'d2',0,'crit')"><div class="opt-dot"></div><span class="opt-text">No — I use what feels right or what she requested</span></button>
-          <button class="opt" onclick="pick(this,'d2',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Sort of — some reasoning but not very specific</span></button>
-          <button class="opt" onclick="pick(this,'d2',3,'str')"><div class="opt-dot"></div><span class="opt-text">Yes — I can explain every decision I made and why</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-d3">
-        <div class="q-num">Question 05</div>
-        <div class="q-text">Look at your last 10 sets. Honestly — do they each look designed for that specific face?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'d3',0,'crit')"><div class="opt-dot"></div><span class="opt-text">No — variations of the same style on different people</span></button>
-          <button class="opt" onclick="pick(this,'d3',2,'dev')"><div class="opt-dot"></div><span class="opt-text">Some do, some don't — depends on the client</span></button>
-          <button class="opt" onclick="pick(this,'d3',3,'str')"><div class="opt-dot"></div><span class="opt-text">Yes — each set is genuinely mapped to that person's face</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-d4">
-        <div class="q-num">Question 06</div>
-        <div class="q-text">Could you identify a lifting, framing, or elongating need within 30 seconds of a client lying down?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'d4',0,'crit')"><div class="opt-dot"></div><span class="opt-text">No — I don't work with those categories</span></button>
-          <button class="opt" onclick="pick(this,'d4',1,'dev')"><div class="opt-dot"></div><span class="opt-text">I know what they mean but don't apply them consistently</span></button>
-          <button class="opt" onclick="pick(this,'d4',3,'str')"><div class="opt-dot"></div><span class="opt-text">Yes — I assess this for every single client before I begin</span></button>
-        </div>
-      </div>
-    </div>
+    <div class="q-wrap" id="sec2Wrap"></div>
   </div>
 
-  <!-- SEC 3: POSITIONING -->
   <div class="audit-sec" id="sec3">
     <div class="sec-banner">
       <div class="sec-banner-bg-num">3</div>
@@ -812,48 +1084,9 @@ body {
       <div class="sec-title">How You<br><span class="outline">Show Up</span></div>
       <div class="sec-desc">What does your presence say before anyone reads a word?</div>
     </div>
-    <div class="q-wrap">
-      <div class="q-card" id="qc-p1">
-        <div class="q-num">Question 07</div>
-        <div class="q-text">Could a stranger understand what makes you different from every other lash artist in your area — within 3 seconds of landing on your page?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'p1',0,'crit')"><div class="opt-dot"></div><span class="opt-text">No — my page looks similar to most lash pages</span></button>
-          <button class="opt" onclick="pick(this,'p1',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Maybe — there are hints but it is not immediately obvious</span></button>
-          <button class="opt" onclick="pick(this,'p1',3,'str')"><div class="opt-dot"></div><span class="opt-text">Yes — my positioning is clear and distinctive from the first impression</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-p2">
-        <div class="q-num">Question 08</div>
-        <div class="q-text">Do you have one specific sentence that describes exactly who you help and what outcome you produce?</div>
-        <div class="q-hint">Not "I do beautiful lashes." More like: "I help women with heavy lids get the lifted look they've been told is impossible."</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'p2',0,'crit')"><div class="opt-dot"></div><span class="opt-text">No — I don't have anything that specific</span></button>
-          <button class="opt" onclick="pick(this,'p2',1,'dev')"><div class="opt-dot"></div><span class="opt-text">I have something but it is quite generic</span></button>
-          <button class="opt" onclick="pick(this,'p2',3,'str')"><div class="opt-dot"></div><span class="opt-text">Yes — a clear, specific positioning statement I use consistently</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-p3">
-        <div class="q-num">Question 09</div>
-        <div class="q-text">If you removed your name from your Instagram, would someone who knows your work still recognise it as yours?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'p3',0,'crit')"><div class="opt-dot"></div><span class="opt-text">No — my work looks similar to many others in my niche</span></button>
-          <button class="opt" onclick="pick(this,'p3',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Some regulars might, but strangers probably wouldn't</span></button>
-          <button class="opt" onclick="pick(this,'p3',3,'str')"><div class="opt-dot"></div><span class="opt-text">Yes — my visual identity and aesthetic is distinctively mine</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-p4">
-        <div class="q-num">Question 10</div>
-        <div class="q-text">How many clicks to go from landing on your Instagram to having an appointment confirmed?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'p4',0,'crit')"><div class="opt-dot"></div><span class="opt-text">5+ clicks — the booking process is not straightforward</span></button>
-          <button class="opt" onclick="pick(this,'p4',1,'dev')"><div class="opt-dot"></div><span class="opt-text">3–4 clicks — manageable but could be easier</span></button>
-          <button class="opt" onclick="pick(this,'p4',3,'str')"><div class="opt-dot"></div><span class="opt-text">1–2 clicks — clear and frictionless</span></button>
-        </div>
-      </div>
-    </div>
+    <div class="q-wrap" id="sec3Wrap"></div>
   </div>
 
-  <!-- SEC 4: CONTENT -->
   <div class="audit-sec" id="sec4">
     <div class="sec-banner">
       <div class="sec-banner-bg-num">4</div>
@@ -861,50 +1094,9 @@ body {
       <div class="sec-title">Your<br><span class="outline">Content</span><br>System</div>
       <div class="sec-desc">Is your content doing the three jobs it needs to do?</div>
     </div>
-    <div class="q-wrap">
-      <div class="q-card" id="qc-c1">
-        <div class="q-num">Question 11</div>
-        <div class="q-text">In the last 30 days, how much of your content has been educational, opinion-based, or transformation stories — versus just showing finished sets?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'c1',0,'crit')"><div class="opt-dot"></div><span class="opt-text">Almost all finished sets — I rarely do anything else</span></button>
-          <button class="opt" onclick="pick(this,'c1',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Maybe 20–30% is educational or opinion-based</span></button>
-          <button class="opt" onclick="pick(this,'c1',3,'str')"><div class="opt-dot"></div><span class="opt-text">50%+ — I consistently mix education with my work</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-c2">
-        <div class="q-num">Question 12</div>
-        <div class="q-text">Do your posts end with a clear, specific call to action?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'c2',0,'crit')"><div class="opt-dot"></div><span class="opt-text">Rarely or never — I don't like to push</span></button>
-          <button class="opt" onclick="pick(this,'c2',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Sometimes — when it feels natural</span></button>
-          <button class="opt" onclick="pick(this,'c2',3,'str')"><div class="opt-dot"></div><span class="opt-text">Always — every post has a deliberate next step</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-c3">
-        <div class="q-num">Question 13</div>
-        <div class="q-text">Do you open your reels with a hook designed to stop the scroll in the first 2 seconds?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'c3',0,'crit')"><div class="opt-dot"></div><span class="opt-text">No — I usually start with the work itself</span></button>
-          <button class="opt" onclick="pick(this,'c3',1,'dev')"><div class="opt-dot"></div><span class="opt-text">I try to but it is not always deliberate</span></button>
-          <button class="opt" onclick="pick(this,'c3',3,'str')"><div class="opt-dot"></div><span class="opt-text">Yes — every reel has a crafted hook as the first priority</span></button>
-        </div>
-      </div>
-      <!-- Optional upload -->
-      <div class="field-block" style="border:none;padding:0;">
-        <p style="font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gray-3);margin-bottom:8px;">Optional — Upload Recent Instagram Screenshots</p>
-        <p style="font-size:10px;color:var(--gray-3);margin-bottom:10px;line-height:1.6;">Helps us give more specific feedback on your visual identity. Images are not stored.</p>
-        <div class="upload-block">
-          <input type="file" accept="image/*" multiple id="igUp" onchange="handleUp(event)">
-          <div class="upload-icon">↑</div>
-          <div class="upload-main">Upload up to 6 screenshots</div>
-          <div class="upload-sub">JPG or PNG</div>
-        </div>
-        <div class="preview-grid" id="prevGrid"></div>
-      </div>
-    </div>
+    <div class="q-wrap" id="sec4Wrap"></div>
   </div>
 
-  <!-- SEC 5: PRICING -->
   <div class="audit-sec" id="sec5">
     <div class="sec-banner">
       <div class="sec-banner-bg-num">5</div>
@@ -912,47 +1104,9 @@ body {
       <div class="sec-title">Your<br><span class="outline">Price</span><br>Story</div>
       <div class="sec-desc">What is your pricing communicating — and does the rest of your business match it?</div>
     </div>
-    <div class="q-wrap">
-      <div class="q-card" id="qc-pr1">
-        <div class="q-num">Question 14</div>
-        <div class="q-text">If you raised your prices by €30–40 right now — what is the first feeling?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'pr1',0,'crit')"><div class="opt-dot"></div><span class="opt-text">Anxiety — I would definitely lose clients</span></button>
-          <button class="opt" onclick="pick(this,'pr1',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Uncertain — some might stay but I am not confident</span></button>
-          <button class="opt" onclick="pick(this,'pr1',3,'str')"><div class="opt-dot"></div><span class="opt-text">Confident — my clients value what I do and would stay</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-pr2">
-        <div class="q-num">Question 15</div>
-        <div class="q-text">Are you charging the same price you were charging 12 months ago?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'pr2',0,'crit')"><div class="opt-dot"></div><span class="opt-text">Yes — prices have not changed in over a year</span></button>
-          <button class="opt" onclick="pick(this,'pr2',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Small increase — but nothing significant</span></button>
-          <button class="opt" onclick="pick(this,'pr2',3,'str')"><div class="opt-dot"></div><span class="opt-text">No — I have raised prices confidently in the last 12 months</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-pr3">
-        <div class="q-num">Question 16</div>
-        <div class="q-text">When a client asks why you charge more than someone else — do you have a clear, confident, specific answer?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'pr3',0,'crit')"><div class="opt-dot"></div><span class="opt-text">No — I find this question uncomfortable and hard to answer</span></button>
-          <button class="opt" onclick="pick(this,'pr3',1,'dev')"><div class="opt-dot"></div><span class="opt-text">I have something but it is vague</span></button>
-          <button class="opt" onclick="pick(this,'pr3',3,'str')"><div class="opt-dot"></div><span class="opt-text">Yes — I can explain my value specifically and with confidence</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-pr4">
-        <div class="q-num">Question 17</div>
-        <div class="q-text">Is every part of your client experience — from first DM to rebooking — as premium as the set you produce?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'pr4',0,'crit')"><div class="opt-dot"></div><span class="opt-text">No — the lashes are premium but the rest is inconsistent</span></button>
-          <button class="opt" onclick="pick(this,'pr4',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Some parts are polished but not all</span></button>
-          <button class="opt" onclick="pick(this,'pr4',3,'str')"><div class="opt-dot"></div><span class="opt-text">Yes — the whole experience matches the price I charge</span></button>
-        </div>
-      </div>
-    </div>
+    <div class="q-wrap" id="sec5Wrap"></div>
   </div>
 
-  <!-- SEC 6: SYSTEMS -->
   <div class="audit-sec" id="sec6">
     <div class="sec-banner">
       <div class="sec-banner-bg-num">6</div>
@@ -960,58 +1114,19 @@ body {
       <div class="sec-title">The<br><span class="outline">Final</span><br>Section</div>
       <div class="sec-desc">The most important questions. Be completely honest.</div>
     </div>
-    <div class="q-wrap">
-      <div class="q-card" id="qc-s1">
-        <div class="q-num">Question 18</div>
-        <div class="q-text">Do you have a clear, written strategy for how you attract and convert new clients?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'s1',0,'crit')"><div class="opt-dot"></div><span class="opt-text">No — mostly posting and hoping something works</span></button>
-          <button class="opt" onclick="pick(this,'s1',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Some structure but nothing written or consistent</span></button>
-          <button class="opt" onclick="pick(this,'s1',3,'str')"><div class="opt-dot"></div><span class="opt-text">Yes — a clear, repeatable system that works</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-s2">
-        <div class="q-num">Question 19</div>
-        <div class="q-text">In the last 6 months — have you read something, felt inspired, made a list, and then changed nothing?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'s2',0,'crit')"><div class="opt-dot"></div><span class="opt-text">Yes — multiple times. I get inspired and then nothing shifts.</span></button>
-          <button class="opt" onclick="pick(this,'s2',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Once or twice — I have acted on some things but not all</span></button>
-          <button class="opt" onclick="pick(this,'s2',3,'str')"><div class="opt-dot"></div><span class="opt-text">No — when I learn something useful I implement it quickly</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-s3">
-        <div class="q-num">Question 20</div>
-        <div class="q-text">Do you have a mentor, community, or accountability structure holding you to a standard you would not hold yourself to alone?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'s3',0,'crit')"><div class="opt-dot"></div><span class="opt-text">No — building this entirely on my own</span></button>
-          <button class="opt" onclick="pick(this,'s3',1,'dev')"><div class="opt-dot"></div><span class="opt-text">A peer group but no formal mentorship or accountability</span></button>
-          <button class="opt" onclick="pick(this,'s3',3,'str')"><div class="opt-dot"></div><span class="opt-text">Yes — structured support and I use it</span></button>
-        </div>
-      </div>
-      <div class="q-card" id="qc-s4">
-        <div class="q-num">Question 21</div>
-        <div class="q-text">Completely honestly — is the main gap in your business a skill gap, a knowledge gap, or a systems and support gap?</div>
-        <div class="opts">
-          <button class="opt" onclick="pick(this,'s4',1,'dev')"><div class="opt-dot"></div><span class="opt-text">Skill — I genuinely need more technical training</span></button>
-          <button class="opt" onclick="pick(this,'s4',2,'dev')"><div class="opt-dot"></div><span class="opt-text">Knowledge — I know what to do but not how to execute it</span></button>
-          <button class="opt" onclick="pick(this,'s4',3,'str')"><div class="opt-dot"></div><span class="opt-text">Systems and support — I need structure, accountability, and a clear framework</span></button>
-        </div>
-      </div>
-    </div>
+    <div class="q-wrap" id="sec6Wrap"></div>
   </div>
 
-  <!-- Bottom nav -->
   <div class="bottom-nav" id="botNav">
     <button class="btn-back" id="btnBack" onclick="goBack()" style="display:none;">← Back</button>
     <button class="btn-next" id="btnNext" onclick="goNext()" disabled>Continue →</button>
   </div>
-
 </div>
 
-<!-- ══ REPORT ══ -->
 <div id="report">
   <div class="gen-screen" id="genScreen">
     <div class="gen-ring"></div>
+    <div class="gen-logo">PSC LASH ACADEMY</div>
     <div class="gen-text">Analysing Your Results</div>
     <p class="gen-sub">Building your personalised report across all six areas of your business.</p>
   </div>
@@ -1019,64 +1134,649 @@ body {
 </div>
 
 <script>
-// ─── STATE ───────────────────────────
 let cur = 1;
 const TOTAL = 6;
-const A = {}; // answers: key -> {score, level}
+const TOTAL_QUESTIONS = 21;
+const A = {};
+let uploadedImages = [];
+let instagramAnalysis = null;
+let instagramAnalysisError = "";
+let aiAttempted = false;
+let leadCaptureSent = false;
 
-const SEC_KEYS = {
-  1: ['exp','bk'],
-  2: ['d1','d2','d3','d4'],
-  3: ['p1','p2','p3','p4'],
-  4: ['c1','c2','c3'],
-  5: ['pr1','pr2','pr3','pr4'],
-  6: ['s1','s2','s3','s4'],
+const LEAD_CAPTURE_URL = "https://PLACEHOLDER";
+const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
+const ANTHROPIC_KEY = "ANTHROPIC_KEY_PLACEHOLDER";
+const AI_SYSTEM_PROMPT = `You are an expert lash business consultant and Instagram strategist
+trained by PSC Lash Academy. You are analysing a lash artist's
+Instagram screenshots to give them a brutally honest, specific audit.
+
+Analyse the images and return ONLY a JSON object with this exact
+structure — no other text:
+{
+  grid_aesthetic: { score: 0-10, verdict: string, issues: [string], fixes: [string] },
+  positioning_clarity: { score: 0-10, verdict: string, issues: [string], fixes: [string] },
+  content_mix: { score: 0-10, verdict: string, issues: [string], fixes: [string] },
+  work_quality_presentation: { score: 0-10, verdict: string, issues: [string], fixes: [string] },
+  call_to_action: { score: 0-10, verdict: string, issues: [string], fixes: [string] },
+  overall_instagram_score: number,
+  biggest_win: string,
+  most_urgent_fix: string
+}
+
+Be specific. Name exact things you see. Do not be generic.
+If you see the same style repeated, say it. If the bio is vague,
+say exactly what is vague about it. If captions have no hook,
+say that. Score honestly — most lash pages score 3-6 out of 10.`;
+
+const SECTION_KEYS = {
+  1: ["q1", "q2"],
+  2: ["q3", "q4", "q5", "q6"],
+  3: ["q7", "q8", "q9", "q10"],
+  4: ["q11", "q12", "q13"],
+  5: ["q14", "q15", "q16", "q17"],
+  6: ["q18", "q19", "q20", "q21"]
 };
 
-// ─── HERO BUTTON ─────────────────────
-document.getElementById('heroBtn').addEventListener('click', function() {
-  document.getElementById('hero').style.display = 'none';
-  document.getElementById('audit-app').style.display = 'block';
-  updateProg();
-  chk();
-  window.scrollTo(0,0);
-});
+const CATEGORY_KEYS = {
+  design: ["q3", "q4", "q5", "q6"],
+  positioning: ["q7", "q8", "q9", "q10"],
+  content: ["q11", "q12", "q13"],
+  pricing: ["q14", "q15", "q16", "q17"],
+  systems: ["q18", "q19", "q20", "q21"]
+};
 
-// ─── PICK OPTION ─────────────────────
+const QUESTION_BANK = {
+  q1: {
+    number: "Question 01",
+    text: "How long have you been doing lashes professionally?",
+    options: [
+      "Under a year — still in my foundation stage",
+      "1 to 3 years — I have the skill but the business hasn't followed",
+      "3 to 5 years — experienced but stuck at the same level",
+      "5 years or more — established but ready to scale"
+    ]
+  },
+  q2: {
+    number: "Question 02",
+    text: "On average, how full is your calendar right now?",
+    options: [
+      "Less than half full — it is very inconsistent week to week",
+      "Around half full — some good weeks, some completely dead ones",
+      "Mostly full but never quite there — a few gaps I can't seem to close",
+      "Fully booked — I have a waiting list"
+    ]
+  },
+  q3: {
+    number: "Question 03",
+    text: "When a client asks for a wispy set, what actually happens next?",
+    options: [
+      "I do a wispy set — the one I know works well",
+      "I have a look at her face but mostly go from what she's described",
+      "I assess her eye shape, lid, and face before I decide anything",
+      "I ask her what she means by wispy, then assess her face and design from scratch"
+    ]
+  },
+  q4: {
+    number: "Question 04",
+    text: "Can you tell me exactly why you chose the curl you used on your last client — not what she asked for, but why that curl was right for her face?",
+    options: [
+      "Honestly no — it was habit or her request",
+      "I have some reason but I couldn't explain it precisely",
+      "Yes — her lid structure meant she needed that specific curl for the result she wanted",
+      "Yes — and I could explain the entire mapping logic I used"
+    ]
+  },
+  q5: {
+    number: "Question 05",
+    text: "Look at your last six sets side by side. Be honest — do they look like they were each designed for that specific face?",
+    options: [
+      "No — they are basically the same approach on different people",
+      "Some variation but nothing that feels truly bespoke",
+      "Most of them yes, but I catch myself defaulting to habit sometimes",
+      "Every single one looks different because every face is different"
+    ]
+  },
+  q6: {
+    number: "Question 06",
+    text: "If I put a new client in front of you right now, could you identify in under a minute whether she needs lifting, framing, or elongating — and explain why?",
+    options: [
+      "No — I don't really work in those categories",
+      "I understand the concepts but I don't apply them to every client",
+      "Yes — I do this automatically before I even pick up a lash",
+      "Yes — and I could map the entire set before I start"
+    ]
+  },
+  q7: {
+    number: "Question 07",
+    text: "If I landed on your Instagram page right now knowing nothing about you — in three seconds, would I know what makes you different from every other lash artist in your city?",
+    options: [
+      "Probably not — my page looks similar to most lash pages",
+      "There are hints but it takes more than three seconds to see it",
+      "I think so — my positioning is fairly clear from the first impression",
+      "Yes — within seconds it is obvious who I am for and why I am different"
+    ]
+  },
+  q8: {
+    number: "Question 08",
+    text: "Write your positioning sentence right now without thinking about it. Do you have one — something specific like \"I help women with heavy lids get the lifted look they have been told is impossible\"?",
+    options: [
+      "No — I wouldn't know where to start with that",
+      "I have something but it is basically \"I do beautiful custom lashes\"",
+      "I have something specific but I don't use it consistently",
+      "Yes — a clear specific sentence I use across everything"
+    ]
+  },
+  q9: {
+    number: "Question 09",
+    text: "Remove your name from your Instagram. Would someone who knows lash work recognise your feed as yours from the aesthetic and approach alone?",
+    options: [
+      "No — it looks like most other lash pages",
+      "My regulars might but a stranger wouldn't",
+      "I think so — there is a recognisable style",
+      "Definitely — my visual identity is completely my own"
+    ]
+  },
+  q10: {
+    number: "Question 10",
+    text: "Time yourself right now. Go to your Instagram as a stranger and count how many clicks it takes to confirm a booking. How many?",
+    options: [
+      "I lost count — it is not straightforward at all",
+      "Around four or five clicks",
+      "Two or three — it works but could be smoother",
+      "One or two clicks maximum — it is frictionless"
+    ]
+  },
+  q11: {
+    number: "Question 11",
+    text: "Out of your last nine posts, how many were educational, showed your point of view, or told a client transformation story — rather than just showing a finished set?",
+    options: [
+      "One or two at most — mostly I just post the work",
+      "Around three — I try occasionally but it's not consistent",
+      "Four or five — I mix it but could do more",
+      "Six or more — education and opinion are core to how I show up"
+    ]
+  },
+  q12: {
+    number: "Question 12",
+    text: "When was the last time you posted a reel that opened with a hook specifically designed to stop someone scrolling — not the lashes themselves, but a line or image designed to create tension?",
+    options: [
+      "I don't think about hooks — I just post the content",
+      "Sometimes — when inspiration strikes",
+      "Most of the time — hooks are something I think about deliberately",
+      "Every single reel — my hook is always the first thing I plan"
+    ]
+  },
+  q13: {
+    number: "Question 13",
+    text: "When you post, do you always include a specific call to action — not just \"link in bio\" but an actual instruction for what to do next?",
+    options: [
+      "Rarely — I don't want to come across as pushy",
+      "Sometimes — when the post feels like it calls for it",
+      "Most of the time — I try to always close the loop",
+      "Always — every post has a deliberate next step built in"
+    ]
+  },
+  q14: {
+    number: "Question 14",
+    text: "Imagine raising your prices by forty euros right now. What is your immediate gut reaction?",
+    options: [
+      "Fear — I would lose clients and I can't afford that",
+      "Uncertainty — I think some would stay but I genuinely don't know",
+      "Mild discomfort — I know I should but the timing never feels right",
+      "Fine — my clients value the result and the right ones would stay"
+    ]
+  },
+  q15: {
+    number: "Question 15",
+    text: "Have your prices changed meaningfully in the last twelve months?",
+    options: [
+      "No — they are exactly where they were a year ago",
+      "I added a small increase but nothing that changed the business",
+      "Yes — one meaningful increase with minimal pushback",
+      "Yes — I raise regularly and it has never caused serious problems"
+    ]
+  },
+  q16: {
+    number: "Question 16",
+    text: "When a client questions your price — or compares you to someone cheaper — do you have a specific, confident answer ready?",
+    options: [
+      "No — it throws me and I often end up justifying or discounting",
+      "I have something but it is vague and I don't feel confident saying it",
+      "I have an answer but I'm still working on delivering it with conviction",
+      "Yes — specific, practised, and confident every time"
+    ]
+  },
+  q17: {
+    number: "Question 17",
+    text: "Walk through your client experience from first DM to rebooking reminder. Does every single touchpoint feel as premium as the set you produce?",
+    options: [
+      "No — the lashes are excellent but the experience around them is inconsistent",
+      "Some parts are polished but I have not thought about all of them deliberately",
+      "Most touchpoints are good but I know there are gaps",
+      "Yes — I have deliberately designed every interaction to match my positioning"
+    ]
+  },
+  q18: {
+    number: "Question 18",
+    text: "Do you have a written, repeatable strategy for how a new client discovers you, decides to book you, and then stays with you — or are you figuring it out post by post?",
+    options: [
+      "No strategy — I post, hope the right people see it, and react to enquiries",
+      "A rough idea in my head but nothing written or deliberately repeatable",
+      "Some structure but it is not consistent across every part of the funnel",
+      "Yes — a clear system I follow and refine"
+    ]
+  },
+  q19: {
+    number: "Question 19",
+    text: "In the last six months have you taken a course, read a book, built a list of things to change, and then — honestly — changed very little?",
+    options: [
+      "Yes — multiple times. I get motivated and then nothing really shifts.",
+      "Once or twice — I acted on some things but not everything",
+      "Occasionally — but I usually implement at least one thing from everything I learn",
+      "No — I have a high implementation rate and I act on what I learn quickly"
+    ]
+  },
+  q20: {
+    number: "Question 20",
+    text: "Is there anyone in your world — a mentor, a programme, a real accountability structure — who holds you to a standard you would not hold yourself to alone?",
+    options: [
+      "No — completely solo, which is exactly why I am stuck",
+      "I have lash friends but no real accountability or structured feedback",
+      "I am part of a community but there is no formal structure or mentorship",
+      "Yes — structured support with someone who can see what I cannot see"
+    ]
+  },
+  q21: {
+    number: "Question 21",
+    text: "Be completely honest with yourself. What is actually the biggest gap in your business right now?",
+    options: [
+      "My technique — I need to get better at the actual lash work",
+      "My knowledge — I know what I should be doing but not how to do it",
+      "My mindset — I know what to do but I keep getting in my own way",
+      "My systems and support — I need structure, accountability, and a framework"
+    ]
+  }
+};
+
+const FINDINGS_MAP = {
+  q3: {
+    crit: { t: "crit", txt: "You are applying, not designing. Without a deliberate face assessment before every client, your results will always be inconsistent — regardless of your technical skill." },
+    dev: { t: "dev", txt: "You assess sometimes but not consistently. Making this non-negotiable for every single client will transform your referral rate." },
+    str: { t: "ok", txt: "Strong design-first approach. This is the foundation of everything else — protect it." }
+  },
+  q4: {
+    crit: { t: "crit", txt: "You cannot justify your curl decisions — which means they are not intentional. Every technical choice should be explainable before you make it." },
+    dev: { t: "dev", txt: "Your reasoning exists but is not precise enough. Train yourself to make every decision consciously and articulate it before acting." },
+    str: { t: "ok", txt: "Deliberate, explainable curl decisions. This directly impacts results and referrals." }
+  },
+  q5: {
+    crit: { t: "crit", txt: "Your sets look the same on different faces. This is the applying trap — it is costing you referrals because clients cannot describe what makes your work different." },
+    dev: { t: "dev", txt: "Inconsistent — your best work is there but it is not yet your standard. Make the face assessment the trigger for every decision." },
+    str: { t: "ok", txt: "Genuinely bespoke work. This is what people talk about and refer friends over." }
+  },
+  q6: {
+    crit: { t: "crit", txt: "No intervention framework means you are working without a map. Learning the lifting, framing, and elongating system will immediately improve every client outcome." },
+    dev: { t: "dev", txt: "You know the theory but are not applying it consistently. This needs to become automatic — not occasional." },
+    str: { t: "ok", txt: "Strong intervention assessment. This is PSC-level design thinking in practice." }
+  },
+  q7: {
+    crit: { t: "crit", txt: "Your page does not stand out — it blends into the feed like every other lash page. Differentiation is not aesthetic. It is what makes a scroller become a booker." },
+    dev: { t: "dev", txt: "Some distinctiveness but not enough. Your ideal client should feel spoken to within 3 seconds of landing on your page." },
+    str: { t: "ok", txt: "Clear, distinctive positioning. This is what generates inbound enquiries without paid advertising." }
+  },
+  q8: {
+    crit: { t: "crit", txt: "No positioning sentence means no filter on who you attract. You will keep getting price-sensitive enquiries until you define exactly who you are for." },
+    dev: { t: "dev", txt: "Your positioning exists but is not sharp enough to do real work. Make it specific enough that someone could identify your ideal client from the description alone." },
+    str: { t: "ok", txt: "Clear positioning sentence. The foundation of premium pricing and the right client base." }
+  },
+  q9: {
+    crit: { t: "crit", txt: "Your work is not visually distinctive. In a saturated feed, good is invisible. Only distinctive creates organic demand." },
+    dev: { t: "dev", txt: "Some recognisability — needs to be stronger and consistent across every post, not just the best ones." },
+    str: { t: "ok", txt: "Visually distinctive. People know your work before they see your name." }
+  },
+  q10: {
+    crit: { t: "crit", txt: "Your booking process has too much friction. Every extra step is a lost client. The path from discovery to confirmed appointment needs to be one or two clicks maximum." },
+    dev: { t: "dev", txt: "Close — but reducing even one step in the booking journey will measurably improve your conversion rate." },
+    str: { t: "ok", txt: "Frictionless booking. This alone has a significant impact on conversion from Instagram to appointment." }
+  },
+  q11: {
+    crit: { t: "crit", txt: "Almost all portfolio content with no education or opinion. You are only doing Job 1 of content — reach — and not doing it well." },
+    dev: { t: "dev", txt: "Improving but still too portfolio-heavy. Aim for at least 50% content that builds authority — education, opinion, and transformation stories." },
+    str: { t: "ok", txt: "Good content mix. You are building authority and trust, not just showcasing work." }
+  },
+  q12: {
+    crit: { t: "crit", txt: "No hooks means your reels are not stopping the scroll. The first 2 seconds determine whether anyone sees the rest." },
+    dev: { t: "dev", txt: "Some attention to hooks but not deliberate enough. Write the hook before anything else — before visual, caption, or edit." },
+    str: { t: "ok", txt: "Strong hook discipline. This is what drives reach and new client discovery." }
+  },
+  q13: {
+    crit: { t: "crit", txt: "No call to action means no conversion. You are creating content, then leaving people with nowhere to go." },
+    dev: { t: "dev", txt: "Inconsistent CTAs. Every piece of content needs a clear next step, every time." },
+    str: { t: "ok", txt: "Consistent CTAs. You are completing the full conversion loop from attention to action." }
+  },
+  q14: {
+    crit: { t: "crit", txt: "Price fear is often a positioning problem, not a market problem. The confidence gap is fixable through clearer value communication." },
+    dev: { t: "dev", txt: "Some confidence, but timing still controls you. Raise prices with deliberate positioning and stronger client journey alignment." },
+    str: { t: "ok", txt: "Strong price confidence. This usually reflects clear positioning and premium client experience." }
+  },
+  q15: {
+    crit: { t: "crit", txt: "Unchanged prices for a year quietly erode margins. With strong positioning, meaningful increases are sustainable." },
+    dev: { t: "dev", txt: "Small increases are a step. Next move: intentional increases tied to clear value upgrades." },
+    str: { t: "ok", txt: "Healthy pricing cadence. You are treating your business like a business." }
+  },
+  q16: {
+    crit: { t: "crit", txt: "If value explanation is weak, price defense collapses. This answer must be specific, practiced, and natural." },
+    dev: { t: "dev", txt: "You have the bones of an answer. Sharpen your language so your value lands instantly." },
+    str: { t: "ok", txt: "Clear and confident value articulation. You can defend your pricing with specifics." }
+  },
+  q17: {
+    crit: { t: "crit", txt: "Premium sets wrapped in inconsistent experience create price resistance before clients even decide." },
+    dev: { t: "dev", txt: "Some premium touchpoints are strong, others leak trust. Audit and fix the weakest interaction first." },
+    str: { t: "ok", txt: "Client journey and pricing are aligned. The experience supports your premium positioning." }
+  },
+  q18: {
+    crit: { t: "crit", txt: "No written strategy means repeated guesswork. Growth needs repeatable systems, not random effort." },
+    dev: { t: "dev", txt: "Some structure exists but it is not yet documented and repeatable end-to-end." },
+    str: { t: "ok", txt: "Clear repeatable system in place. This is what compounds results month over month." }
+  },
+  q19: {
+    crit: { t: "crit", txt: "The information loop is costing momentum. Implementation beats inspiration every time." },
+    dev: { t: "dev", txt: "You implement sometimes, but speed and consistency can improve significantly." },
+    str: { t: "ok", txt: "High implementation rate. You convert learning into action quickly." }
+  },
+  q20: {
+    crit: { t: "crit", txt: "Solo execution creates blind spots and slower progress. Structured accountability compresses growth timelines." },
+    dev: { t: "dev", txt: "Community helps, but informal feedback is rarely enough for breakthrough improvements." },
+    str: { t: "ok", txt: "Structured support is a force multiplier when used consistently." }
+  },
+  q21: {
+    crit: { t: "crit", txt: "Naming a technical gap is useful, but most stalls include positioning, systems, and execution layers too." },
+    dev: { t: "dev", txt: "You are aware of deeper constraints. Translate that awareness into one concrete system change this week." },
+    str: { t: "ok", txt: "Strong self-awareness around systems and support. That clarity accelerates implementation." }
+  }
+};
+
+const CATEGORY_META = [
+  { key: "design", name: "Design Thinking", icon: "◈", sub: "Assessment & technique", keys: CATEGORY_KEYS.design },
+  { key: "positioning", name: "Positioning & Visibility", icon: "◉", sub: "How you show up", keys: CATEGORY_KEYS.positioning },
+  { key: "content", name: "Content System", icon: "◐", sub: "Grab, hold, convert", keys: CATEGORY_KEYS.content },
+  { key: "pricing", name: "Pricing & Offer", icon: "◑", sub: "Your price story", keys: CATEGORY_KEYS.pricing },
+  { key: "systems", name: "Systems & Mindset", icon: "◒", sub: "Accountability & structure", keys: CATEGORY_KEYS.systems }
+];
+
+const ACTION_MAP = {
+  design: {
+    urgent: {
+      ttl: "Implement a face assessment before every client",
+      dsc: "Use one repeatable structure before every set: eye architecture, lid dynamics, facial framing, communication goal, then design."
+    },
+    improve: {
+      ttl: "Document your mapping logic by client type",
+      dsc: "Turn your best decisions into a repeatable map library so quality does not depend on mood or memory."
+    },
+    maintain: {
+      ttl: "Protect your strongest advantage",
+      dsc: "Keep assessing every face deliberately. Avoid defaulting to habit as your calendar gets busier."
+    }
+  },
+  positioning: {
+    urgent: {
+      ttl: "Write and deploy one sharp positioning sentence",
+      dsc: "Make it specific enough that the right client recognises herself instantly and the wrong one self-selects out."
+    },
+    improve: {
+      ttl: "Audit your page's first three seconds",
+      dsc: "Check bio, pinned posts, and visual cues. The difference you offer should be obvious without scrolling."
+    },
+    maintain: {
+      ttl: "Scale what is already distinctive",
+      dsc: "Double down on your unique style and language so your profile remains instantly recognisable."
+    }
+  },
+  content: {
+    urgent: {
+      ttl: "Rebuild your next 9 posts around strategy",
+      dsc: "Plan a clear mix: education, point of view, transformation, and CTA-driven conversion posts."
+    },
+    improve: {
+      ttl: "Install a non-negotiable hook and CTA process",
+      dsc: "Write the first 2 seconds and final instruction before creating the post body."
+    },
+    maintain: {
+      ttl: "Scale the formats that drive action",
+      dsc: "Keep testing and retain only posts that produce saves, DMs, and bookings."
+    }
+  },
+  pricing: {
+    urgent: {
+      ttl: "Align your full client journey with your price",
+      dsc: "From first DM to rebooking reminder, every touchpoint must feel premium and intentional."
+    },
+    improve: {
+      ttl: "Practice your value articulation script",
+      dsc: "Prepare your answer to price objections until it sounds natural, specific, and calm."
+    },
+    maintain: {
+      ttl: "Keep your pricing cadence intentional",
+      dsc: "Continue structured increases tied to visible value improvements and experience upgrades."
+    }
+  },
+  systems: {
+    urgent: {
+      ttl: "Break the learning loop with one execution sprint",
+      dsc: "Choose one change from this report and implement it fully this week before consuming more information."
+    },
+    improve: {
+      ttl: "Document your acquisition-to-retention funnel",
+      dsc: "Clarify how discovery, booking, experience, and rebooking work as one connected system."
+    },
+    maintain: {
+      ttl: "Keep accountability at a high standard",
+      dsc: "Protect the structures that force implementation and honest performance review."
+    }
+  }
+};
+
+const BIGGEST_GAP_REASON = {
+  design: "Design logic impacts every single client result, referral, and retention cycle in your business.",
+  positioning: "If your positioning is unclear, everything else gets harder — especially premium pricing and client quality.",
+  content: "Content is your daily sales engine. Weak content means weak visibility, trust, and conversion.",
+  pricing: "Pricing confidence reflects business clarity. If this area is weak, revenue growth stays fragile.",
+  systems: "Without systems and accountability, progress becomes inconsistent no matter how strong your talent is."
+};
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function levelForOption(index) {
+  if (index === 0) return "crit";
+  if (index === 3) return "str";
+  return "dev";
+}
+
+function lvlOf(pct) {
+  if (pct < 35) return { lbl: "Critical Gap", cls: "crit" };
+  if (pct < 62) return { lbl: "Developing", cls: "dev" };
+  return { lbl: "Strong", cls: "str" };
+}
+
+function lvlOfTen(score) {
+  if (score < 4) return "crit";
+  if (score < 7) return "dev";
+  return "str";
+}
+
+function secScore(keys) {
+  let tot = 0;
+  let mx = 0;
+  keys.forEach((k) => {
+    if (A[k]) {
+      tot += A[k].score;
+      mx += 3;
+    }
+  });
+  return mx > 0 ? Math.round((tot / mx) * 100) : 0;
+}
+
+function answeredCount() {
+  return Object.keys(A).length;
+}
+
+function renderQuestionCard(key) {
+  const q = QUESTION_BANK[key];
+  const card = document.createElement("div");
+  card.className = "q-card";
+  card.id = "card-" + key;
+
+  const num = document.createElement("div");
+  num.className = "q-num";
+  num.textContent = q.number;
+  card.appendChild(num);
+
+  const text = document.createElement("div");
+  text.className = "q-text";
+  text.textContent = q.text;
+  card.appendChild(text);
+
+  const opts = document.createElement("div");
+  opts.className = "opts";
+
+  q.options.forEach((option, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "opt";
+    btn.type = "button";
+    btn.setAttribute("data-key", key);
+    btn.setAttribute("data-index", String(idx));
+    btn.innerHTML = '<div class="opt-dot"></div><span class="opt-text">' + escapeHtml(option) + "</span>";
+    btn.addEventListener("click", () => pick(btn, key, idx, levelForOption(idx)));
+    opts.appendChild(btn);
+  });
+
+  card.appendChild(opts);
+  return card;
+}
+
+function buildSections() {
+  const sec1 = document.getElementById("sec1Wrap");
+  sec1.innerHTML = `
+    <div class="field-block">
+      <label class="field-label">Your First Name</label>
+      <input class="field-input" id="uName" type="text" placeholder="e.g. Sarah">
+    </div>
+    <div class="field-block">
+      <label class="field-label">Email Address</label>
+      <input class="field-input" id="uEmail" type="email" placeholder="you@example.com">
+    </div>
+    <div class="field-block">
+      <label class="field-label">Instagram Handle</label>
+      <input class="field-input" id="uHandle" type="text" placeholder="@yourlashpage">
+    </div>
+  `;
+  sec1.appendChild(renderQuestionCard("q1"));
+  sec1.appendChild(renderQuestionCard("q2"));
+
+  ["q3", "q4", "q5", "q6"].forEach((k) => document.getElementById("sec2Wrap").appendChild(renderQuestionCard(k)));
+  ["q7", "q8", "q9", "q10"].forEach((k) => document.getElementById("sec3Wrap").appendChild(renderQuestionCard(k)));
+  ["q11", "q12", "q13"].forEach((k) => document.getElementById("sec4Wrap").appendChild(renderQuestionCard(k)));
+  ["q14", "q15", "q16", "q17"].forEach((k) => document.getElementById("sec5Wrap").appendChild(renderQuestionCard(k)));
+  ["q18", "q19", "q20", "q21"].forEach((k) => document.getElementById("sec6Wrap").appendChild(renderQuestionCard(k)));
+
+  const upload = document.createElement("div");
+  upload.className = "field-block";
+  upload.style.border = "none";
+  upload.style.padding = "0";
+  upload.innerHTML = `
+    <p style="font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gray-3);margin-bottom:8px;">Optional — Upload Recent Instagram Screenshots</p>
+    <p style="font-size:10px;color:var(--gray-3);margin-bottom:10px;line-height:1.6;">Add screenshots of your profile, feed, reels, and captions for specific analysis.</p>
+    <div class="upload-block">
+      <input type="file" accept="image/*" multiple id="igUp">
+      <div class="upload-icon">↑</div>
+      <div class="upload-main">Upload up to 6 screenshots</div>
+      <div class="upload-sub">JPG or PNG</div>
+    </div>
+    <div class="preview-grid" id="prevGrid"></div>
+    <div class="analyze-wrap" id="analyzeWrap">
+      <button class="btn-analyze" id="analyzeBtn" type="button">Analyse My Page</button>
+      <div class="analyze-status" id="analyzeStatus"></div>
+    </div>
+  `;
+  document.getElementById("sec4Wrap").appendChild(upload);
+}
+
 function pick(btn, key, score, level) {
-  const grid = btn.closest('.opts');
-  grid.querySelectorAll('.opt').forEach(b => b.classList.remove('sel'));
-  btn.classList.add('sel');
+  const grid = btn.closest(".opts");
+  grid.querySelectorAll(".opt").forEach((b) => b.classList.remove("sel"));
+  btn.classList.add("sel");
+  btn.classList.add("pressed");
+  setTimeout(() => btn.classList.remove("pressed"), 120);
   A[key] = { score, level };
-  const card = btn.closest('.q-card');
-  if (card) card.classList.add('done');
+  const card = btn.closest(".q-card");
+  if (card) card.classList.add("done");
+  updateQuestionProgress();
   chk();
 }
 
-// ─── CHECK if section complete ───────
+function emailValid(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
 function chk() {
-  const btn = document.getElementById('btnNext');
+  const btn = document.getElementById("btnNext");
   if (!btn) return;
   let ok = true;
   if (cur === 1) {
-    const n = document.getElementById('uName').value.trim();
-    const h = document.getElementById('uHandle').value.trim();
-    if (!n || !h || !A['exp'] || !A['bk']) ok = false;
+    const n = document.getElementById("uName").value.trim();
+    const e = document.getElementById("uEmail").value.trim();
+    const h = document.getElementById("uHandle").value.trim();
+    if (!n || !e || !emailValid(e) || !h || !A.q1 || !A.q2) ok = false;
   } else {
-    SEC_KEYS[cur].forEach(k => { if (!A[k]) ok = false; });
+    SECTION_KEYS[cur].forEach((k) => {
+      if (!A[k]) ok = false;
+    });
   }
   btn.disabled = !ok;
 }
 
-// ─── NAVIGATION ──────────────────────
+function animateSection(sectionIndex) {
+  const sec = document.getElementById("sec" + sectionIndex);
+  if (!sec) return;
+  sec.classList.remove("section-visible");
+  void sec.offsetWidth;
+  sec.classList.add("section-visible");
+}
+
+function updateProg() {
+  const pct = ((cur - 1) / TOTAL) * 100;
+  const fill = document.getElementById("progFill");
+  fill.style.width = pct + "%";
+  fill.classList.remove("animate");
+  void fill.offsetWidth;
+  fill.classList.add("animate");
+  document.getElementById("progLabel").textContent = "Section " + cur + " of " + TOTAL;
+}
+
+function updateQuestionProgress() {
+  const done = answeredCount();
+  const pct = Math.round((done / TOTAL_QUESTIONS) * 100);
+  document.getElementById("qProgFill").style.width = pct + "%";
+  document.getElementById("qProgLabel").textContent = done + " of " + TOTAL_QUESTIONS + " answered";
+}
+
 function goNext() {
   if (cur < TOTAL) {
-    document.getElementById('sec' + cur).classList.remove('active');
+    document.getElementById("sec" + cur).classList.remove("active");
     cur++;
-    document.getElementById('sec' + cur).classList.add('active');
-    document.getElementById('btnBack').style.display = 'block';
-    document.getElementById('btnNext').textContent =
-      cur === TOTAL ? 'Generate My Report →' : 'Continue →';
+    document.getElementById("sec" + cur).classList.add("active");
+    animateSection(cur);
+    document.getElementById("btnBack").style.display = "block";
+    document.getElementById("btnNext").textContent = cur === TOTAL ? "Generate My Report →" : "Continue →";
     updateProg();
     chk();
     window.scrollTo(0, 0);
@@ -1087,340 +1787,470 @@ function goNext() {
 
 function goBack() {
   if (cur > 1) {
-    document.getElementById('sec' + cur).classList.remove('active');
+    document.getElementById("sec" + cur).classList.remove("active");
     cur--;
-    document.getElementById('sec' + cur).classList.add('active');
-    if (cur === 1) document.getElementById('btnBack').style.display = 'none';
-    document.getElementById('btnNext').textContent = 'Continue →';
+    document.getElementById("sec" + cur).classList.add("active");
+    animateSection(cur);
+    if (cur === 1) document.getElementById("btnBack").style.display = "none";
+    document.getElementById("btnNext").textContent = "Continue →";
     updateProg();
     chk();
     window.scrollTo(0, 0);
   }
 }
 
-function updateProg() {
-  const pct = ((cur - 1) / TOTAL) * 100;
-  document.getElementById('progFill').style.width = pct + '%';
-  document.getElementById('progLabel').textContent = 'Section ' + cur + ' of ' + TOTAL;
-}
-
-// ─── UPLOAD ──────────────────────────
-function handleUp(e) {
-  const files = Array.from(e.target.files).slice(0, 6);
-  const grid = document.getElementById('prevGrid');
-  grid.innerHTML = '';
-  grid.style.display = files.length ? 'grid' : 'none';
-  files.forEach(f => {
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(f);
-    img.className = 'prev-img';
-    grid.appendChild(img);
+async function toBase64Image(file) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => {
+      const dataUrl = fr.result;
+      const parts = String(dataUrl).split(",");
+      resolve({
+        name: file.name,
+        mime: file.type || "image/jpeg",
+        previewUrl: dataUrl,
+        data: parts[1] || ""
+      });
+    };
+    fr.onerror = reject;
+    fr.readAsDataURL(file);
   });
 }
 
-// ─── SCORING ─────────────────────────
-function secScore(keys) {
-  let tot = 0, mx = 0;
-  keys.forEach(k => {
-    if (A[k]) { tot += A[k].score; mx += 3; }
+async function handleUp(event) {
+  const files = Array.from(event.target.files || []).slice(0, 6);
+  const converted = await Promise.all(files.map((f) => toBase64Image(f).catch(() => null)));
+  uploadedImages = converted.filter(Boolean);
+
+  const grid = document.getElementById("prevGrid");
+  grid.innerHTML = "";
+  grid.style.display = uploadedImages.length ? "grid" : "none";
+  uploadedImages.forEach((img) => {
+    const el = document.createElement("img");
+    el.src = img.previewUrl;
+    el.className = "prev-img";
+    grid.appendChild(el);
   });
-  return mx > 0 ? Math.round((tot / mx) * 100) : 0;
+
+  const wrap = document.getElementById("analyzeWrap");
+  wrap.style.display = uploadedImages.length ? "block" : "none";
+  if (!uploadedImages.length) {
+    document.getElementById("analyzeStatus").textContent = "";
+  }
 }
 
-function lvlOf(pct) {
-  if (pct < 35) return { lbl: 'Critical Gap', cls: 'crit' };
-  if (pct < 62) return { lbl: 'Developing', cls: 'dev' };
-  return { lbl: 'Strong', cls: 'str' };
+function parseClaudeJson(raw) {
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    const s = raw.indexOf("{");
+    const e = raw.lastIndexOf("}");
+    if (s >= 0 && e > s) {
+      return JSON.parse(raw.slice(s, e + 1));
+    }
+    throw err;
+  }
 }
 
-// ─── FINDINGS MAP ────────────────────
-const FM = {
-  d1: {
-    crit: { t:'crit', txt:'You are applying, not designing. Without a deliberate face assessment before every client, your results will always be inconsistent — regardless of your technical skill.' },
-    dev:  { t:'dev',  txt:'You assess sometimes but not consistently. Making this non-negotiable for every single client will transform your referral rate.' },
-    str:  { t:'ok',   txt:'Strong design-first approach. This is the foundation of everything else — protect it.' }
-  },
-  d2: {
-    crit: { t:'crit', txt:'You cannot justify your curl decisions — which means they are not intentional. Every technical choice should be explainable before you make it.' },
-    dev:  { t:'dev',  txt:'Your reasoning exists but is not precise enough. Train yourself to make every decision consciously and articulate it before acting.' },
-    str:  { t:'ok',   txt:'Deliberate, explainable curl decisions. This directly impacts results and referrals.' }
-  },
-  d3: {
-    crit: { t:'crit', txt:'Your sets look the same on different faces. This is the applying trap — it is costing you referrals because clients cannot describe what makes your work different.' },
-    dev:  { t:'dev',  txt:'Inconsistent — your best work is there but it is not yet your standard. Make the face assessment the trigger for every decision.' },
-    str:  { t:'ok',   txt:'Genuinely bespoke work. This is what people talk about and refer friends over.' }
-  },
-  d4: {
-    crit: { t:'crit', txt:'No intervention framework means you are working without a map. Learning the lifting, framing, and elongating system will immediately improve every client outcome.' },
-    dev:  { t:'dev',  txt:'You know the theory but are not applying it consistently. This needs to become automatic — not occasional.' },
-    str:  { t:'ok',   txt:'Strong intervention assessment. This is PSC-level design thinking in practice.' }
-  },
-  p1: {
-    crit: { t:'crit', txt:'Your page does not stand out — it blends into the feed like every other lash page. Differentiation is not aesthetic. It is what makes a scroller become a booker.' },
-    dev:  { t:'dev',  txt:'Some distinctiveness but not enough. Your ideal client should feel spoken to within 3 seconds of landing on your page.' },
-    str:  { t:'ok',   txt:'Clear, distinctive positioning. This is what generates inbound enquiries without paid advertising.' }
-  },
-  p2: {
-    crit: { t:'crit', txt:'No positioning sentence means no filter on who you attract. You will keep getting price-sensitive enquiries until you define exactly who you are for.' },
-    dev:  { t:'dev',  txt:'Your positioning exists but is not sharp enough to do real work. Make it specific enough that someone could identify your ideal client from the description alone.' },
-    str:  { t:'ok',   txt:'Clear positioning sentence. The foundation of premium pricing and the right client base.' }
-  },
-  p3: {
-    crit: { t:'crit', txt:'Your work is not visually distinctive. In a saturated feed, good is invisible. Only distinctive creates organic demand.' },
-    dev:  { t:'dev',  txt:'Some recognisability — needs to be stronger and consistent across every post, not just the best ones.' },
-    str:  { t:'ok',   txt:'Visually distinctive. People know your work before they see your name.' }
-  },
-  p4: {
-    crit: { t:'crit', txt:'Your booking process has too much friction. Every extra step is a lost client. The path from discovery to confirmed appointment needs to be one or two clicks maximum.' },
-    dev:  { t:'dev',  txt:'Close — but reducing even one step in the booking journey will measurably improve your conversion rate.' },
-    str:  { t:'ok',   txt:'Frictionless booking. This alone has a significant impact on conversion from Instagram to appointment.' }
-  },
-  c1: {
-    crit: { t:'crit', txt:'Almost all portfolio content with no education or opinion. You are only doing Job 1 of content — reach — and not doing it well. Your audience has no reason to trust you specifically over anyone else.' },
-    dev:  { t:'dev',  txt:'Improving but still too portfolio-heavy. Aim for at least 50% content that builds authority — education, opinion, and transformation stories.' },
-    str:  { t:'ok',   txt:'Good content mix. You are building authority and trust, not just showcasing work.' }
-  },
-  c2: {
-    crit: { t:'crit', txt:'No call to action means no conversion. You are creating content, building trust, and then leaving people with nowhere to go. This is the most common — and most fixable — conversion failure.' },
-    dev:  { t:'dev',  txt:'Inconsistent CTAs. Make this the last thing you write for every single post, without exception. Every piece of content needs a next step.' },
-    str:  { t:'ok',   txt:'Consistent CTAs. You are completing the full conversion loop from attention to action.' }
-  },
-  c3: {
-    crit: { t:'crit', txt:'No hooks means your reels are not stopping the scroll. You are competing with everything on the internet simultaneously. The first 2 seconds determine whether anyone sees the rest.' },
-    dev:  { t:'dev',  txt:'Some attention to hooks but not deliberate enough. Write the hook before anything else — before the visual, before the caption, before the edit.' },
-    str:  { t:'ok',   txt:'Strong hook discipline. This is what drives reach and new client discovery.' }
-  },
-  pr1: {
-    crit: { t:'crit', txt:'Price anxiety is a positioning problem, not a market problem. The fear comes from not having built the case for your value. That case is entirely buildable — but it requires deliberate work.' },
-    dev:  { t:'dev',  txt:'Some confidence but not enough. Raising prices without anxiety requires having every other element of your business aligned first.' },
-    str:  { t:'ok',   txt:'Price confidence. The result of clear positioning and a premium client experience from start to finish.' }
-  },
-  pr2: {
-    crit: { t:'crit', txt:'Prices unchanged for 12 months while costs rise is a slow erosion of your margins. A price increase with the right positioning rarely loses the right clients.' },
-    dev:  { t:'dev',  txt:'Small increases are good — they need to be intentional and tied to deliberate improvements in your positioning and experience.' },
-    str:  { t:'ok',   txt:'Regular price increases. You are treating your business like a business, not a hobby.' }
-  },
-  pr3: {
-    crit: { t:'crit', txt:'Unable to articulate your value means you cannot defend your price. This answer needs to be ready, specific, and confident before you increase — not after.' },
-    dev:  { t:'dev',  txt:'Vague value articulation will not hold under pricing pressure. Make it specific: not "I do quality work" but "I specialise in X for clients with Y because Z."' },
-    str:  { t:'ok',   txt:'Clear value articulation. You can defend your price with specifics, not generics.' }
-  },
-  pr4: {
-    crit: { t:'crit', txt:'A premium set wrapped in a mediocre experience tells clients the price is unjustified before they even decide. Every single touchpoint must match the number on your price list.' },
-    dev:  { t:'dev',  txt:'Some premium touchpoints, others letting the experience down. Audit every interaction and fix the lowest-rated one first.' },
-    str:  { t:'ok',   txt:'Consistent premium experience. Your price is justified before the client even sits in your chair.' }
-  },
-  s1: {
-    crit: { t:'crit', txt:'No system means you restart every month from the same place. Posting and hoping is exhausting and produces inconsistent results. A system does not have to be complicated — it has to be consistent.' },
-    dev:  { t:'dev',  txt:'Some structure — but without documentation and repetition it will not compound. Write down what works and repeat it deliberately.' },
-    str:  { t:'ok',   txt:'Clear client acquisition system. This is what creates predictable, growing revenue month on month.' }
-  },
-  s2: {
-    crit: { t:'crit', txt:'The information loop is real and it is costing you months. Reading without implementing is comfort, not progress. Pick one thing and do it this week.' },
-    dev:  { t:'dev',  txt:'Some implementation — but you need to be ruthless about execution over consumption. Less reading, more doing.' },
-    str:  { t:'ok',   txt:'High implementation rate. You turn knowledge into action — which is everything.' }
-  },
-  s3: {
-    crit: { t:'crit', txt:'Building alone means slower progress, more blind spots, and the information loop is much harder to break. Structured support is the single thing that makes everything else move faster.' },
-    dev:  { t:'dev',  txt:'Peer support is good. Informal accountability rarely creates breakthrough results — structured accountability does.' },
-    str:  { t:'ok',   txt:'Structured support in place. This is what converts knowledge into lasting change.' }
-  },
-  s4: {
-    dev:  { t:'dev',  txt:'If it is genuinely a skill gap, the PSC design curriculum will close it. But be honest — most artists underestimate how much of their gap is positioning and systems, not technique.' },
-    str:  { t:'ok',   txt:'Clear self-awareness. Recognising that systems and support are the gap is half the solution already.' }
-  },
-};
+async function analyseMyPage() {
+  if (!uploadedImages.length) return;
+  const btn = document.getElementById("analyzeBtn");
+  const status = document.getElementById("analyzeStatus");
+  aiAttempted = true;
+  instagramAnalysis = null;
+  instagramAnalysisError = "";
+  btn.disabled = true;
+  btn.textContent = "Analysing...";
+  status.textContent = "Running AI Instagram analysis...";
 
-// ─── BUILD REPORT ────────────────────
+  try {
+    const content = [{
+      type: "text",
+      text: "Analyse these uploaded Instagram screenshots and return only the JSON object."
+    }];
+    uploadedImages.forEach((img) => {
+      content.push({
+        type: "image",
+        source: {
+          type: "base64",
+          media_type: img.mime,
+          data: img.data
+        }
+      });
+    });
+
+    const response = await fetch(ANTHROPIC_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": ANTHROPIC_KEY,
+        "anthropic-version": "2023-06-01"
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1600,
+        system: AI_SYSTEM_PROMPT,
+        messages: [{ role: "user", content }]
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("AI request failed with status " + response.status);
+    }
+
+    const payload = await response.json();
+    const raw = (payload.content || [])
+      .map((item) => item && item.type === "text" ? item.text : "")
+      .join("\n")
+      .trim();
+    const parsed = parseClaudeJson(raw);
+    instagramAnalysis = parsed;
+    status.textContent = "Analysis complete. It will appear in your final report.";
+  } catch (err) {
+    instagramAnalysisError = "AI analysis could not be generated right now. Your report will still be produced.";
+    status.textContent = instagramAnalysisError;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Analyse My Page";
+  }
+}
+
+function sendLeadCapture(payload) {
+  if (leadCaptureSent) return;
+  leadCaptureSent = true;
+  fetch(LEAD_CAPTURE_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
+}
+
 function showReport() {
-  document.getElementById('audit-app').style.display = 'none';
-  document.getElementById('botNav').style.display = 'none';
-  const rep = document.getElementById('report');
-  rep.style.display = 'block';
+  document.getElementById("audit-app").style.display = "none";
+  document.getElementById("botNav").style.display = "none";
+  const rep = document.getElementById("report");
+  rep.style.display = "block";
   window.scrollTo(0, 0);
 
   setTimeout(() => {
-    document.getElementById('genScreen').style.display = 'none';
+    document.getElementById("genScreen").style.display = "none";
     buildReport();
-    document.getElementById('repContent').style.display = 'block';
+    document.getElementById("repContent").style.display = "block";
     window.scrollTo(0, 0);
-  }, 2600);
+  }, 2400);
+}
+
+function buildInstagramSection(nextDelayFn) {
+  if (!instagramAnalysis && !instagramAnalysisError) return "";
+
+  if (!instagramAnalysis && instagramAnalysisError) {
+    return `
+      <div class="insta-title">Instagram Page Analysis</div>
+      <div class="insta-top report-card" style="--d:${nextDelayFn()};">
+        <div class="insta-meta">Analysis status</div>
+        <div class="insta-kv">${escapeHtml(instagramAnalysisError)}</div>
+      </div>
+    `;
+  }
+
+  const analysis = instagramAnalysis || {};
+  const categoryRows = [
+    ["grid_aesthetic", "Grid Aesthetic"],
+    ["positioning_clarity", "Positioning Clarity"],
+    ["content_mix", "Content Mix"],
+    ["work_quality_presentation", "Work Quality Presentation"],
+    ["call_to_action", "Call to Action"]
+  ];
+
+  let html = `<div class="insta-title">Instagram Page Analysis</div>`;
+  const aiOverall = Number(analysis.overall_instagram_score || 0);
+  const topCls = lvlOfTen(aiOverall);
+  html += `
+    <div class="insta-top report-card" style="--d:${nextDelayFn()};">
+      <div class="insta-meta">Overall Instagram Score</div>
+      <div class="insta-top-score ${topCls}">${aiOverall}/10</div>
+      <div class="insta-kv"><strong>Biggest Win:</strong> ${escapeHtml(analysis.biggest_win || "N/A")}</div>
+      <div class="insta-kv"><strong>Most Urgent Fix:</strong> ${escapeHtml(analysis.most_urgent_fix || "N/A")}</div>
+    </div>
+  `;
+
+  categoryRows.forEach((entry, i) => {
+    const key = entry[0];
+    const label = entry[1];
+    const item = analysis[key] || {};
+    const score = Number(item.score || 0);
+    const cls = lvlOfTen(score);
+    const issues = Array.isArray(item.issues) ? item.issues : [];
+    const fixes = Array.isArray(item.fixes) ? item.fixes : [];
+    html += `
+      <div class="ai-card report-card" style="--d:${nextDelayFn()};">
+        <div class="ai-head" onclick="toggleAiCard(${i})">
+          <div class="ai-name">${escapeHtml(label)}</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="ai-score ${cls}">${score}/10</div>
+            <div class="chev">▾</div>
+          </div>
+        </div>
+        <div class="ai-body" id="aiBody${i}">
+          <div class="ai-verdict">${escapeHtml(item.verdict || "No verdict returned.")}</div>
+          <div class="ai-list-label">Issues</div>
+          <ul class="ai-list">
+            ${issues.map((x) => "<li>" + escapeHtml(x) + "</li>").join("") || "<li>No issues returned.</li>"}
+          </ul>
+          <div class="ai-list-label">Fixes</div>
+          <ul class="ai-list">
+            ${fixes.map((x) => "<li>" + escapeHtml(x) + "</li>").join("") || "<li>No fixes returned.</li>"}
+          </ul>
+        </div>
+      </div>
+    `;
+  });
+
+  return html;
 }
 
 function buildReport() {
-  const name = document.getElementById('uName').value.trim() || 'Your';
+  const name = document.getElementById("uName").value.trim() || "Your";
+  const email = document.getElementById("uEmail").value.trim();
+  const handle = document.getElementById("uHandle").value.trim();
 
   const scores = {
-    design:     secScore(['d1','d2','d3','d4']),
-    positioning:secScore(['p1','p2','p3','p4']),
-    content:    secScore(['c1','c2','c3']),
-    pricing:    secScore(['pr1','pr2','pr3','pr4']),
-    systems:    secScore(['s1','s2','s3','s4']),
+    design: secScore(CATEGORY_KEYS.design),
+    positioning: secScore(CATEGORY_KEYS.positioning),
+    content: secScore(CATEGORY_KEYS.content),
+    pricing: secScore(CATEGORY_KEYS.pricing),
+    systems: secScore(CATEGORY_KEYS.systems)
   };
-  const all = Object.values(scores);
-  const overall = Math.round(all.reduce((a,b)=>a+b,0) / all.length);
+
+  const overall = Math.round(Object.values(scores).reduce((a, b) => a + b, 0) / 5);
   const ov = lvlOf(overall);
+  const sorted = Object.entries(scores).sort((a, b) => a[1] - b[1]);
+  const lowest = sorted[0];
+  const highest = sorted[sorted.length - 1];
+
+  sendLeadCapture({
+    name,
+    email,
+    instagram: handle,
+    overall_score: overall,
+    design_score: scores.design,
+    positioning_score: scores.positioning,
+    content_score: scores.content,
+    pricing_score: scores.pricing,
+    systems_score: scores.systems,
+    timestamp: new Date().toISOString()
+  });
 
   const summaries = {
-    crit: `${name}, your audit reveals significant gaps across multiple areas. The good news: every single one is fixable. But they need to be addressed together — not one at a time over years of trial and error.`,
-    dev:  `${name}, you have real foundations in place — but there are clear, specific gaps holding you back from the results your skill deserves. This report tells you exactly where to focus first.`,
-    str:  `${name}, you are building something solid. A few targeted areas still need work — closing those gaps is what moves you from strong to exceptional and fully booked.`,
+    crit: `${name}, your audit reveals significant gaps across multiple areas. The good news: every single one is fixable when you address them deliberately and in sequence.`,
+    dev: `${name}, you have real foundations in place — but there are clear, specific gaps holding you back from the results your skill deserves.`,
+    str: `${name}, you are building something strong. Closing the final gaps now is what moves you into consistent premium growth.`
   };
 
-  const secMeta = [
-    { key:'design',      name:'Design Thinking',       icon:'◈', sub:'Assessment & technique',    keys:['d1','d2','d3','d4'] },
-    { key:'positioning', name:'Positioning & Visibility',icon:'◉', sub:'How you show up',         keys:['p1','p2','p3','p4'] },
-    { key:'content',     name:'Content System',         icon:'◐', sub:'Grab, hold, convert',      keys:['c1','c2','c3'] },
-    { key:'pricing',     name:'Pricing & Offer',        icon:'◑', sub:'Your price story',         keys:['pr1','pr2','pr3','pr4'] },
-    { key:'systems',     name:'Systems & Mindset',      icon:'◒', sub:'Accountability & structure',keys:['s1','s2','s3','s4'] },
-  ];
+  let delayIndex = 0;
+  const nextDelay = () => (delayIndex++ * 100) + "ms";
 
-  // Build HTML
   let html = `
-  <div class="rep-hero">
-    <div class="rep-ring" style="width:500px;height:500px;"></div>
-    <div class="rep-ring" style="width:340px;height:340px;"></div>
-    <div class="rep-ey">Your 180° Audit Report</div>
-    <div class="rep-name">${name}'s Results</div>
-    <div class="rep-score ${ov.cls}">${overall}%</div>
-    <div class="rep-score-lbl">${ov.lbl}</div>
-    <p class="rep-summary">${summaries[ov.cls] || summaries.dev}</p>
-  </div>
-  <div class="rep-body">`;
+    <div class="rep-hero">
+      <div class="rep-ring" style="width:500px;height:500px;"></div>
+      <div class="rep-ring" style="width:340px;height:340px;"></div>
+      <div class="rep-ey">Your 180° Audit Report</div>
+      <div class="rep-name">${escapeHtml(name)}'s Results</div>
+      <div class="rep-score ${ov.cls}" id="overallScore" data-target="${overall}">0%</div>
+      <div class="rep-score-lbl">${ov.lbl}</div>
+      <p class="rep-summary">${escapeHtml(summaries[ov.cls] || summaries.dev)}</p>
+    </div>
+    <div class="rep-body">
+      <div class="gap-card report-card" style="--d:${nextDelay()};">
+        <div class="gap-title">Your Biggest Gap</div>
+        <div class="gap-main">${escapeHtml(CATEGORY_META.find((m) => m.key === lowest[0]).name)} (${lowest[1]}%)</div>
+        <div class="gap-desc">${escapeHtml(BIGGEST_GAP_REASON[lowest[0]] || "This area is currently creating the largest drag on growth.")}</div>
+      </div>
 
-  // Score cards
-  secMeta.forEach((sm, i) => {
-    const sc = scores[sm.key];
+      <div class="glance-card report-card" style="--d:${nextDelay()};">
+        <div class="report-title">Your Audit at a Glance</div>
+        ${CATEGORY_META.map((meta) => `
+          <div class="glance-row">
+            <div class="glance-top"><span>${meta.name}</span><span>${scores[meta.key]}%</span></div>
+            <div class="glance-track"><div class="glance-fill" style="width:${scores[meta.key]}%"></div></div>
+          </div>
+        `).join("")}
+      </div>
+  `;
+
+  html += buildInstagramSection(nextDelay);
+
+  CATEGORY_META.forEach((meta, idx) => {
+    const sc = scores[meta.key];
     const lv = lvlOf(sc);
-    const findings = sm.keys
-      .filter(k => A[k] && FM[k] && FM[k][A[k].level])
-      .map(k => FM[k][A[k].level]);
+    const findings = meta.keys
+      .filter((k) => A[k] && FINDINGS_MAP[k] && FINDINGS_MAP[k][A[k].level])
+      .map((k) => FINDINGS_MAP[k][A[k].level]);
 
     html += `
-    <div class="scard" id="sc${i}">
-      <div class="scard-head" onclick="toggleScard(${i})">
-        <div class="scard-left">
-          <div class="scard-ico">${sm.icon}</div>
-          <div>
-            <div class="scard-title">${sm.name}</div>
-            <div class="scard-sub">${sm.sub}</div>
+      <div class="scard report-card" style="--d:${nextDelay()};">
+        <div class="scard-head" onclick="toggleScard(${idx})">
+          <div class="scard-left">
+            <div class="scard-ico">${meta.icon}</div>
+            <div>
+              <div class="scard-title">${meta.name}</div>
+              <div class="scard-sub">${meta.sub}</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="scard-pct ${lv.cls}">${sc}%</div>
+            <div class="chev">▾</div>
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div class="scard-pct ${lv.cls}">${sc}%</div>
-          <div class="chev">▾</div>
+        <div class="scard-body" id="sb${idx}">
+          <div class="bar-wrap">
+            <div class="bar-lbl"><span>${meta.name}</span><span>${lv.lbl}</span></div>
+            <div class="bar-track"><div class="bar-fill ${lv.cls}" style="width:${sc}%"></div></div>
+          </div>
+          <div class="findings-lbl">Key Findings</div>
+          ${findings.map((f) => `<div class="finding"><div class="fdot ${f.t}"></div><div class="ftext">${escapeHtml(f.txt)}</div></div>`).join("")}
         </div>
       </div>
-      <div class="scard-body" id="sb${i}">
-        <div class="bar-wrap">
-          <div class="bar-lbl"><span>${sm.name}</span><span>${lv.lbl}</span></div>
-          <div class="bar-track"><div class="bar-fill ${lv.cls}" style="width:${sc}%"></div></div>
-        </div>
-        <div class="findings-lbl">Key Findings</div>
-        ${findings.map(f => `<div class="finding"><div class="fdot ${f.t}"></div><div class="ftext">${f.txt}</div></div>`).join('')}
-      </div>
-    </div>`;
+    `;
   });
-
-  // Priority actions
-  const sorted = Object.entries(scores).sort((a,b)=>a[1]-b[1]);
-  const actionMap = {
-    design: {
-      urg:{ ttl:'Implement a face assessment before every single client', dsc:'Start with the five dimensions — eye architecture, lid dynamics, brow relationship, facial framing, communication goal. Make this non-negotiable before you place one lash. This week.' },
-      imp:{ ttl:'Build your design decision-making into a repeatable system', dsc:'Your instincts are good but inconsistent. Write down your assessment process and apply it deliberately for every client — not just the difficult ones.' }
-    },
-    positioning: {
-      urg:{ ttl:'Write your positioning sentence this week', dsc:'"I help [specific who] achieve [specific outcome] through [specific approach]." This becomes the filter for every content, pricing, and client decision you make going forward.' },
-      imp:{ ttl:'Audit your Instagram page as a complete stranger', dsc:'Open your page fresh. Ask: within 3 seconds, is it clear who this is for and why it is different? Fix whatever does not pass that test before you post anything else.' }
-    },
-    content: {
-      urg:{ ttl:'Restructure your next 9 posts around Grab / Hold / Convert', dsc:'3 posts that grab new eyes. 3 that build trust through education or opinion. 3 that explicitly invite a booking. Plan all 9 before you film any of them.' },
-      imp:{ ttl:'Add a call to action to every single post from today', dsc:'This one change alone will measurably improve your conversion rate. Never let a post go out without a clear, specific next step for the person reading it.' }
-    },
-    pricing: {
-      urg:{ ttl:'Audit every client touchpoint and align it with your price', dsc:'List every interaction a client has with you from first DM to rebooking reminder. Rate each one. Fix the lowest-rated touchpoint first — that is the inconsistency undermining your price story.' },
-      imp:{ ttl:'Prepare and practise your value articulation answer', dsc:'Write a specific, confident answer to "why do you charge more?" Practise it until it feels natural. You need this ready before you raise — not after.' }
-    },
-    systems: {
-      urg:{ ttl:'Break the information loop — implement one thing this week', dsc:'Pick one change from this report. Not a list. One thing. Give it a specific deadline. Tell someone what you are doing. Do that one thing before you read anything else.' },
-      imp:{ ttl:'Find structured accountability — not just a peer group', dsc:'A programme with a framework, feedback, and accountability is what breaks the loop. The information exists. The missing ingredient is structure and someone who can see what you cannot.' }
-    }
-  };
 
   html += `<div class="pri-title">YOUR PRIORITY ACTIONS</div>`;
-  let actNum = 1;
-  sorted.forEach(([key, sc], idx) => {
-    const isUrg = sc < 40;
-    const isImp = sc >= 40 && sc < 65;
-    const am = actionMap[key];
-    if (!am) return;
-    if (isUrg || isImp || idx === 0) {
-      const act = isUrg ? am.urg : am.imp;
-      const urg = isUrg ? 'urg' : 'imp';
-      const tag = isUrg ? 'Fix This First' : 'Important';
-      html += `
-      <div class="act-card ${urg}">
-        <div class="act-n">0${actNum}</div>
+  sorted.forEach((pair, index) => {
+    const key = pair[0];
+    const score = pair[1];
+    const map = ACTION_MAP[key];
+    let variant = "imp";
+    let tag = "Priority";
+    let act = map.improve;
+
+    if (index === sorted.length - 1) {
+      variant = "mnt";
+      tag = "Maintain";
+      act = map.maintain;
+    } else if (score < 45) {
+      variant = "urg";
+      tag = "Fix This First";
+      act = map.urgent;
+    }
+
+    html += `
+      <div class="act-card ${variant} report-card" style="--d:${nextDelay()};">
+        <div class="act-n">${String(index + 1).padStart(2, "0")}</div>
         <div>
           <div class="act-tag">${tag}</div>
-          <div class="act-ttl">${act.ttl}</div>
-          <div class="act-desc">${act.dsc}</div>
+          <div class="act-ttl">${escapeHtml(act.ttl)}</div>
+          <div class="act-desc">${escapeHtml(act.dsc)}</div>
         </div>
-      </div>`;
-      actNum++;
-    }
+      </div>
+    `;
   });
 
-  // Add a maintain card
-  const best = sorted[sorted.length-1];
-  const maintainMap = {
-    design:     'Your design thinking is a genuine competitive advantage. Protect it by never defaulting to habit — assess every face, every time, regardless of how busy you are.',
-    positioning:'Your positioning is working. Now make sure every single piece of content reinforces it consistently — not just the posts you put thought into.',
-    content:    'Your content system is producing results. Focus now on scaling the formats that work and cutting the ones that do not — ruthlessly.',
-    pricing:    'Your pricing confidence is strong. The next move is systematic price increases tied to deliberate improvements in your client experience.',
-    systems:    'Your implementation rate is excellent. Make sure the systems you are building are the right ones — aligned with where you actually want to take this business.',
-  };
-  if (best && maintainMap[best[0]]) {
-    html += `
-    <div class="act-card mnt">
-      <div class="act-n">0${actNum}</div>
-      <div>
-        <div class="act-tag">Maintain</div>
-        <div class="act-ttl">Protect your strongest area: ${best[0]}</div>
-        <div class="act-desc">${maintainMap[best[0]]}</div>
-      </div>
-    </div>`;
-  }
-
-  // Final CTA
+  const shareText = `I just completed the PSC 180° Audit and scored ${overall}%. Get your free audit at psclashes.com/audit`;
   html += `
-  </div>
-  <div class="final-cta">
-    <div class="fcta-ring" style="width:400px;height:400px;"></div>
-    <div class="fcta-ring" style="width:260px;height:260px;"></div>
-    <div class="fcta-ey">Ready For the Reset?</div>
-    <div class="fcta-title">THE 180°<br>PROGRAMME</div>
-    <p class="fcta-desc">
-      Your audit has identified exactly where the gaps are. The 180 Degree Programme addresses every single one — with the design framework, positioning system, content strategy, and community to make the reset permanent.
-    </p>
-    <a href="https://psclashes.com/180" class="fcta-btn">Apply Now →</a>
-    <p class="fcta-ig">@psc_lashes &nbsp;·&nbsp; psclashes.com/180</p>
-  </div>`;
+      <div class="share-card report-card" style="--d:${nextDelay()};">
+        <div class="share-title">Share Your Results</div>
+        <div class="share-sub">Copy this Instagram story text:</div>
+        <div class="share-copy" id="shareCopyText">${escapeHtml(shareText)}</div>
+        <button class="copy-btn" type="button" onclick="copyShareText()">Copy Text</button>
+      </div>
+    </div>
+    <div class="final-cta">
+      <div class="fcta-ring" style="width:400px;height:400px;"></div>
+      <div class="fcta-ring" style="width:260px;height:260px;"></div>
+      <div class="fcta-ey">Ready For the Reset?</div>
+      <div class="fcta-title">THE 180°<br>PROGRAMME</div>
+      <p class="fcta-desc">
+        Your audit has identified exactly where the gaps are. The 180 Degree Programme addresses every single one — with the design framework, positioning system, content strategy, and community to make the reset permanent.
+      </p>
+      <a href="https://psclashes.com/180" class="fcta-btn">Apply Now →</a>
+      <p class="fcta-ig">@psc_lashes &nbsp;·&nbsp; psclashes.com/180</p>
+    </div>
+  `;
 
-  document.getElementById('repContent').innerHTML = html;
+  document.getElementById("repContent").innerHTML = html;
+  animateOverallScore(overall);
+}
+
+function animateOverallScore(target) {
+  const el = document.getElementById("overallScore");
+  if (!el) return;
+  const duration = 1500;
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const val = Math.round(target * p);
+    el.textContent = val + "%";
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 
 function toggleScard(i) {
-  const body = document.getElementById('sb' + i);
+  const body = document.getElementById("sb" + i);
+  if (!body) return;
   const head = body.previousElementSibling;
-  const isOpen = body.classList.contains('show');
-  document.querySelectorAll('.scard-body').forEach(b => b.classList.remove('show'));
-  document.querySelectorAll('.scard-head').forEach(h => h.classList.remove('open'));
+  const isOpen = body.classList.contains("show");
+  document.querySelectorAll(".scard-body").forEach((b) => b.classList.remove("show"));
+  document.querySelectorAll(".scard-head").forEach((h) => h.classList.remove("open"));
   if (!isOpen) {
-    body.classList.add('show');
-    head.classList.add('open');
+    body.classList.add("show");
+    head.classList.add("open");
   }
 }
+
+function toggleAiCard(i) {
+  const body = document.getElementById("aiBody" + i);
+  if (!body) return;
+  const head = body.previousElementSibling;
+  const isOpen = body.classList.contains("show");
+  document.querySelectorAll(".ai-body").forEach((b) => b.classList.remove("show"));
+  document.querySelectorAll(".ai-head").forEach((h) => h.classList.remove("open"));
+  if (!isOpen) {
+    body.classList.add("show");
+    head.classList.add("open");
+  }
+}
+
+async function copyShareText() {
+  const el = document.getElementById("shareCopyText");
+  if (!el) return;
+  const text = el.textContent || "";
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (err) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+  }
+}
+
+function init() {
+  buildSections();
+  document.getElementById("uName").addEventListener("input", chk);
+  document.getElementById("uEmail").addEventListener("input", chk);
+  document.getElementById("uHandle").addEventListener("input", chk);
+  document.getElementById("igUp").addEventListener("change", handleUp);
+  document.getElementById("analyzeBtn").addEventListener("click", analyseMyPage);
+
+  document.getElementById("heroBtn").addEventListener("click", () => {
+    document.getElementById("hero").style.display = "none";
+    document.getElementById("audit-app").style.display = "block";
+    updateProg();
+    updateQuestionProgress();
+    chk();
+    animateSection(1);
+    window.scrollTo(0, 0);
+  });
+
+  updateProg();
+  updateQuestionProgress();
+  chk();
+}
+
+init();
 </script>
 </body>
 </html>
