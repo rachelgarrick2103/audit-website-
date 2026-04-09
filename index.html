@@ -570,9 +570,9 @@ body {
   position: relative;
   z-index: 2;
 }
-.rep-score.crit { color: #E74C3C; }
-.rep-score.dev  { color: #E67E22; }
-.rep-score.str  { color: #BDC3C7; }
+.rep-score.crit { color: var(--red); }
+.rep-score.dev  { color: var(--amber); }
+.rep-score.str  { color: var(--green); }
 .rep-score-lbl {
   font-size: 16px;
   color: var(--gray-3);
@@ -832,6 +832,7 @@ body {
   padding: 14px 18px 18px;
 }
 .ai-body.show { display: block; }
+.ai-head.open .chev { transform: rotate(180deg); }
 .ai-verdict {
   font-size: 11px;
   margin-bottom: 12px;
@@ -1141,7 +1142,6 @@ const A = {};
 let uploadedImages = [];
 let instagramAnalysis = null;
 let instagramAnalysisError = "";
-let aiAttempted = false;
 let leadCaptureSent = false;
 
 const LEAD_CAPTURE_URL = "https://PLACEHOLDER";
@@ -1856,7 +1856,6 @@ async function analyseMyPage() {
   if (!uploadedImages.length) return;
   const btn = document.getElementById("analyzeBtn");
   const status = document.getElementById("analyzeStatus");
-  aiAttempted = true;
   instagramAnalysis = null;
   instagramAnalysisError = "";
   btn.disabled = true;
@@ -2026,7 +2025,6 @@ function buildReport() {
   const ov = lvlOf(overall);
   const sorted = Object.entries(scores).sort((a, b) => a[1] - b[1]);
   const lowest = sorted[0];
-  const highest = sorted[sorted.length - 1];
 
   sendLeadCapture({
     name,
