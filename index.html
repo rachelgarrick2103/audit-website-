@@ -1145,12 +1145,6 @@ let instagramAnalysisError = "";
 let leadCaptureSent = false;
 
 const LEAD_CAPTURE_URL = "https://script.google.com/macros/s/AKfycbxb8z2UB7il4OLgRTMOV-U_6jecHHogkHlZ8tB19k9_xxHp8mLP9ZmgodbMAS6e3QpDrA/exec";
-const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
-const ANTHROPIC_KEY = [
-  "sk-ant-api03-",
-  "SPOsToe2Vgd5HcanrY1yNfQCCNxlJhOOHHS4s2boY0V70uOO",
-  "qe3j41BG_cHSFzNURMehTyO0634GsHHcTCRPWQ-eXZSoQAA"
-].join("");
 const AI_SYSTEM_PROMPT = `You are an expert lash business consultant and Instagram strategist
 trained by PSC Lash Academy. You are analysing a lash artist's
 Instagram screenshots to give them a brutally honest, specific audit.
@@ -1867,42 +1861,30 @@ async function analyseMyPage() {
   status.textContent = "Running AI Instagram analysis...";
 
   try {
-    const content = [{
-      type: "text",
-      text: "Analyse these uploaded Instagram screenshots and return only the JSON object."
-    }];
-    uploadedImages.forEach((img) => {
-      content.push({
-        type: "image",
-        source: {
-          type: "base64",
-          media_type: img.mime,
-          data: img.data
-        }
-      });
-    });
-
-    const response = await fetch(ANTHROPIC_URL, {
+    const images = uploadedImages.map((img) => ({
+      mime: img.mime,
+      data: img.data
+    }));
+    const response = await fetch("/api/analyse", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "x-api-key": ANTHROPIC_KEY,
-        "anthropic-version": "2023-06-01"
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1600,
-        system: AI_SYSTEM_PROMPT,
-        messages: [{ role: "user", content }]
+        images,
+        systemPrompt: AI_SYSTEM_PROMPT
       })
     });
 
     if (!response.ok) {
-      throw new Error("AI request failed with status " + response.status);
+      throw new Error("AI proxy failed with status " + response.status);
     }
 
     const payload = await response.json();
-    const raw = (payload.content || [])
+    const contentBlocks = Array.isArray(payload.content)
+      ? payload.content
+      : (payload.anthropicResponse && Array.isArray(payload.anthropicResponse.content) ? payload.anthropicResponse.content : []);
+    const raw = contentBlocks
       .map((item) => item && item.type === "text" ? item.text : "")
       .join("\n")
       .trim();
