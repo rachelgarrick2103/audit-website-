@@ -2171,30 +2171,29 @@ function parseClaudeJson(raw) {
 
 async function requestInstagramAnalysis() {
   const images = uploadedImages.map((img) => ({
-    mime: img.mime,
+    type: img.mime || "image/jpeg",
     data: img.data
   }));
+  const answers = Object.fromEntries(
+    Object.entries(A).map(([key, value]) => [key, value && typeof value === "object" ? value.score : value])
+  );
   const response = await fetch("/api/analyse", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ images })
+    body: JSON.stringify({
+      images,
+      auditData: answers
+    })
   });
 
   if (!response.ok) {
     throw new Error("AI proxy failed with status " + response.status);
   }
 
-  const payload = await response.json();
-  const contentBlocks = Array.isArray(payload.content)
-    ? payload.content
-    : (payload.anthropicResponse && Array.isArray(payload.anthropicResponse.content) ? payload.anthropicResponse.content : []);
-  const raw = contentBlocks
-    .map((item) => item && item.type === "text" ? item.text : "")
-    .join("\n")
-    .trim();
-  return parseClaudeJson(raw);
+  const analysis = await response.json();
+  return analysis;
 }
 
 function normalizeInstagramAnalysis(raw) {

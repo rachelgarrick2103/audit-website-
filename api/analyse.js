@@ -1,130 +1,119 @@
-const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
-
-const AI_SYSTEM_PROMPT = `You are a PSC Lash Academy Instagram strategist.
-Analyse these Instagram screenshots from a lash
-artist's page and give brutally specific feedback.
-
-Return ONLY valid JSON with this structure:
-{
-  grid_aesthetic: {
-    score: 1-10,
-    verdict: one sentence,
-    issues: [up to 3 specific things you see],
-    fixes: [up to 3 specific actions]
-  },
-  content_mix: {
-    score: 1-10,
-    verdict: one sentence,
-    issues: [up to 3 specific things],
-    fixes: [up to 3 specific actions]
-  },
-  positioning_clarity: {
-    score: 1-10,
-    verdict: one sentence,
-    issues: [up to 3 specific things],
-    fixes: [up to 3 specific actions]
-  },
-  hook_strength: {
-    score: 1-10,
-    verdict: one sentence,
-    issues: [up to 3 specific things],
-    fixes: [up to 3 specific actions]
-  },
-  overall_instagram_score: 1-100,
-  biggest_win: one specific positive thing,
-  most_urgent_fix: one specific action to take today
-}
-
-Be specific. Name what you actually see.
-Score honestly — most lash pages score 40-65.
-Do not be generic.`;
-
-function parseJsonBody(req) {
-  if (!req || req.body == null) return {};
+function parseBody(req) {
+  if (!req) return {};
   if (typeof req.body === "string") {
     try {
       return JSON.parse(req.body);
-    } catch (error) {
+    } catch (e) {
       return {};
     }
   }
-  if (typeof req.body === "object") return req.body;
-  return {};
+  return req.body && typeof req.body === "object" ? req.body : {};
 }
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
-    return res.status(405).json({ error: "Method not allowed. Use POST." });
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const apiKey = process.env.ANTHROPIC_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ error: "Server configuration missing ANTHROPIC_KEY." });
-  }
-
-  const body = parseJsonBody(req);
-  const images = Array.isArray(body.images) ? body.images : [];
-  if (!images.length) {
-    return res.status(400).json({ error: "At least one base64 image is required." });
-  }
-
-  const content = [
-    {
-      type: "text",
-      text: "Analyse these uploaded Instagram screenshots and return only the JSON object."
-    }
-  ];
-
-  images.forEach((img) => {
-    if (!img || !img.data) return;
-    content.push({
-      type: "image",
-      source: {
-        type: "base64",
-        media_type: img.mime || "image/jpeg",
-        data: img.data
-      }
-    });
-  });
-
-  if (content.length === 1) {
-    return res.status(400).json({ error: "Images were provided but no valid base64 payloads were found." });
-  }
+  const body = parseBody(req);
+  const { images = [], auditData = {} } = body;
 
   try {
-    const response = await fetch(ANTHROPIC_URL, {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": apiKey,
+        "x-api-key": process.env.ANTHROPIC_KEY,
         "anthropic-version": "2023-06-01"
       },
       body: JSON.stringify({
         model: "claude-sonnet-4-20250514",
-        max_tokens: 1600,
-        system: AI_SYSTEM_PROMPT,
-        messages: [{ role: "user", content }]
+        max_tokens: 2000,
+        messages: [{
+          role: "user",
+          content: [
+            ...images.map((img) => ({
+              type: "image",
+              source: {
+                type: "base64",
+                media_type: img.type || img.mime || "image/jpeg",
+                data: img.data
+              }
+            })),
+            {
+              type: "text",
+              text: `You are a PSC Lash Academy Instagram strategist. 
+Analyse these Instagram screenshots from a lash artist's page.
+
+If any image shows a profile page, read the bio text directly.
+
+Return ONLY valid JSON with no other text:
+{
+  "grid_aesthetic": {
+    "score": 1-10,
+    "verdict": "one sentence",
+    "issues": ["specific thing 1", "specific thing 2"],
+    "fixes": ["specific fix 1", "specific fix 2"]
+  },
+  "content_mix": {
+    "score": 1-10,
+    "verdict": "one sentence", 
+    "issues": ["specific thing 1", "specific thing 2"],
+    "fixes": ["specific fix 1", "specific fix 2"]
+  },
+  "positioning_clarity": {
+    "score": 1-10,
+    "verdict": "one sentence",
+    "issues": ["specific thing 1", "specific thing 2"],
+    "fixes": ["specific fix 1", "specific fix 2"]
+  },
+  "hook_strength": {
+    "score": 1-10,
+    "verdict": "one sentence",
+    "issues": ["specific thing 1", "specific thing 2"],
+    "fixes": ["specific fix 1", "specific fix 2"]
+  },
+  "bio_analysis": {
+    "original_bio": "exact bio text read from screenshot or null",
+    "score": 1-10,
+    "verdict": "one sentence",
+    "what_works": "one positive thing or null",
+    "critical_issues": ["issue 1", "issue 2"],
+    "rewritten_bio": "rewritten bio under 150 chars with clear positioning and CTA",
+    "character_count": 120
+  },
+  "overall_instagram_score": 65,
+  "biggest_win": "one specific positive thing you see",
+  "most_urgent_fix": "one specific action to take today"
+}
+
+Be specific. Name exactly what you see.
+Score honestly — most lash pages score 40-65.
+If no profile page visible, set bio_analysis to null.
+
+Audit answers context (optional): ${JSON.stringify(auditData)}`
+            }
+          ]
+        }]
       })
     });
 
-    const payload = await response.json().catch(async () => {
-      const text = await response.text();
-      return { error: text || "Unknown Anthropic response error." };
-    });
+    const data = await response.json();
+    const text = data.content?.[0]?.text || "";
 
-    if (!response.ok) {
-      return res.status(response.status).json({
-        error: "Anthropic request failed.",
-        details: payload
-      });
+    try {
+      const parsed = JSON.parse(text);
+      res.status(200).json(parsed);
+    } catch (e) {
+      const match = text.match(/\{[\s\S]*\}/);
+      if (match) {
+        res.status(200).json(JSON.parse(match[0]));
+      } else {
+        res.status(500).json({ error: "Could not parse analysis" });
+      }
     }
-
-    return res.status(200).json(payload);
   } catch (error) {
-    return res.status(500).json({
-      error: "Unexpected server error while calling Anthropic.",
-      details: error && error.message ? error.message : "Unknown error"
-    });
+    console.error("Analysis error:", error);
+    res.status(500).json({ error: error.message });
   }
 }
