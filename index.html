@@ -1517,6 +1517,7 @@ let uploadedImages = [];
 let instagramAnalysis = null;
 let instagramAnalysisError = "";
 let leadCaptureSent = false;
+let airtableLeadSent = false;
 let isSectionTransitioning = false;
 let latestReportData = null;
 let welcomeAudioUrl = "";
@@ -2080,6 +2081,10 @@ function buildSections() {
       <label class="field-label">Your First Name</label>
       <input class="field-input" id="uName" type="text" placeholder="e.g. Sarah">
     </div>
+    <div class="field-block">
+      <label class="field-label">Business Name</label>
+      <input class="field-input" id="uBusiness" type="text" placeholder="e.g. Lush Lash Studio">
+    </div>
     <div class="welcome-voice">
       <div class="welcome-voice-row">
         <button class="welcome-voice-btn" id="speakWelcomeBtn" type="button">Speak Welcome</button>
@@ -2149,9 +2154,10 @@ function chk() {
   let ok = true;
   if (cur === 1) {
     const n = document.getElementById("uName").value.trim();
+    const b = document.getElementById("uBusiness").value.trim();
     const e = document.getElementById("uEmail").value.trim();
     const h = document.getElementById("uHandle").value.trim();
-    if (!n || !e || !emailValid(e) || !h || !A.q1 || !A.q2) ok = false;
+    if (!n || !b || !e || !emailValid(e) || !h || !A.q1 || !A.q2) ok = false;
   } else {
     SECTION_KEYS[cur].forEach((k) => {
       if (!A[k]) ok = false;
@@ -2207,9 +2213,38 @@ function transitionSections(fromIdx, toIdx, direction) {
   }, 300);
 }
 
+function submitReg() {
+  if (airtableLeadSent) return;
+  airtableLeadSent = true;
+  const name = (document.getElementById("uName")?.value || "").trim();
+  const business = (document.getElementById("uBusiness")?.value || "").trim();
+  const email = (document.getElementById("uEmail")?.value || "").trim();
+  void fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${AIRTABLE_TOKEN}`
+    },
+    body: JSON.stringify({
+      records: [
+        {
+          fields: {
+            Name: name,
+            Business: business,
+            Email: email,
+            Source: "180° Audit Checker",
+            Date: new Date().toISOString()
+          }
+        }
+      ]
+    })
+  });
+}
+
 function goNext() {
   if (isSectionTransitioning) return;
   if (cur < TOTAL) {
+    if (cur === 1) submitReg();
     const prev = cur;
     cur++;
     transitionSections(prev, cur, "next");
@@ -2944,6 +2979,7 @@ function retakeAuditForInstagram() {
 function init() {
   buildSections();
   document.getElementById("uName").addEventListener("input", chk);
+  document.getElementById("uBusiness").addEventListener("input", chk);
   document.getElementById("uEmail").addEventListener("input", chk);
   document.getElementById("uHandle").addEventListener("input", chk);
   document.getElementById("speakWelcomeBtn").addEventListener("click", () => playWelcomeAudio(true));
