@@ -1210,80 +1210,6 @@ body {
   }
 }
 
-.gap-card {
-  background: var(--black);
-  color: var(--white);
-  padding: 22px 22px;
-  margin-bottom: 14px;
-}
-.gap-title {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 30px;
-  letter-spacing: 0.05em;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-.gap-main {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(42px, 8vw, 62px);
-  line-height: 0.9;
-  letter-spacing: 0.02em;
-  margin-bottom: 8px;
-}
-.gap-pct {
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #CECECE;
-  margin-bottom: 8px;
-}
-.gap-desc {
-  font-size: 11px;
-  color: #D0D0D0;
-  line-height: 1.75;
-}
-
-.glance-card {
-  background: var(--white);
-  border: 1px solid var(--gray-2);
-  padding: 20px;
-  margin-bottom: 14px;
-}
-.glance-row { margin-bottom: 12px; }
-.glance-row:last-child { margin-bottom: 0; }
-.glance-top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-  color: var(--gray-4);
-  margin-bottom: 5px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.glance-name {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.glance-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.glance-dot.crit { background: var(--red); }
-.glance-dot.dev { background: var(--amber); }
-.glance-dot.str { background: var(--green); }
-.glance-track {
-  height: 5px;
-  background: var(--gray-1);
-}
-.glance-fill {
-  height: 100%;
-  background: var(--black);
-  width: 0%;
-}
-
 /* Score cards */
 .scard {
   background: var(--white);
@@ -1701,236 +1627,65 @@ body {
   line-height: 1.65;
 }
 
-.share-card {
-  background: var(--white);
-  border: 1px solid var(--gray-2);
-  padding: 18px 20px;
-  margin: 24px 0 14px;
-}
-.download-card {
-  background: var(--white);
-  border: 1px solid var(--gray-2);
-  padding: 18px 20px;
-  margin: 24px 0 12px;
-}
-.share-title {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 28px;
-  letter-spacing: 0.04em;
-  margin-bottom: 6px;
-}
-.share-sub {
-  font-size: 11px;
-  color: var(--gray-3);
-  margin-bottom: 10px;
-}
-.share-copy {
-  background: var(--gray-1);
-  border: 1px solid var(--gray-2);
-  padding: 12px;
-  font-size: 11px;
-  color: var(--gray-4);
-  line-height: 1.7;
-  margin-bottom: 10px;
-}
-.copy-btn {
-  background: var(--black);
-  color: var(--white);
-  border: none;
-  padding: 11px 16px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.copy-btn:disabled {
-  background: var(--gray-2);
-  color: var(--gray-3);
-  cursor: not-allowed;
-}
-
-.timeline-title {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 32px;
-  letter-spacing: 0.04em;
-  margin: 28px 0 12px;
-}
-.timeline-card {
-  background: var(--white);
-  border: 1px solid var(--gray-2);
-  padding: 16px;
-  position: relative;
-  margin-bottom: 18px;
-}
-.timeline-line {
-  position: absolute;
-  left: 31px;
-  top: 40px;
-  bottom: 30px;
-  width: 1px;
-  background: var(--gray-2);
-}
-.timeline-step {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  margin-bottom: 14px;
-  position: relative;
-}
-.timeline-step:last-child { margin-bottom: 0; }
-.timeline-num {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 30px;
-  line-height: 1;
-  min-width: 30px;
-  color: var(--black);
-  background: var(--white);
-  position: relative;
-  z-index: 1;
-}
-.timeline-kicker {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--black);
-  margin-bottom: 4px;
-}
-.timeline-text {
-  font-size: 11px;
-  color: var(--gray-4);
-  line-height: 1.65;
-}
-
-#downloadCanvasHost {
-  position: fixed;
-  left: -9999px;
-  top: 0;
-  pointer-events: none;
-}
-.dl-card {
-  width: 1080px;
-  background: var(--white);
-  color: var(--black);
-  border: 3px solid var(--black);
-  padding: 64px;
-  font-family: "Inter", sans-serif;
-}
-.dl-title {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 74px;
-  letter-spacing: 0.04em;
-  text-align: center;
-}
-.dl-name {
-  margin-top: 10px;
-  text-align: center;
-  font-size: 28px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.dl-score {
-  margin: 26px 0 22px;
-  text-align: center;
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 220px;
-  line-height: 0.82;
-}
-.dl-row { margin-bottom: 14px; }
-.dl-row-top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 20px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-.dl-track {
-  height: 10px;
-  background: #EAEAEA;
-}
-.dl-fill {
-  height: 100%;
-  background: var(--black);
-}
-.dl-foot {
-  margin-top: 24px;
-  text-align: center;
-  font-size: 22px;
-  letter-spacing: 0.1em;
-}
-
-/* Final CTA */
-.final-cta {
+.report-close {
   background: var(--black);
   padding: 52px 24px;
   text-align: center;
-  margin-top: 32px;
-  position: relative;
-  overflow: hidden;
+  margin-top: 2px;
 }
-.fcta-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 0.5px solid rgba(255,255,255,0.06);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.fcta-ey {
+.rc-eyebrow {
   font-size: 9px;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.26em;
   color: var(--gray-3);
   text-transform: uppercase;
-  margin-bottom: 14px;
-  position: relative;
-  z-index: 2;
+  margin-bottom: 18px;
 }
-.fcta-title {
+.rc-title {
   font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(42px, 9vw, 64px);
+  font-size: clamp(36px, 8vw, 58px);
   line-height: 0.88;
   color: var(--white);
-  margin-bottom: 16px;
-  position: relative;
-  z-index: 2;
+  margin-bottom: 20px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.fcta-desc {
-  font-size: 13px;
+.rc-message {
+  font-family: "DM Serif Display", serif;
+  font-style: italic;
+  font-size: 14px;
   color: var(--gray-3);
   max-width: 400px;
-  margin: 0 auto 28px;
-  line-height: 1.65;
-  position: relative;
-  z-index: 2;
+  margin: 0 auto 32px;
+  line-height: 1.75;
 }
-.fcta-btn {
+.rc-btn {
   display: inline-block;
   background: var(--white);
   color: var(--black);
+  font-family: "Inter", sans-serif;
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 16px 40px;
+  padding: 18px 48px;
   text-decoration: none;
   border: none;
   cursor: pointer;
   transition: background 0.2s;
-  position: relative;
-  z-index: 2;
+  display: block;
+  max-width: 360px;
+  margin: 0 auto 16px;
+  text-align: center;
 }
-.fcta-btn:hover { background: var(--gray-2); }
-.fcta-ig {
-  font-size: 9px;
+.rc-btn:hover { background: var(--gray-2); }
+.rc-sub {
+  font-size: 10px;
   color: var(--gray-4);
-  margin-top: 16px;
-  letter-spacing: 0.12em;
-  position: relative;
-  z-index: 2;
+  letter-spacing: 0.1em;
 }
+.rc-sub strong { color: var(--gray-3); }
 </style>
 </head>
 <body>
@@ -2087,9 +1842,7 @@ body {
   </div>
   <div id="repContent" style="display:none;"></div>
 </div>
-<div id="downloadCanvasHost" aria-hidden="true"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 let cur = 1;
 const TOTAL = 6;
@@ -3291,15 +3044,6 @@ function buildReport() {
     </div>
     <div class="rep-body">
       ${buildInstagramSection(nextDelay)}
-      <div class="gap-card report-card" style="--d:${nextDelay()};">
-        <div class="gap-title">YOUR BIGGEST GAP</div>
-        <div class="gap-main">${escapeHtml(lowestName)}</div>
-        <div class="gap-pct">${lowest[1]}% score</div>
-        <div class="gap-desc">${escapeHtml(BIGGEST_GAP_REASON[lowestKey] || "This area is currently creating the largest drag on growth.")}</div>
-      </div>
-
-      <div class="glance-card report-card" style="--d:${nextDelay()};">
-        <div class="report-title">Your Results at a Glance</div>
         ${CATEGORY_META.map((meta) => `
           <div class="glance-row">
             <div class="glance-top">
@@ -3428,64 +3172,37 @@ function buildReport() {
     `;
     actionNumber++;
   });
-
-  const shareText = `I just audited my lash business with the PSC 180° Audit Checker and scored ${overall}%. Eye opening. Get yours free at psclashes.com/audit 👁️`;
   html += `
-      <div class="download-card report-card" style="--d:${nextDelay()};">
-        <div class="share-title">Download Your Report</div>
-        <div class="share-sub">Generate a clean shareable report card image for your Instagram stories.</div>
-        <button class="copy-btn" id="downloadBtn" type="button" onclick="downloadReportCard()">Download Your Report</button>
+      <div class="report-close report-card" style="--d:${nextDelay()};">
+        <div class="rc-eyebrow">Based On Your Results</div>
+        <div class="rc-title" id="rcTitle">—</div>
+        <div class="rc-message" id="rcMessage">—</div>
+        <a href="https://psclashes.com/180" class="rc-btn">Apply for the 180° Programme →</a>
+        <div class="rc-sub">Or DM <strong>@psc_lashes</strong> on Instagram to talk it through first</div>
       </div>
-
-      <div class="share-card report-card" style="--d:${nextDelay()};">
-        <div class="share-title">Share Your Score</div>
-        <div class="share-sub">Copy and post this story caption:</div>
-        <div class="share-copy" id="shareCaptionText">${escapeHtml(shareText)}</div>
-        <button class="copy-btn" type="button" onclick="copyShareCaption(this)">Copy Caption</button>
-      </div>
-
-      <div class="timeline-title">What Happens When You Fix This</div>
-      <div class="timeline-card report-card" style="--d:${nextDelay()};">
-        <div class="timeline-line"></div>
-        <div class="timeline-step">
-          <div class="timeline-num">1</div>
-          <div>
-            <div class="timeline-kicker">Step 1 — WEEK 1-2</div>
-            <div class="timeline-text">You identify your exact gaps and stop trying to fix everything at once.</div>
-          </div>
-        </div>
-        <div class="timeline-step">
-          <div class="timeline-num">2</div>
-          <div>
-            <div class="timeline-kicker">Step 2 — WEEK 3-6</div>
-            <div class="timeline-text">You implement the right changes in the right order with a system and support behind you.</div>
-          </div>
-        </div>
-        <div class="timeline-step">
-          <div class="timeline-num">3</div>
-          <div>
-            <div class="timeline-kicker">Step 3 — MONTH 2-3</div>
-            <div class="timeline-text">Your calendar fills. Your prices rise. Your content converts. The loop breaks.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="final-cta">
-      <div class="fcta-ring" style="width:400px;height:400px;"></div>
-      <div class="fcta-ring" style="width:260px;height:260px;"></div>
-      <div class="fcta-ey">Ready For the Reset?</div>
-      <div class="fcta-title">THE 180°<br>PROGRAMME</div>
-      <p class="fcta-desc">
-        Your audit has identified exactly where the gaps are. The 180 Degree Programme addresses every single one — with the design framework, positioning system, content strategy, and community to make the reset permanent.
-      </p>
-      <a href="https://psclashes.com/180" class="fcta-btn">Apply Now →</a>
-      <p class="fcta-ig">@psc_lashes &nbsp;·&nbsp; psclashes.com/180</p>
     </div>
   `;
 
   document.getElementById("repContent").innerHTML = html;
   animateOverallScore(overall);
-  animateGlanceBars();
+  populateClosingBlock(overall, name);
+}
+
+function populateClosingBlock(overall, name) {
+  const title = document.getElementById("rcTitle");
+  const message = document.getElementById("rcMessage");
+  if (!title || !message) return;
+
+  if (overall <= 40) {
+    title.textContent = "The 180° Programme Was Built For Exactly Where You Are Right Now";
+    message.textContent = `${name}, your results show gaps across multiple areas that are compounding each other. This is not a one-fix situation — it needs a framework, in the right order, with support behind it. That is exactly what the programme is.`;
+  } else if (overall <= 62) {
+    title.textContent = "You Are Close — But The Gaps Are Specific And They Are Costing You";
+    message.textContent = `${name}, you have real foundations. What your results show is that the remaining gaps are precise — and closing them in the right order is what makes everything compound. The 180° Programme is built for this exact stage.`;
+  } else {
+    title.textContent = "You Are Operating At A High Level — This Is What Takes You Further";
+    message.textContent = `${name}, your foundations are strong. The 180° Programme is where artists at your level come to sharpen the final gaps, raise their ceiling, and build the systems that make growth stop depending on them being constantly on.`;
+  }
 }
 
 function animateOverallScore(target) {
@@ -3501,19 +3218,6 @@ function animateOverallScore(target) {
     if (p < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
-}
-
-function animateGlanceBars() {
-  const bars = Array.from(document.querySelectorAll(".glance-fill[data-target]"));
-  bars.forEach((bar, index) => {
-    const target = Math.max(0, Math.min(100, Number(bar.getAttribute("data-target") || 0)));
-    bar.style.width = "0%";
-    bar.style.transition = "none";
-    setTimeout(() => {
-      bar.style.transition = "width 1s ease";
-      bar.style.width = target + "%";
-    }, 150 * index + 40);
-  });
 }
 
 function toggleScard(i) {
@@ -3542,86 +3246,6 @@ function toggleAiCard(i) {
   }
 }
 
-async function copyShareCaption(btn) {
-  const el = document.getElementById("shareCaptionText");
-  if (!el) return;
-  const text = el.textContent || "";
-  try {
-    await navigator.clipboard.writeText(text);
-  } catch (err) {
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    document.body.removeChild(ta);
-  }
-  if (btn) {
-    btn.textContent = "Copied ✓";
-    setTimeout(() => {
-      btn.textContent = "Copy Caption";
-    }, 2000);
-  }
-}
-
-function safeFilename(value) {
-  const cleaned = String(value || "Report")
-    .replace(/[^a-zA-Z0-9-_ ]/g, "")
-    .trim()
-    .replace(/\s+/g, "-");
-  return cleaned || "Report";
-}
-
-function downloadCardHtml() {
-  if (!latestReportData) return "";
-  const { name, overall, scores } = latestReportData;
-  return `
-    <div class="dl-card">
-      <div class="dl-title">PSC 180° AUDIT</div>
-      <div class="dl-name">${escapeHtml(name)}</div>
-      <div class="dl-score">${overall}%</div>
-      ${CATEGORY_META.map((meta) => `
-        <div class="dl-row">
-          <div class="dl-row-top"><span>${meta.name}</span><span>${scores[meta.key]}%</span></div>
-          <div class="dl-track"><div class="dl-fill" style="width:${scores[meta.key]}%"></div></div>
-        </div>
-      `).join("")}
-      <div class="dl-foot">psclashes.com/audit</div>
-    </div>
-  `;
-}
-
-async function downloadReportCard() {
-  const btn = document.getElementById("downloadBtn");
-  if (!btn || !latestReportData) return;
-  if (typeof html2canvas !== "function") {
-    return;
-  }
-
-  btn.disabled = true;
-  const prevText = btn.textContent;
-  btn.textContent = "Generating...";
-
-  try {
-    const host = document.getElementById("downloadCanvasHost");
-    host.innerHTML = downloadCardHtml();
-    const card = host.firstElementChild;
-    const canvas = await html2canvas(card, {
-      backgroundColor: "#FFFFFF",
-      scale: 2
-    });
-    const link = document.createElement("a");
-    link.href = canvas.toDataURL("image/png");
-    link.download = `PSC-Audit-${safeFilename(latestReportData.name)}.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    host.innerHTML = "";
-  } finally {
-    btn.disabled = false;
-    btn.textContent = prevText;
-  }
-}
 
 function retakeAuditForInstagram() {
   document.getElementById("report").style.display = "none";
