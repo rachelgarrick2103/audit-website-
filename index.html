@@ -1386,6 +1386,92 @@ body {
   line-height: 1.65;
 }
 
+/* Mentorship CTA */
+.mentor-cta {
+  background: var(--black);
+  padding: 32px 24px;
+  margin-bottom: 10px;
+}
+.mentor-ey {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: var(--gray-3);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.mentor-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(28px, 6vw, 42px);
+  color: var(--white);
+  line-height: 0.9;
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+.mentor-desc {
+  font-size: 12px;
+  color: var(--gray-3);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 20px;
+  max-width: 480px;
+}
+.mentor-options {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.mentor-option {
+  flex: 1;
+  min-width: 200px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px;
+}
+.mentor-option-tag {
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--gray-3);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.mentor-option-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 20px;
+  color: var(--white);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.mentor-option-desc {
+  font-size: 10px;
+  color: var(--gray-3);
+  line-height: 1.7;
+  font-weight: 300;
+}
+.mentor-btn {
+  display: inline-block;
+  background: var(--white);
+  color: var(--black);
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  text-decoration: none;
+  transition: background 0.2s;
+  margin-bottom: 14px;
+}
+.mentor-btn:hover { background: var(--gray-2); }
+.mentor-dm {
+  font-size: 10px;
+  color: var(--gray-4);
+  letter-spacing: 0.06em;
+}
+.mentor-dm strong { color: var(--gray-3); }
+
 /* Instagram analysis */
 .insta-section {
   background: var(--white);
@@ -3221,7 +3307,12 @@ function buildReport() {
       </div>
   `;
 
-  CATEGORY_META.forEach((meta, idx) => {
+  const scorecardOrder = ["design", "positioning", "content", "systems", "pricing"];
+  const orderedCategoryMeta = scorecardOrder
+    .map((key) => CATEGORY_META.find((meta) => meta.key === key))
+    .filter(Boolean);
+
+  orderedCategoryMeta.forEach((meta, idx) => {
     const sc = scores[meta.key];
     const lv = lvlOf(sc);
     const findings = meta.keys
@@ -3253,6 +3344,35 @@ function buildReport() {
         </div>
       </div>
     `;
+
+    if (meta.key === "systems") {
+      html += `
+        <div class="mentor-cta report-card" style="--d:${nextDelay()};">
+          <div class="mentor-ey">FROM RACHEL — PSC LASH ACADEMY</div>
+          <div class="mentor-title">THIS IS EXACTLY WHAT I HELP WITH</div>
+          <p class="mentor-desc">
+            If your growth section revealed gaps in retention, referrals, or offer clarity —
+            this is the work I do with lash artists inside my mentorship programmes.
+            Not generic business advice. Specific, structured support built around your
+            numbers, your clients, and where you actually want to take this.
+          </p>
+          <div class="mentor-options">
+            <div class="mentor-option">
+              <div class="mentor-option-tag">ONE TO ONE</div>
+              <div class="mentor-option-title">Private Mentorship</div>
+              <div class="mentor-option-desc">Direct access to Rachel. We work through your specific gaps together with a clear plan and weekly accountability.</div>
+            </div>
+            <div class="mentor-option">
+              <div class="mentor-option-tag">PROGRAMME</div>
+              <div class="mentor-option-title">The 180° Programme</div>
+              <div class="mentor-option-desc">The full framework — design, positioning, content, pricing, and systems — with a community of lash artists doing the same reset.</div>
+            </div>
+          </div>
+          <a href="https://psclashes.com/180" class="mentor-btn">Find Out More →</a>
+          <div class="mentor-dm">Or DM me on Instagram <strong>@psc_lashes</strong> if you want to talk through which option suits you</div>
+        </div>
+      `;
+    }
   });
 
   html += `<div class="pri-title">YOUR PRIORITY ACTIONS</div>`;
