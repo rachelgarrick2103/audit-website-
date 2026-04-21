@@ -1102,6 +1102,24 @@ body {
   transition: all 0.2s;
 }
 .wc-continue:hover { background: var(--gray-4); }
+.wc-mute-btn {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  background: transparent;
+  border: 1px solid var(--gray-2);
+  color: var(--gray-3);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.wc-mute-btn:hover {
+  border-color: var(--black);
+  color: var(--black);
+}
 
 .rep-hero {
   background: var(--black);
@@ -1880,6 +1898,7 @@ body {
       <div class="wc-message" id="wcMsg">Your personalised business diagnostic is ready.</div>
       <button class="wc-continue" type="button" onclick="startAudit()">Begin My Audit →</button>
     </div>
+    <button class="wc-mute" id="welcomeMuteBtn" type="button" aria-label="Mute welcome audio">Mute</button>
   </div>
 </section>
 
@@ -2893,7 +2912,7 @@ function startAudit() {
 
 async function requestWelcomeSpeech(name) {
   const safeName = String(name || "").trim() || "there";
-  const text = `Hi ${safeName}, welcome to your PSC 180 Degree Audit. Let's find exactly what to fix first.`;
+  const text = `Hi ${safeName}, welcome to your official 180 degree audit. I'm Rachel, founder of PSC Lash Academy. Your personalised business diagnostic is ready — let's find out exactly what's holding your business back.`;
   const response = await fetch("/api/speak", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
