@@ -2999,25 +2999,36 @@ function startAudit() {
 async function requestWelcomeSpeech(name) {
   const safeName = String(name || "").trim() || "there";
   const text = `Hi ${safeName}, welcome to your official 180 degree audit. I'm Rachel, founder of PSC Lash Academy. Your personalised business diagnostic is ready — let's find out exactly what's holding your business back.`;
-  const response = await fetch("/api/speak", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text })
-  });
-  if (!response.ok) {
-    throw new Error("Speech proxy failed with status " + response.status);
+  try {
+    const response = await fetch("/api/speak", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text })
+    });
+    if (!response.ok) {
+      throw new Error("Speech proxy failed with status " + response.status);
+    }
+    const blob = await response.blob();
+    if (!blob || !blob.size) {
+      throw new Error("Speech response missing audio blob.");
+    }
+    return URL.createObjectURL(blob);
+  } catch (error) {
+    console.log("Welcome speech request failed:", error);
+    throw error;
   }
-  const payload = await response.json();
-  if (!payload || !payload.audioBase64) {
-    throw new Error("Speech response missing audio.");
-  }
-  const mime = payload.mimeType || "audio/mpeg";
-  return `data:${mime};base64,${payload.audioBase64}`;
 }
 
-function stopWelcomeAudio() {
+function stopWelcomeAudio(revokeUrl) {
   if (welcomeAudio) {
     try { welcomeAudio.pause(); } catch (e) {}
+    welcomeAudio.currentTime = 0;
+    welcomeAudio.onended = null;
+    welcomeAudio = null;
+  }
+  if (revokeUrl && welcomeAudioUrl) {
+    try { URL.revokeObjectURL(welcomeAudioUrl); } catch (e) {}
+    welcomeAudioUrl = "";
   }
 }
 
@@ -3031,12 +3042,19 @@ async function playWelcomeAudio(forceRefresh) {
   btn.textContent = "Loading Voice...";
 
   try {
+    stopWelcomeAudio(false);
     if (forceRefresh || !welcomeAudioUrl) {
+      if (welcomeAudioUrl) {
+        try { URL.revokeObjectURL(welcomeAudioUrl); } catch (e) {}
+        welcomeAudioUrl = "";
+      }
       welcomeAudioUrl = await requestWelcomeSpeech(userName);
     }
-    stopWelcomeAudio();
     welcomeAudio = new Audio(welcomeAudioUrl);
-    await welcomeAudio.play();
+    await welcomeAudio.play().catch((e) => {
+      console.log("Audio play failed:", e);
+      throw e;
+    });
     btn.textContent = "Speaking...";
     welcomeAudio.onended = () => {
       btn.textContent = "Speak Welcome";
@@ -3044,6 +3062,7 @@ async function playWelcomeAudio(forceRefresh) {
     };
     return;
   } catch (err) {
+    console.log("Welcome audio playback failed:", err);
     btn.textContent = "Voice Unavailable";
     setTimeout(() => {
       btn.textContent = prev;
@@ -3054,7 +3073,7 @@ async function playWelcomeAudio(forceRefresh) {
 }
 
 function muteWelcomeAudio() {
-  stopWelcomeAudio();
+  stopWelcomeAudio(false);
   const btn = document.getElementById("speakWelcomeBtn");
   if (btn) {
     btn.disabled = false;

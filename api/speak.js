@@ -30,24 +30,22 @@ export default async function handler(req, res) {
   }
 
   try {
-    const elevenResponse = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "xi-api-key": key
-        },
-        body: JSON.stringify({
-          text,
-          model_id: "eleven_multilingual_v2",
-          voice_settings: {
-            stability: 0.45,
-            similarity_boost: 0.8
-          }
-        })
-      }
-    );
+    const endpoint = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
+    const elevenResponse = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "xi-api-key": key
+      },
+      body: JSON.stringify({
+        text,
+        model_id: "eleven_multilingual_v2",
+        voice_settings: {
+          stability: 0.45,
+          similarity_boost: 0.8
+        }
+      })
+    });
 
     if (!elevenResponse.ok) {
       const errText = await elevenResponse.text().catch(() => "");
@@ -58,11 +56,11 @@ export default async function handler(req, res) {
     }
 
     const arrayBuffer = await elevenResponse.arrayBuffer();
-    const base64Audio = Buffer.from(arrayBuffer).toString("base64");
-    return res.status(200).json({
-      audioBase64: base64Audio,
-      mimeType: "audio/mpeg"
-    });
+    const audioBuffer = Buffer.from(arrayBuffer);
+    const contentType = elevenResponse.headers.get("content-type") || "audio/mpeg";
+    res.setHeader("Content-Type", contentType);
+    res.setHeader("Cache-Control", "no-store");
+    return res.status(200).send(audioBuffer);
   } catch (error) {
     return res.status(500).json({
       error: "Speech generation failed",
