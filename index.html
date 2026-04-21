@@ -112,6 +112,217 @@ body {
   z-index: 2;
 }
 
+/* Register + Welcome screens */
+#s-register,
+#s-welcome {
+  display: none;
+  min-height: 100vh;
+}
+#s-register {
+  background: var(--black);
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+}
+.reg-wrap {
+  width: 100%;
+  max-width: 420px;
+}
+.reg-ey {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  color: var(--gray-3);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.reg-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(48px, 10vw, 76px);
+  line-height: 0.86;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.reg-title .out {
+  -webkit-text-stroke: 1px var(--white);
+  color: transparent;
+}
+.reg-sub {
+  font-size: 13px;
+  color: var(--gray-3);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+.reg-field { margin-bottom: 10px; }
+.reg-input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--white);
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 17px 20px;
+  outline: none;
+  transition: all 0.25s;
+}
+.reg-input::placeholder { color: rgba(255,255,255,0.2); }
+.reg-input:focus {
+  border-color: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.08);
+}
+.reg-submit {
+  width: 100%;
+  background: var(--white);
+  color: var(--black);
+  border: none;
+  padding: 18px;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 6px;
+}
+.reg-submit:disabled {
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.3);
+  cursor: not-allowed;
+}
+
+#s-welcome {
+  background: #F2F2F0;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.wc-bg-num {
+  position: absolute;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(180px, 40vw, 320px);
+  color: rgba(0,0,0,0.04);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.02em;
+}
+.wc-card {
+  background: var(--white);
+  border-radius: 2px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 2px 40px rgba(0,0,0,0.08);
+}
+.wc-orb-wrap { position: relative; flex-shrink: 0; }
+.wc-orb {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg,#a8edea,#fed6e3,#a8c8f8,#c3b1e1,#fbc2eb,#a18cd1,#a8edea);
+  animation: wcOrbSpin 8s linear infinite;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.12);
+}
+@keyframes wcOrbSpin {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(360deg); }
+}
+.wc-orb-live {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.92);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--black);
+  white-space: nowrap;
+}
+.wc-orb-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #1a9c4e;
+  margin-right: 5px;
+}
+.wc-info { flex: 1; min-width: 0; }
+.wc-name {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(28px, 6vw, 44px);
+  color: var(--black);
+  letter-spacing: 0.03em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.wc-role {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--gray-3);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.wc-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.wc-status-left {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--gray-3);
+  text-transform: uppercase;
+}
+.wc-status-pill {
+  background: var(--black);
+  color: var(--white);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 5px 12px;
+  text-transform: uppercase;
+}
+.wc-divider {
+  height: 1px;
+  background: var(--gray-1);
+  margin-bottom: 16px;
+}
+.wc-message {
+  font-size: 12px;
+  color: var(--gray-3);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.wc-continue {
+  width: 100%;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 16px;
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
 /* APP */
 #audit-app { display: none; }
 .audit-sec { display: none; }
@@ -670,6 +881,227 @@ body {
   max-width: 280px;
   line-height: 1.7;
 }
+
+/* Register + Welcome screens */
+#s-register {
+  min-height: 100vh;
+  background: var(--black);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+}
+#s-register.active { display: flex; }
+.reg-wrap {
+  width: 100%;
+  max-width: 420px;
+}
+.reg-ey {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  color: var(--gray-3);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.reg-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(48px, 10vw, 76px);
+  line-height: 0.86;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.reg-title .out {
+  -webkit-text-stroke: 1px var(--white);
+  color: transparent;
+}
+.reg-sub {
+  font-size: 13px;
+  color: var(--gray-3);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.reg-field { margin-bottom: 10px; }
+.reg-input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--white);
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 16px 18px;
+  outline: none;
+  transition: all 0.25s;
+}
+.reg-input::placeholder { color: rgba(255,255,255,0.2); }
+.reg-input:focus {
+  border-color: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.08);
+}
+.reg-submit {
+  width: 100%;
+  background: var(--white);
+  color: var(--black);
+  border: none;
+  padding: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reg-submit:hover { background: var(--gray-2); }
+.reg-submit:disabled {
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.3);
+  cursor: not-allowed;
+}
+
+#s-welcome {
+  min-height: 100vh;
+  background: #F2F2F0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  position: relative;
+  overflow: hidden;
+}
+#s-welcome.active { display: flex; }
+.wc-bg-num {
+  position: absolute;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(180px, 40vw, 320px);
+  color: rgba(0,0,0,0.04);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.02em;
+}
+.wc-card {
+  background: var(--white);
+  border-radius: 2px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 2px 40px rgba(0,0,0,0.08);
+}
+.wc-orb-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+.wc-orb {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg,#a8edea,#fed6e3,#a8c8f8,#c3b1e1,#fbc2eb,#a18cd1,#a8edea);
+  animation: orbSpin 8s linear infinite;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.12);
+}
+@keyframes orbSpin {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(360deg); }
+}
+.wc-orb-live {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.9);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--black);
+  white-space: nowrap;
+}
+.wc-orb-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #1a9c4e;
+  margin-right: 5px;
+  animation: blink 1.4s ease infinite;
+}
+.wc-info {
+  flex: 1;
+  min-width: 0;
+}
+.wc-name {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(28px, 6vw, 44px);
+  color: var(--black);
+  letter-spacing: 0.03em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.wc-role {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--gray-3);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.wc-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.wc-status-left {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--gray-3);
+  text-transform: uppercase;
+}
+.wc-status-pill {
+  background: var(--black);
+  color: var(--white);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 5px 12px;
+  text-transform: uppercase;
+}
+.wc-divider {
+  height: 1px;
+  background: var(--gray-1);
+  margin-bottom: 16px;
+}
+.wc-message {
+  font-size: 12px;
+  color: var(--gray-3);
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+.wc-continue {
+  width: 100%;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 16px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.wc-continue:hover { background: var(--gray-4); }
 
 .rep-hero {
   background: var(--black);
@@ -1415,6 +1847,40 @@ body {
   </p>
   <button class="btn-start" id="heroBtn">Start My Audit &nbsp;→</button>
   <p class="hero-note">Takes 4–5 minutes &nbsp;·&nbsp; Completely free &nbsp;·&nbsp; Premium report included</p>
+</section>
+
+<section id="s-register">
+  <div class="reg-wrap">
+    <div class="reg-ey">Step 1 of 1 — Before we begin</div>
+    <div class="reg-title">LET'S<br><span class="out">START</span><br>HERE</div>
+    <p class="reg-sub">Your details personalise every part of your report — from your welcome screen to your AI analysis.</p>
+    <div class="reg-field"><input class="reg-input" id="rName" type="text" placeholder="First name"></div>
+    <div class="reg-field"><input class="reg-input" id="rBiz" type="text" placeholder="Business name"></div>
+    <div class="reg-field"><input class="reg-input" id="rEmail" type="email" placeholder="Email address"></div>
+    <button class="reg-submit" id="regBtn" type="button" disabled>Continue →</button>
+    <p class="reg-privacy">No spam. Your data is used only to personalise your report and send it to you.</p>
+  </div>
+</section>
+
+<section id="s-welcome">
+  <div class="wc-bg-num">180°</div>
+  <div class="wc-card">
+    <div class="wc-orb-wrap">
+      <div class="wc-orb"></div>
+      <div class="wc-orb-live"><span class="wc-orb-dot"></span>LIVE</div>
+    </div>
+    <div class="wc-info">
+      <div class="wc-name"><span id="wcName">—</span></div>
+      <div class="wc-role">180° Audit Checker — PSC Lash Academy</div>
+      <div class="wc-status">
+        <div class="wc-status-left">CONNECTED — READY</div>
+        <div class="wc-status-pill">OFFICIAL AUDIT</div>
+      </div>
+      <div class="wc-divider"></div>
+      <div class="wc-message" id="wcMsg">Your personalised business diagnostic is ready.</div>
+      <button class="wc-continue" type="button" onclick="startAudit()">Begin My Audit →</button>
+    </div>
+  </div>
 </section>
 
 <div id="audit-app">
@@ -2213,38 +2679,9 @@ function transitionSections(fromIdx, toIdx, direction) {
   }, 300);
 }
 
-function submitReg() {
-  if (airtableLeadSent) return;
-  airtableLeadSent = true;
-  const name = (document.getElementById("uName")?.value || "").trim();
-  const business = (document.getElementById("uBusiness")?.value || "").trim();
-  const email = (document.getElementById("uEmail")?.value || "").trim();
-  void fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${AIRTABLE_TOKEN}`
-    },
-    body: JSON.stringify({
-      records: [
-        {
-          fields: {
-            Name: name,
-            Business: business,
-            Email: email,
-            Source: "180° Audit Checker",
-            Date: new Date().toISOString()
-          }
-        }
-      ]
-    })
-  });
-}
-
 function goNext() {
   if (isSectionTransitioning) return;
   if (cur < TOTAL) {
-    if (cur === 1) submitReg();
     const prev = cur;
     cur++;
     transitionSections(prev, cur, "next");
@@ -2376,6 +2813,81 @@ function normalizeInstagramAnalysis(raw) {
     biggest_win: String(source.biggest_win || "No specific win returned."),
     most_urgent_fix: String(source.most_urgent_fix || "No urgent fix returned.")
   };
+}
+
+function regChk() {
+  const n = document.getElementById("rName").value.trim();
+  const b = document.getElementById("rBiz").value.trim();
+  const e = document.getElementById("rEmail").value.trim();
+  document.getElementById("regBtn").disabled = !(n && b && e && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e));
+}
+
+function show(id) {
+  const hero = document.getElementById("hero");
+  const register = document.getElementById("s-register");
+  const welcome = document.getElementById("s-welcome");
+  const audit = document.getElementById("audit-app");
+  const report = document.getElementById("report");
+  if (hero) hero.style.display = "none";
+  if (register) register.classList.remove("active");
+  if (welcome) welcome.classList.remove("active");
+  if (audit) audit.style.display = "none";
+  if (report) report.style.display = "none";
+
+  if (id === "s-register") {
+    if (register) register.classList.add("active");
+  } else if (id === "s-welcome") {
+    if (welcome) welcome.classList.add("active");
+  } else if (id === "s-audit") {
+    if (audit) audit.style.display = "block";
+  } else if (id === "hero") {
+    if (hero) hero.style.display = "flex";
+  }
+  window.scrollTo(0, 0);
+}
+
+function submitReg() {
+  const name = document.getElementById("rName").value.trim();
+  const biz = document.getElementById("rBiz").value.trim();
+  const email = document.getElementById("rEmail").value.trim();
+  const wcName = document.getElementById("wcName");
+  const wcMsg = document.getElementById("wcMsg");
+  if (wcName) wcName.textContent = name.toUpperCase();
+  if (wcMsg) {
+    wcMsg.textContent = `Welcome, ${name}. Your personalised 180° business diagnostic is ready. This audit was built specifically for lash professionals who are done guessing and ready to know exactly what needs to change.`;
+  }
+
+  if (!airtableLeadSent) {
+    airtableLeadSent = true;
+    void fetch("/api/lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        business: biz,
+        email
+      })
+    }).catch(() => {});
+  }
+
+  show("s-welcome");
+}
+
+function startAudit() {
+  show("s-audit");
+  cur = 1;
+  document.querySelectorAll(".audit-sec").forEach((sec) => {
+    sec.classList.remove("active", "section-visible", "slide-in-right", "slide-in-left", "slide-out-left", "slide-out-right");
+  });
+  document.getElementById("sec1").classList.add("active");
+  document.getElementById("btnBack").style.display = "none";
+  document.getElementById("btnNext").textContent = "Continue →";
+  document.getElementById("botNav").style.display = "flex";
+  updateProg();
+  updateQuestionProgress();
+  chk();
+  animateSection(1);
+  window.scrollTo(0, 0);
 }
 
 async function requestWelcomeSpeech(name) {
@@ -2987,18 +3499,17 @@ function init() {
   document.getElementById("analyzeBtn").addEventListener("click", analyseMyPage);
 
   document.getElementById("heroBtn").addEventListener("click", () => {
-    document.getElementById("hero").style.display = "none";
-    document.getElementById("audit-app").style.display = "block";
-    updateProg();
-    updateQuestionProgress();
-    chk();
-    animateSection(1);
-    window.scrollTo(0, 0);
+    show("s-register");
   });
+  document.getElementById("regBtn").addEventListener("click", submitReg);
+  document.getElementById("rName").addEventListener("input", regChk);
+  document.getElementById("rBiz").addEventListener("input", regChk);
+  document.getElementById("rEmail").addEventListener("input", regChk);
 
   updateProg();
   updateQuestionProgress();
   chk();
+  regChk();
 }
 
 init();
