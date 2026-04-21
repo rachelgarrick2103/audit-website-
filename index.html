@@ -190,6 +190,8 @@ body {
   color: rgba(255,255,255,0.3);
   cursor: not-allowed;
 }
+@keyframes blink { 0%,100%{opacity:0.3} 50%{opacity:1} }
+.reg-privacy { font-size:9px; color:rgba(255,255,255,0.2); margin-top:12px; letter-spacing:0.1em; text-align:center; }
 
 #s-welcome {
   background: #F2F2F0;
@@ -958,6 +960,8 @@ body {
   color: rgba(255,255,255,0.3);
   cursor: not-allowed;
 }
+@keyframes blink { 0%,100%{opacity:0.3} 50%{opacity:1} }
+.reg-privacy { font-size:9px; color:rgba(255,255,255,0.2); margin-top:12px; letter-spacing:0.1em; text-align:center; }
 
 #s-welcome {
   min-height: 100vh;
@@ -1750,7 +1754,7 @@ body {
       <div class="wc-message" id="wcMsg">Your personalised business diagnostic is ready.</div>
       <button class="wc-continue" type="button" onclick="startAudit()">Begin My Audit →</button>
     </div>
-    <button class="wc-mute" id="welcomeMuteBtn" type="button" aria-label="Mute welcome audio">Mute</button>
+    <button class="wc-mute-btn" id="welcomeMuteBtn" type="button" aria-label="Mute welcome audio">Mute</button>
   </div>
 </section>
 
@@ -1846,7 +1850,7 @@ body {
 <script>
 let cur = 1;
 const TOTAL = 6;
-const TOTAL_QUESTIONS = 21;
+const TOTAL_QUESTIONS = window._isLashTech ? 21 : 17;
 const A = {};
 let uploadedImages = [];
 let instagramAnalysis = null;
@@ -1867,26 +1871,22 @@ Return ONLY valid JSON with this structure:
   grid_aesthetic: {
     score: 1-10,
     verdict: one sentence,
-    issues: [up to 3 specific things you see],
-    fixes: [up to 3 specific actions]
+    issues: [up to 3 specific things you see]
   },
   content_mix: {
     score: 1-10,
     verdict: one sentence,
-    issues: [up to 3 specific things],
-    fixes: [up to 3 specific actions]
+    issues: [up to 3 specific things]
   },
   positioning_clarity: {
     score: 1-10,
     verdict: one sentence,
-    issues: [up to 3 specific things],
-    fixes: [up to 3 specific actions]
+    issues: [up to 3 specific things]
   },
   hook_strength: {
     score: 1-10,
     verdict: one sentence,
-    issues: [up to 3 specific things],
-    fixes: [up to 3 specific actions]
+    issues: [up to 3 specific things]
   },
   overall_instagram_score: 1-100,
   biggest_win: one specific positive thing,
@@ -2498,10 +2498,11 @@ function updateProg() {
 }
 
 function updateQuestionProgress() {
+  const total = window._isLashTech ? 21 : 17;
   const done = answeredCount();
-  const pct = Math.round((done / TOTAL_QUESTIONS) * 100);
+  const pct = Math.round((done / total) * 100);
   document.getElementById("qProgFill").style.width = pct + "%";
-  document.getElementById("qProgLabel").textContent = "Question " + done + " of " + TOTAL_QUESTIONS + " answered";
+  document.getElementById("qProgLabel").textContent = "Question " + done + " of " + total + " answered";
 }
 
 function transitionSections(fromIdx, toIdx, direction) {
@@ -2609,7 +2610,7 @@ function parseClaudeJson(raw) {
 }
 
 async function requestInstagramAnalysis() {
-  const ANTHROPIC_KEY = "YOUR_ANTHROPIC_API_KEY";
+  const ANTHROPIC_KEY = "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";
 
   const imageBlocks = uploadedImages.map((img) => ({
     type: "image",
@@ -2676,9 +2677,9 @@ function normalizeInstagramAnalysis(raw) {
 }
 
 async function submitToAirtable(name, biz, email, handle) {
-  const AIRTABLE_TOKEN = "YOUR_TOKEN_HERE";
-  const BASE_ID = "YOUR_BASE_ID_HERE";
-  const TABLE_NAME = "Leads";
+  const AIRTABLE_TOKEN = "patFVbXbNs2SVUA41.ae1c3d114d0bb91633b40ce00523f67436c1a7ef67e8d4151e5086cf564a39c2";
+  const BASE_ID = "apphIHEXf68pajTu7";
+  const TABLE_NAME = "AUDIT";
   try {
     await fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`, {
       method: "POST",
@@ -2785,8 +2786,8 @@ function startAudit() {
 }
 
 async function requestWelcomeSpeech(name) {
-  const ELEVEN_KEY = "YOUR_ELEVENLABS_API_KEY";
-  const VOICE_ID = "YOUR_VOICE_ID";
+  const ELEVEN_KEY = "2a0686700cecd1c6e2a731baed8768da8819034f6b0588b2f0b377d387d642bd";
+  const VOICE_ID = "wWWn96OtTHu1sn8SRGEr";
   const safeName = String(name || "").trim() || "there";
   const text = `Hi ${safeName}, welcome to your official 180 degree audit. I'm Rachel, founder of PSC Lash Academy. Your personalised business diagnostic is ready — let's find out exactly what's holding your business back.`;
 
@@ -2988,9 +2989,9 @@ function buildInstagramSection(nextDelayFn) {
           <ul class="ai-list">
             ${issues.map((x) => "<li>" + escapeHtml(x) + "</li>").join("") || "<li>No issues returned.</li>"}
           </ul>
-          <div class="ai-list-label">Fixes</div>
+          <div class="ai-list-label">Danger Zones</div>
           <ul class="ai-list">
-            ${fixes.map((x) => "<li>" + escapeHtml(x) + "</li>").join("") || "<li>No fixes returned.</li>"}
+            ${issues.map((x) => "<li>" + escapeHtml(x) + "</li>").join("") || "<li>No issues returned.</li>"}
           </ul>
         </div>
       </div>
@@ -3044,19 +3045,6 @@ function buildReport() {
     </div>
     <div class="rep-body">
       ${buildInstagramSection(nextDelay)}
-        ${CATEGORY_META.map((meta) => `
-          <div class="glance-row">
-            <div class="glance-top">
-              <span class="glance-name">
-                <span class="glance-dot ${lvlOf(scores[meta.key]).cls}"></span>
-                <span>${meta.name}</span>
-              </span>
-              <span>${scores[meta.key]}%</span>
-            </div>
-            <div class="glance-track"><div class="glance-fill" data-target="${scores[meta.key]}"></div></div>
-          </div>
-        `).join("")}
-      </div>
   `;
 
   const scorecardOrder = ["design", "positioning", "content", "systems", "pricing"];
@@ -3282,6 +3270,7 @@ function init() {
   document.getElementById("rBiz").addEventListener("input", regChk);
   document.getElementById("rEmail").addEventListener("input", regChk);
   document.getElementById("rHandle").addEventListener("input", regChk);
+  document.getElementById("welcomeMuteBtn").addEventListener("click", muteWelcomeAudio);
 
   updateProg();
   updateQuestionProgress();
