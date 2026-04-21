@@ -16,10 +16,10 @@ export default async function handler(req, res) {
   }
 
   const key = process.env.ELEVENLABS_API_KEY;
-  const voiceId = process.env.ELEVENLABS_VOICE_ID;
-  if (!key || !voiceId) {
+  const voiceId = process.env.ELEVENLABS_VOICE_ID || "ywWWn96OtTHu1sn8SRGEr";
+  if (!key) {
     return res.status(500).json({
-      error: "Server missing ELEVENLABS_API_KEY or ELEVENLABS_VOICE_ID"
+      error: "Server missing ELEVENLABS_API_KEY"
     });
   }
 
