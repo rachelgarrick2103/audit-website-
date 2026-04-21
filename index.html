@@ -300,6 +300,88 @@ body {
 }
 .field-input:focus { border-color: var(--black); }
 .field-input::placeholder { color: var(--gray-2); }
+.welcome-voice {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.welcome-voice-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.welcome-voice-btn {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 10px 14px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.welcome-voice-btn:disabled {
+  background: var(--gray-2);
+  color: var(--gray-3);
+  cursor: not-allowed;
+}
+.welcome-voice-status {
+  font-size: 9px;
+  color: var(--gray-3);
+  letter-spacing: 0.04em;
+}
+.welcome-speak-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-speak {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 10px 14px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-speak:disabled {
+  background: var(--gray-2);
+  color: var(--gray-3);
+  cursor: not-allowed;
+}
+.welcome-speak-status {
+  font-size: 10px;
+  color: var(--gray-3);
+  line-height: 1.45;
+}
+.voice-cta {
+  margin-top: 12px;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 10px 14px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.voice-cta:disabled {
+  background: var(--gray-2);
+  color: var(--gray-3);
+  cursor: not-allowed;
+}
+.voice-status {
+  margin-top: 8px;
+  font-size: 10px;
+  color: var(--gray-3);
+  line-height: 1.5;
+}
 
 /* Questions */
 .q-card {
@@ -457,6 +539,35 @@ body {
   color: var(--gray-3);
   margin-top: 8px;
   line-height: 1.5;
+}
+.voice-box {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  padding: 14px;
+  margin: 10px 0 12px;
+}
+.btn-speak {
+  width: 100%;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 12px 14px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.btn-speak:disabled {
+  background: var(--gray-2);
+  color: var(--gray-3);
+  cursor: not-allowed;
+}
+.voice-status {
+  font-size: 10px;
+  color: var(--gray-3);
+  line-height: 1.5;
+  margin-top: 8px;
 }
 
 /* Bottom nav */
@@ -1408,6 +1519,8 @@ let instagramAnalysisError = "";
 let leadCaptureSent = false;
 let isSectionTransitioning = false;
 let latestReportData = null;
+let welcomeAudioUrl = "";
+let welcomeAudio = null;
 
 const LEAD_CAPTURE_URL = "https://script.google.com/macros/s/AKfycbxb8z2UB7il4OLgRTMOV-U_6jecHHogkHlZ8tB19k9_xxHp8mLP9ZmgodbMAS6e3QpDrA/exec";
 const AI_SYSTEM_PROMPT = `You are a PSC Lash Academy Instagram strategist.
@@ -1967,6 +2080,12 @@ function buildSections() {
       <label class="field-label">Your First Name</label>
       <input class="field-input" id="uName" type="text" placeholder="e.g. Sarah">
     </div>
+    <div class="welcome-voice">
+      <div class="welcome-voice-row">
+        <button class="welcome-voice-btn" id="speakWelcomeBtn" type="button">Speak Welcome</button>
+        <div class="welcome-voice-status" id="welcomeSpeakStatus">Add your name, then tap to hear your personal welcome.</div>
+      </div>
+    </div>
     <div class="field-block">
       <label class="field-label">Email Address</label>
       <input class="field-input" id="uEmail" type="email" placeholder="you@example.com">
@@ -2222,6 +2341,63 @@ function normalizeInstagramAnalysis(raw) {
     biggest_win: String(source.biggest_win || "No specific win returned."),
     most_urgent_fix: String(source.most_urgent_fix || "No urgent fix returned.")
   };
+}
+
+async function requestWelcomeSpeech(name) {
+  const safeName = String(name || "").trim() || "there";
+  const text = `Hi ${safeName}, welcome to your PSC 180 Degree Audit. Let's find exactly what to fix first.`;
+  const response = await fetch("/api/speak", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text })
+  });
+  if (!response.ok) {
+    throw new Error("Speech proxy failed with status " + response.status);
+  }
+  const payload = await response.json();
+  if (!payload || !payload.audioBase64) {
+    throw new Error("Speech response missing audio.");
+  }
+  const mime = payload.mimeType || "audio/mpeg";
+  return `data:${mime};base64,${payload.audioBase64}`;
+}
+
+function stopWelcomeAudio() {
+  if (welcomeAudio) {
+    try { welcomeAudio.pause(); } catch (e) {}
+  }
+}
+
+async function playWelcomeAudio(forceRefresh) {
+  const btn = document.getElementById("speakWelcomeBtn");
+  const nameInput = document.getElementById("uName");
+  if (!btn || !nameInput) return;
+  const userName = nameInput.value.trim();
+  btn.disabled = true;
+  const prev = btn.textContent;
+  btn.textContent = "Loading Voice...";
+
+  try {
+    if (forceRefresh || !welcomeAudioUrl) {
+      welcomeAudioUrl = await requestWelcomeSpeech(userName);
+    }
+    stopWelcomeAudio();
+    welcomeAudio = new Audio(welcomeAudioUrl);
+    await welcomeAudio.play();
+    btn.textContent = "Speaking...";
+    welcomeAudio.onended = () => {
+      btn.textContent = "Speak Welcome";
+      btn.disabled = false;
+    };
+    return;
+  } catch (err) {
+    btn.textContent = "Voice Unavailable";
+    setTimeout(() => {
+      btn.textContent = prev;
+      btn.disabled = false;
+    }, 1800);
+    return;
+  }
 }
 
 async function analyseMyPage() {
@@ -2770,6 +2946,7 @@ function init() {
   document.getElementById("uName").addEventListener("input", chk);
   document.getElementById("uEmail").addEventListener("input", chk);
   document.getElementById("uHandle").addEventListener("input", chk);
+  document.getElementById("speakWelcomeBtn").addEventListener("click", () => playWelcomeAudio(true));
   document.getElementById("igUp").addEventListener("change", handleUp);
   document.getElementById("analyzeBtn").addEventListener("click", analyseMyPage);
 
