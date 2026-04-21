@@ -2967,6 +2967,15 @@ async function playWelcomeAudio(forceRefresh) {
   }
 }
 
+function muteWelcomeAudio() {
+  stopWelcomeAudio();
+  const btn = document.getElementById("speakWelcomeBtn");
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = "Speak Welcome";
+  }
+}
+
 async function analyseMyPage() {
   if (!uploadedImages.length) return;
   const btn = document.getElementById("analyzeBtn");
